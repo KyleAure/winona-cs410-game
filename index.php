@@ -30,5 +30,48 @@
 			</td>
 		</tr>
 	</table>
+	
+		<h2 id = "message">Introductions for this team</h1>
+	<p class='description'>Create your introduction by creating a web page for your
+	introduction and then adding it to the list below. Please add in alphabetical order by your 
+	first name.</p>
+	
+	<h2>Class List </h2>
+	<ol>
+	  <li><a href="JohnEberhard.php">John Eberhard</a></li>
+	  
+	  </ol>
+				
+				
+	<h1>PhP Generated list</h1>
+		<table border="1" align="left">
+		 <tr>
+		   <th>Student</th>
+		   <th>Picture</th>
+		 </tr>
+<?PHP				
+foreach (glob("*.php") as $filename) {
+	if ( 0 != strcmp("$filename","index.php")) {
+	 if ( 0 != strcmp("$filename","connect.php")) {
+		
+	   $name = preg_replace("/.php/","","$filename")	;
+	   $filecontents = file_get_contents("$filename"); 
+	   
+       echo "<tr><td><a href=\"$filename\">$name</a>   </td>";
+
+	   $filecontents = file_get_contents("$filename");
+       // echo '<!--';  
+	   // echo "$filecontents";  
+       // echo '-->'; 
+	   $imagelink = preg_replace('/^.*"(images.[^"]*)".*/s','$1',"$filecontents");
+	   echo "<td><img src=\"$imagelink\" alt=\"$name\" style=\"height:100px\"></td>"; 
+       
+       echo "</tr>";
+     }
+    }
+}
+	
+?>	
+</table>
 </body>
 </html>
