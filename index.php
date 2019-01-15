@@ -39,6 +39,7 @@
 	<h2>Class List </h2>
 	<ol>
 	  <li><a href="JohnEberhard.php">John Eberhard</a></li>
+	  <li><a href="KyleAure.php">Kyle Aure</a></li>
 	  
 	  </ol>
 				
