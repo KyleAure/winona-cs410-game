@@ -37,10 +37,12 @@
 				    <li>Javascript<li>
 				  </ul>
 		        <li>Hobbies</li>
+					<ul>
 		           <li>Painting and drawing</li>
 		           <li>Cooking and baking</li>
 		           <li>Spending time with family</li>
-		        <li>Other Interests/li>
+					</ul>
+		        <li>Other Interests</li>
 		        <li>Future Plans / Aspirations</li>
 		        <li>Links</li>
 		          <ul>
