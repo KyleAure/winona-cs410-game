@@ -41,7 +41,7 @@
 				  </ul>
 		        <li>Family History</li>
 		          <ul>
-				    <li>Always lived in SE Minnesota.</li>
+				    <li>Always lived in Southeast Minnesota.</li>
 				  </ul>
 		        <li>Other Interests/li>
 		          <ul>
