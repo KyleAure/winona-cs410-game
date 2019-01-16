@@ -41,6 +41,7 @@
 	  <li><a href="JohnEberhard.php">John Eberhard</a></li>
 	  <li><a href="KyleAure.php">Kyle Aure</a></li>
 	  <li><a href="TristinHarvell.php">Tristin Harvell</a></li>
+	  <li><a href="ErikaTix.php">Erika Tix</a></li>
 	  
 	  </ol>
 				
