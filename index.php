@@ -12,7 +12,7 @@
 				<img class = 'newappIcon' src='images/newapp-icon.png'>
 			</td>
 			<td>
-				<h1 id = "message"><?php echo "Welcome to the banana project for Winona CS410"; ?></h1>
+				<h1 id = "message"><?php echo "Welcome to the orange project for Winona CS410"; ?></h1>
 				<p class='description'> 
 				Thanks for visiting.
 				</p>
