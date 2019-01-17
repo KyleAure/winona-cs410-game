@@ -41,7 +41,7 @@
 		          <ul>
 				    <li>Always lived in SE Minnesota.</li>
 				  </ul>
-		        <li>Other Interests/li>
+		        <li>Other Interests</li>
 		          <ul>
 				    <li>I love the outdoors.</li>
 				    <li>I love trying new food.</li>
