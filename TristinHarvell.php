@@ -18,8 +18,6 @@
 				   <ul>
 				     <li>Girlfriend of 5 years</li>
 				     <li>Two younger brothers in Minnesota</li>
-				     <li> 
-				     
 				   </ul>
 				<li>Work Experience</li>
 				  <ul>
