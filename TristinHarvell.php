@@ -46,7 +46,7 @@
 				    <li>I love the outdoors!</li>
 				    <li>I love trying new food!</li>
 				    <li>I love the traveling!</li>
-				    <li>I love going on adventures!</li>
+				    <li>I love going on adventures.</li>
 				  </ul>
 		        <li>Future Plans / Aspirations</li>
 		          <ul>
