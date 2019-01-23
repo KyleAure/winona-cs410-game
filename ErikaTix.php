@@ -19,7 +19,7 @@
 				     <li>Married for 2 years</li>
 				     <li>One son, Finley - age 6</li>
 				     <li>Two dogs, Lyra and Odin</li>
-				     
+				     <li>One bearded dragon, Mushu</li>
 				   </ul>
 				<li>Work Experience</li>
 				  <ul>
@@ -34,7 +34,6 @@
 				    <li>Java</li>
 				    <li>SQL</li>
 				    <li>HTML</li>
-				    <li>Javascript<li>
 				  </ul>
 		        <li>Hobbies</li>
 					<ul>
@@ -44,9 +43,14 @@
 					</ul>
 		        <li>Other Interests</li>
 		        <li>Future Plans / Aspirations</li>
+		        	<ul>
+		        	<li>Graduate WSU-R with Bachelors in Computer Science</li>
+		        	<li>Obtain a job in web or mobile development field</li>
+		        	</ul>
 		        <li>Links</li>
 		          <ul>
 		            <li><a href="https://www.facebook.com/HairByErikaTix/">Facebook</a></li>
+		            <li><a href="www.linkedin.com/in/erika-tix-49a590177/">LinkedIn</a></li>
 		          </ul>
 				</ul>
 	
