@@ -1,3 +1,5 @@
 launchConfigurations/
 #Mac auto generated files
 .DS_Store
+#Java compiled files
+.class 
