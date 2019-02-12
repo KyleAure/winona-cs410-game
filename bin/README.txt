@@ -1,1 +1,0 @@
-This is the directory to store your source code
