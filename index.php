@@ -15,9 +15,7 @@
 			</td>
 			<td>
 				<h1 id = "message"><?php echo "Welcome to the Orange Team project for Winona CS410"; ?></h1>
-				<p class='description'> 
-					Thanks for visiting.
-				</p>
+				<p class='description'>Orange Project -- Updated 2/8/2019</p>
 				<p>
 					Here are the project milestones
 				</p>
