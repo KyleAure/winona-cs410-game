@@ -1,10 +1,17 @@
 <h2 id="SystemArchitecture">System Architecture</h2>
-<p>
-Our puzzle slider game will be run in a single instance. It will be GUI-driven, with the GUIs being created by Java FX.
-There will be a different GUI for each menu screen in the game: one for the login screen, one for the main menu, 
-one for setting up a game, one that will function as a pause screen mid-game, and one that will appear upon winning a game.
-The program will be able to create and save user profiles and data on the machine on which it is running.
-It will also implement Junit testing and build automation tools to help us test and debug code as we develop it.
-The GUI, file storage, Junit testing, and automation tools will all be contained in their own packages with the program.
-</p>
+
+<div id="SystemArchitecture">
+	<img src="../../images/SystemArchitecture_Build.png" alt="System Architecture Build">
+	<p>
+		Our <i>Puzzle Slider</i> game will run as a .JAR program built using Maven.
+		It will be GUI-diven, with user input propagating down the system architecture layers. 
+		There will be seperate interfaces for each game screen: Login, Main Menu, Game Settings, Main Game, and Win/Lose.
+		The program will be able to create and save user profiles and data using a JDBC connection to a Derby database. 
+		It will also implement Junit testing and build automation tools to help ensure our code is being developed to the specifications we set for ourselves.  
+	</p>
+	<img src="../../images/SystemArchitecture_Overview.png" alt="System Architecture Build">
+	<p>
+		Our app will be divided into packages for each high level system: Application, Component, Database, Image Processing, and Game Logic
+	</p>
+</div>
 <hr>
