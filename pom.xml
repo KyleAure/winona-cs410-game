@@ -1,27 +1,65 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- Project details -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.winona.cs</groupId>
   <artifactId>puzzle.game</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Orange Project</name>
+  <!-- Dependencies -->
   <dependencies>
-  	<dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.12</version>
-    <scope>test</scope>
-</dependency>
+  	<!-- Junit for automated testing -->
+    <dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.12</version>
+	    <scope>test</scope>
+    </dependency>
+    <!-- Derby for database connection -->
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.8.3.0</version>
+    </dependency>
   </dependencies>
+  <!-- Build Properties -->
   <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
+	  <plugins>
+	  	  <!-- maven complier version and java source -> target -->
+	      <plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.8.0</version>
+	        <configuration>
+	          <source>1.8</source>
+	          <target>1.8</target>
+	        </configuration>
+	      </plugin>
+	      <!-- Makes executable (fat) JAR by pointing to main class and including dependencies -->
+	      <!-- FYI including dependencies is not necessary if we host our project somewhere -->
+		  <plugin>
+			  <artifactId>maven-assembly-plugin</artifactId>
+			  <executions>
+			      <execution>
+			           <phase>package</phase>
+			           <goals>
+			               <goal>single</goal>
+			           </goals>
+			       </execution>
+			   </executions>
+			   <configuration>
+			         <archive>
+			             <manifest>
+			                   <mainClass>edu.winona.cs.app.App</mainClass>
+			             </manifest>
+			         </archive>
+			         <descriptorRefs>
+			             <descriptorRef>jar-with-dependencies</descriptorRef>
+			        </descriptorRefs>
+			   </configuration>
+		  </plugin>
+	  </plugins>
   </build>
 </project>
+
+
+
+          
