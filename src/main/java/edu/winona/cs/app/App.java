@@ -1,29 +1,26 @@
 
 package edu.winona.cs.app;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import edu.winona.cs.db.SampleDB;
+import edu.winona.cs.db.DatabaseManager;
+import edu.winona.cs.db.UserTable;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		//TODO: Remove sample code and use this main class to launch GUI, database, and other components.
 		JOptionPane.showMessageDialog(null, "Hello World.");
 	
-		SampleDB sdb = new SampleDB();
-		String output = "";
+		DatabaseManager dm = new DatabaseManager();
+		Connection conn = dm.connectionToDerby();
+		UserTable ut = new UserTable(conn);
+		ut.addUser("erika", "hello1234");
+		ut.dropTable();
 		
-		try {
-			sdb.connectionToDerby();
-			output = sdb.sampleDBUsabe();
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
-		
-		JOptionPane.showMessageDialog(null, output);
 	}
 	
 	public static String stringValidation() {
