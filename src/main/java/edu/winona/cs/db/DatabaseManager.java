@@ -7,17 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 //TODO: Remove this class and develop a database interface to create new users. 
-public class SampleDB {
+public class DatabaseManager {
 	//connection variable to database
 	private Connection conn;
+	
 	
 	/**
 	 * Establishes connection to our database
 	 * @throws SQLException
 	 */
-	public void connectionToDerby() throws SQLException {
-		String dbURL = "jdbc:derby:sampledb;create=true";
+	public Connection connectionToDerby() throws SQLException {
+		String dbURL = "jdbc:derby:puzzledb;create=true";
 		conn = DriverManager.getConnection(dbURL);
+		return conn;
 	}
 	
 	public String sampleDBUsabe() throws SQLException {
