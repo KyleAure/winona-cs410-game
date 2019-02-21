@@ -1,17 +1,20 @@
 
+package edu.winona.cs.component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 
     private String username;
-    private String password;
     private List<Score> highScores = new ArrayList<>();
 
-    public Player(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Player() {
     }
+    
+    public Player(String username) {
+        this.username = username;
+    } 
 
     public String getUsername() {
         return username;
@@ -19,14 +22,6 @@ public class Player {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<Score> getHighScores() {
@@ -40,7 +35,6 @@ public class Player {
     @Override
     public String toString() {
         return "Player: " + username
-                + "Password: " + password
                 + "High-Scores: " + highScores;
     }
 

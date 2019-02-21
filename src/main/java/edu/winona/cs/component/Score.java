@@ -1,26 +1,38 @@
+package edu.winona.cs.component;
 
 public class Score {
-    
-    private Double completionTime;
+
+    private double completionTime;
+    private double highScore;
 
     public Score() {
     }
 
-    public Score(Double completionTime) {
+    public Score(double completionTime, double highScore) {
         this.completionTime = completionTime;
+        this.highScore = highScore;
     }
 
-    public Double getCompletionTime() {
+    public double getCompletionTime() {
         return completionTime;
     }
 
-    public void setCompletionTime(Double completionTime) {
+    public void setCompletionTime(double completionTime) {
         this.completionTime = completionTime;
+    }
+
+    public double getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(double highScore) {
+        this.highScore = highScore;
     }
 
     @Override
     public String toString() {
-        return "Score: " + completionTime;
+        return "Score: " + completionTime
+                + "High Score: " + highScore;
     }
-    
+
 }
