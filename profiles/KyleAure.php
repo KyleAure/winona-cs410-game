@@ -3,7 +3,7 @@
 <head>
 	<title>Kyle Aure Introduction</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
 	<h1 id = "message">Kyle Aure Introduction Updated January 2018</h1>
