@@ -65,3 +65,25 @@ Upon logging in, the user will be given five different options to choose from. <
 </p>
 <img src="../../images/WinScreenUseCaseDiagram.png" alt="Win Screen Use Case Model">
 
+<!-- Game Screen Use Case model -->
+<h3 id="gameScreenUseCaseModel">Casual Game Screen Model</h3>
+<p>
+    A user that has started a new game will see many options on this game screen. First the user will have the option to pause the current game.
+	When the user pauses the game, the timer will stop counting and the game will temporarily stop until "Resume" is clicked. The user also has the
+	option to save and exit the current game. Upon this selection, the game will save the current state and will exit the game screen. This will then
+	return the user to the main menu screen.
+</p>
+<p>
+    A user has the option to select a "Game Settings" option from the Game Screen. This option will prompt the user options to change the theme of the game screen
+	(red, blue, purple, or pink). This will only change the settings of the game screen and not the login, main menu, or win condition screen. The theme
+	selected from a user will include a save state for the current theme selected, meaning if they exit the game, log out and then log back in the theme will be the
+	same as when they exited.
+</p>
+<p>
+    A user has the option to restart the current game on the Game Screen. Upon this selection the user will be prompted with a yes or no
+	button that will ask "Are you sure you want to restart? Your progress will be lost.". If the user selects "yes", the current game will restart
+	and they will not be able to undo this action. If the user should select "no", the prompt will exit and the current game on the Game Screen will
+	continue as normal until the puzzle is solved.
+</p>
+<img src="../../images/GameScreen_UseCaseDiagram.png" alt="Login Use Case Model">
+
