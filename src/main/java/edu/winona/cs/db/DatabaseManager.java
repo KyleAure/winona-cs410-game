@@ -1,49 +1,89 @@
 package edu.winona.cs.db;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-//TODO: Remove this class and develop a database interface to create new users. 
+/**
+ * Database Manager Class
+ * 
+ * This class creates the puzzledb.
+ * Defines the database Name, URL, driver, and creation status of the database.
+ * 
+ * @author Kyle Aure and Erika Tix
+ */
 public class DatabaseManager {
-	//connection variable to database
-	private Connection conn;
-	
+	//STEP 1: Define location and name of embedded database
+	public static final String DBNAME = "puzzledb";
+	public static final String DBURL = "jdbc:derby:" + DBNAME;
+	public static final String JDBCDRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+	private static final String DBCREATEURL = "jdbc:derby:" + DBNAME + ";create=true";
+	private static boolean created = false;
 	
 	/**
-	 * Establishes connection to our database
-	 * @throws SQLException
+	 * Creates database and will set the created variable to True if successful.
 	 */
-	public Connection connectionToDerby() throws SQLException {
-		String dbURL = "jdbc:derby:puzzledb;create=true";
-		conn = DriverManager.getConnection(dbURL);
-		return conn;
+	public static void createDatabase() {
+		System.out.println("Attempting database connection from: createDatabase");
+		//If database has not been created
+		if(!created) {
+			//Create it
+		   Connection conn = null;
+		   try{
+		      //STEP 2: Register JDBC driver
+			  Class.forName(JDBCDRIVER);
+	
+		      //STEP 3: Open a connection and create database
+		      System.out.println("Connecting to database...");
+		      conn = DriverManager.getConnection(DBCREATEURL);
+		      System.out.println("Database created successfully...");
+		      created = true;
+		   }catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   }catch(Exception e){
+		      //Handle errors for Class.forName
+		      e.printStackTrace();
+		   }finally{
+		      //finally block used to close resources
+		      try{
+		         if(conn!=null)
+		            conn.close();
+		      }catch(SQLException se){
+		         se.printStackTrace();
+		      }//end finally try
+		   }//end try
+		   System.out.println("End database creation.\n");
+		//If the database has been created
+		} else {
+			System.out.println("Warning: attempted to create database even though flag is true.");
+		}
 	}
 	
-	public String sampleDBUsabe() throws SQLException {
-		Statement stmt = conn.createStatement();
-		String results = "";
-		
-		//Create Table
-		stmt.execute("Create Table USERS (id int primary key, name varchar(30))");
-		
-		//Insert two rows
-		stmt.executeUpdate("insert into USERS values (1, 'Tom')");
-		stmt.executeUpdate("insert into USERS values (2,'Peter')");
-		
-		//Query
-		ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
-		
-		//Print results
-		while (rs.next()) {
-			results += String.format("%d\t%s\n", rs.getInt("id"), rs.getString("name"));
+	public static boolean isCreated() {
+		return created;
+	}
+	
+	/**
+	 * Returns a string representation of the database by the
+	 * tables that the database has included.
+	 */
+	public static String getTables() {
+		String results = "Printing Tables";
+		results += "\n---------------------\n";
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection(DBURL);
+			DatabaseMetaData dbmd = conn.getMetaData();
+			ResultSet resultSet = dbmd.getTables(null, null, null, new String[]{"TABLE"});
+			while(resultSet.next()) {
+				results += resultSet.getString("TABLE_NAME") + "\n";
+			}
+		} catch (SQLException e) {
+			System.out.println("Connection to database failed.");
 		}
-		
-		//Drop table
-		stmt.executeUpdate("Drop Table USERS");
-		
 		return results;
 	}
 }
