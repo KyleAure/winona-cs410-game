@@ -35,5 +35,5 @@ target/
 
 #Ignore embedded database
 #TODO: update this ignore once final naming structure has been decided.
-sampledb/
+puzzledb/
 
