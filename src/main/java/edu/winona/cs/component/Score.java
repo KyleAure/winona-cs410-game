@@ -1,6 +1,9 @@
 package edu.winona.cs.component;
 
+import edu.winona.cs.log.Log;
+
 public class Score {
+	private static final Log LOG = new Log("Score");
 
     private double completionTime;
     private double highScore;

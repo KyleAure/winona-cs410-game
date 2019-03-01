@@ -1,7 +1,10 @@
 
 package edu.winona.cs.component;
 
+import edu.winona.cs.log.Log;
+
 public class Timer {
+	private static final Log LOG = new Log("Timer");
     
     private double startTime;
     private double endTime;
@@ -47,6 +50,6 @@ public class Timer {
                 "Difference: " + difference;
     }
     
-    //method for pausing
+    //TODO method for pausing
     
 }

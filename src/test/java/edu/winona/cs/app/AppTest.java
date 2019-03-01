@@ -5,7 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import edu.winona.cs.log.LogTest;
+
 public class AppTest {
+	private static final LogTest LOG = new LogTest("AppTest");
 
 	@Test
 	public void stringValTest() {

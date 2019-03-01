@@ -6,12 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import edu.winona.cs.log.Log;
+import edu.winona.cs.log.Log.LogLevel;
+
 /**
  * Creates a USER table and allows users to create and verify users.
  * 
  * @author Kyle Aure
  */
 public class UserTable implements Table {
+	private static final Log LOG = new Log("UserTable");
+	
 	//Table attributes
 	public static final String NAME = "users";
 	private static boolean created = false;
@@ -22,7 +27,7 @@ public class UserTable implements Table {
 	
 	@Override
 	public void createTable() {
-		System.out.println("Attempting database connection from: UserTable.createTable");
+		LOG.log(LogLevel.INFO, "Attempting database connection from: UserTable.createTable");
 		if(!created) {
 		   //STEP 1: Create variables
 		   String sql = "CREATE TABLE " + NAME + " (" + 
@@ -36,44 +41,44 @@ public class UserTable implements Table {
 		      Class.forName(DatabaseManager.JDBCDRIVER);
 
 		      //STEP 3: Open a connection
-		      System.out.println("Connecting to a selected database...");
+		      LOG.log(LogLevel.INFO, "Connecting to a selected database...");
 		      conn = DriverManager.getConnection(DatabaseManager.DBURL);
-		      System.out.println("Connected database successfully...");
+		      LOG.log(LogLevel.INFO, "Connected database successfully...");
 		      
 		      //STEP 4: Execute a query
-		      System.out.println("Creating table in given database...");
+		      LOG.log(LogLevel.INFO, "Creating table in given database...");
 		      stmt = conn.createStatement();
 		      stmt.executeUpdate(sql);
 		      created = true;
-		      System.out.println("Created table in given database...");
-		   }catch(SQLException se){
+		      LOG.log(LogLevel.INFO, "Created table in given database...");
+		   }catch(SQLException e){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      LOG.log(e, LogLevel.SEVERE, "SQLException when creating the UserTable");
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 		   }finally{
 		      //finally block used to close resources
 		      try{
 		         if(stmt!=null)
 		            conn.close();
-		      }catch(SQLException se){
+		      }catch(SQLException e){
 		      }// do nothing
 		      try{
 		         if(conn!=null)
 		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
+		      }catch(SQLException e){
+		         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 		      }//end finally try
 		   }//end try
-		   System.out.println("End table creation.\n");
+		   LOG.log(LogLevel.INFO, "End table creation.\n");
 		} else {
-			System.out.println("Warning: attempted to create table even though flag is true.");
+			LOG.log(LogLevel.WARNING, "Attempted to create table even though flag is true.");
 		}//end if-else
 	}
 	
 	public void dropTable() {
-		System.out.println("Attempting database connection from: UserTable.dropTable");
+		LOG.log(LogLevel.INFO, "Attempting database connection from: UserTable.dropTable");
 		if(created) {
 		   //STEP 1: Create Variables
 		   String sql = "DROP TABLE " + NAME;
@@ -84,39 +89,39 @@ public class UserTable implements Table {
 		      Class.forName(DatabaseManager.JDBCDRIVER);
 
 		      //STEP 3: Open a connection
-		      System.out.println("Connecting to a selected database...");
+		      LOG.log(LogLevel.INFO, "Connecting to a selected database...");
 		      conn = DriverManager.getConnection(DatabaseManager.DBURL);
-		      System.out.println("Connected database successfully...");
+		      LOG.log(LogLevel.INFO, "Connected database successfully...");
 		      
 		      //STEP 4: Execute a query
-		      System.out.println("Dropping table in given database...");
+		      LOG.log(LogLevel.INFO, "Dropping table in given database...");
 		      stmt = conn.createStatement();
 		      stmt.executeUpdate(sql);
 		      created = false;
-		      System.out.println("Dropped table in given database...");
-		   }catch(SQLException se){
+		      LOG.log(LogLevel.INFO, "Dropped table in given database...");
+		   }catch(SQLException e){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      LOG.log(e, LogLevel.SEVERE, "SQLException when dropping the UserTable");
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 		   }finally{
 		      //finally block used to close resources
 		      try{
 		         if(stmt!=null)
 		            conn.close();
-		      }catch(SQLException se){
+		      }catch(SQLException e){
 		      }// do nothing
 		      try{
 		         if(conn!=null)
 		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
+		      }catch(SQLException e){
+		         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 		      }//end finally try
 		   }//end try
-		   System.out.println("End table drop.\n");
+		   LOG.log(LogLevel.INFO, "End table drop.\n");
 		} else {
-			System.out.println("Warning: attempted to drop table even though flag is false.");
+			LOG.log(LogLevel.WARNING, "Attempted to drop table even though flag is false.");
 		}//end if-else
 	}
 
@@ -126,7 +131,7 @@ public class UserTable implements Table {
 	}
 	
 	public void createUser(String username, String password) throws IllegalArgumentException {
-		System.out.println("Attempting database connection from: UserTable.createUser");
+		LOG.log(LogLevel.INFO, "Attempting database connection from: UserTable.createUser");
 		if(created) {
 			   Connection conn = null;
 			   Statement stmt = null;
@@ -136,43 +141,43 @@ public class UserTable implements Table {
 			      Class.forName(DatabaseManager.JDBCDRIVER);
 		
 			      //STEP 3: Open a connection
-			      System.out.println("Connecting to a selected database...");
+			      LOG.log(LogLevel.INFO, "Connecting to a selected database...");
 			      conn = DriverManager.getConnection(DatabaseManager.DBURL);
-			      System.out.println("Connected database successfully...");
+			      LOG.log(LogLevel.INFO, "Connected database successfully...");
 			      
 			      //STEP 4: Execute a query
-			      System.out.println("Creating statement...");
+			      LOG.log(LogLevel.INFO, "Creating statement...");
 			      stmt = conn.createStatement();
 			      stmt.execute(sql);
-			      System.out.println("User successfully created...");
-			   }catch(SQLException se){
+			      LOG.log(LogLevel.INFO, "User successfully created...");
+			   }catch(SQLException e){
 			      //Handle errors for JDBC
 			      throw new IllegalArgumentException("Failed to create user due to non-unique username.");
 			   }catch(Exception e){
 			      //Handle errors for Class.forName
-			      e.printStackTrace();
+			     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 			   }finally{
 			      //finally block used to close resources
 			      try{
 			         if(stmt!=null)
 			            conn.close();
-			      }catch(SQLException se){
+			      }catch(SQLException e){
 			      }// do nothing
 			      try{
 			         if(conn!=null)
 			            conn.close();
-			      }catch(SQLException se){
-			         se.printStackTrace();
+			      }catch(SQLException e){
+			         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 			      }//end finally try
 			   }//end try
-			   System.out.println("End user creation.\n");
+			   LOG.log(LogLevel.INFO, "End user creation.\n");
 		} else {
-			System.out.println("Attempted to access table that has not been created. User creation no executed.");
+			LOG.log(LogLevel.WARNING, "Attempted to access table that has not been created. User creation no executed.");
 		}
 	}
 
 	public boolean verifyUser(String username, String password) {
-		System.out.println("Attempting database connection from: UserTable.verifyUser");
+		LOG.log(LogLevel.INFO, "Attempting database connection from: UserTable.verifyUser");
 		if(created) {
 			   //STEP 1: Create variables assume user is not verified. 
 			   boolean result = false;
@@ -184,18 +189,18 @@ public class UserTable implements Table {
 			      Class.forName(DatabaseManager.JDBCDRIVER);
 		
 			      //STEP 3: Open a connection
-			      System.out.println("Connecting to a selected database...");
+			      LOG.log(LogLevel.INFO, "Connecting to a selected database...");
 			      conn = DriverManager.getConnection(DatabaseManager.DBURL);
-			      System.out.println("Connected database successfully...");
+			      LOG.log(LogLevel.INFO, "Connected database successfully...");
 			      
 			      //STEP 4: Execute a query
-			      System.out.println("Creating statement...");
+			      LOG.log(LogLevel.INFO, "Creating statement...");
 			      stmt = conn.createStatement();
 			      ResultSet rs = stmt.executeQuery(sql);
-			      System.out.println("Extracting results...");
+			      LOG.log(LogLevel.INFO, "Extracting results...");
 			      
 			      //STEP 5: Extract data from result set
-			      System.out.println("Comparing results...");
+			      LOG.log(LogLevel.INFO, "Comparing results...");
 			      while(rs.next()){
 			         //Retrieve by column name
 			         String passCompare = rs.getString(attPassword);   
@@ -205,31 +210,31 @@ public class UserTable implements Table {
 			         }
 			      }
 			      rs.close();
-			      System.out.println("Finished comparing results...");
-			   }catch(SQLException se){
+			      LOG.log(LogLevel.INFO, "Finished comparing results...");
+			   }catch(SQLException e){
 			      //Handle errors for JDBC
-			      se.printStackTrace();
+			      LOG.log(e, LogLevel.SEVERE, "SQLException when trying to verify user");
 			   }catch(Exception e){
 			      //Handle errors for Class.forName
-			      e.printStackTrace();
+			     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 			   }finally{
 			      //finally block used to close resources
 			      try{
 			         if(stmt!=null)
 			            conn.close();
-			      }catch(SQLException se){
+			      }catch(SQLException e){
 			      }// do nothing
 			      try{
 			         if(conn!=null)
 			            conn.close();
-			      }catch(SQLException se){
-			         se.printStackTrace();
+			      }catch(SQLException e){
+			         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 			      }//end finally try
 			   }//end try
-			   System.out.println("End verification.\n");
+			   LOG.log(LogLevel.INFO, "End verification.\n");
 			   return result;
 		} else {
-			System.out.println("Attempted to access table that has not been created. Verfication returned false.");
+			LOG.log(LogLevel.WARNING, "Attempted to access table that has not been created. Verfication returned false.");
 			return false;
 		}
 	}
@@ -248,12 +253,12 @@ public class UserTable implements Table {
 		      Class.forName(DatabaseManager.JDBCDRIVER);
 	
 		      //STEP 3: Open a connection
-		      System.out.println("Connecting to a selected database...");
+		      LOG.log(LogLevel.INFO, "Connecting to a selected database...");
 		      conn = DriverManager.getConnection(DatabaseManager.DBURL);
-		      System.out.println("Connected database successfully...");
+		      LOG.log(LogLevel.INFO, "Connected database successfully...");
 		      
 		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
+		      LOG.log(LogLevel.INFO, "Creating statement...");
 		      stmt = conn.createStatement();
 	
 		      String sql = "SELECT * FROM " + NAME;
@@ -268,27 +273,27 @@ public class UserTable implements Table {
 		         results += password + "\n";
 		      }
 		      rs.close();
-		   }catch(SQLException se){
+		   }catch(SQLException e){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      LOG.log(e, LogLevel.SEVERE, "SQLException when getting data from UserTable");
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 		   }finally{
 		      //finally block used to close resources
 		      try{
 		         if(stmt!=null)
 		            conn.close();
-		      }catch(SQLException se){
+		      }catch(SQLException e){
 		      }// do nothing
 		      try{
 		         if(conn!=null)
 		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
+		      }catch(SQLException e){
+		         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 		      }//end finally try
 		   }//end try
-		   System.out.println("End table string creation.\n");
+		   LOG.log(LogLevel.INFO, "End table string creation.\n");
 		   return results;
 		} else {
 			return "User table has not been create. No data to display.";
