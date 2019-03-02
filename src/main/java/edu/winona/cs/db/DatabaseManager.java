@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import edu.winona.cs.log.Log;
+import edu.winona.cs.log.Log.LogLevel;
+
 /**
  * Database Manager Class
  * 
@@ -19,6 +22,9 @@ public class DatabaseManager {
 	public static final String DBNAME = "puzzledb";
 	public static final String DBURL = "jdbc:derby:" + DBNAME;
 	public static final String JDBCDRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+	
+	//Private variables
+	private static final Log LOG = new Log("DatabaseManager");
 	private static final String DBCREATEURL = "jdbc:derby:" + DBNAME + ";create=true";
 	private static boolean created = false;
 	
@@ -26,7 +32,7 @@ public class DatabaseManager {
 	 * Creates database and will set the created variable to True if successful.
 	 */
 	public static void createDatabase() {
-		System.out.println("Attempting database connection from: createDatabase");
+		LOG.log(LogLevel.INFO,"Attempting database connection from: createDatabase");
 		//If database has not been created
 		if(!created) {
 			//Create it
@@ -36,29 +42,29 @@ public class DatabaseManager {
 			  Class.forName(JDBCDRIVER);
 	
 		      //STEP 3: Open a connection and create database
-		      System.out.println("Connecting to database...");
+		      LOG.log(LogLevel.INFO,"Connecting to database...");
 		      conn = DriverManager.getConnection(DBCREATEURL);
-		      System.out.println("Database created successfully...");
+		      LOG.log(LogLevel.INFO, "Database created successfully...");
 		      created = true;
-		   }catch(SQLException se){
+		   }catch(SQLException e){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      LOG.log(e, LogLevel.SEVERE, "SQLException thrown while creating database.");
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		     LOG.log(e, LogLevel.SEVERE, "Exception registering JDBC Driver");
 		   }finally{
 		      //finally block used to close resources
 		      try{
 		         if(conn!=null)
 		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
+		      }catch(SQLException e){
+		         LOG.log(e, LogLevel.WARNING, "SQLException thrown while closing connection.");
 		      }//end finally try
 		   }//end try
-		   System.out.println("End database creation.\n");
+		   LOG.log(LogLevel.INFO, "End database creation.\n");
 		//If the database has been created
 		} else {
-			System.out.println("Warning: attempted to create database even though flag is true.");
+			LOG.log(LogLevel.WARNING, "Attempted to create database even though flag is true.");
 		}
 	}
 	
@@ -82,7 +88,7 @@ public class DatabaseManager {
 				results += resultSet.getString("TABLE_NAME") + "\n";
 			}
 		} catch (SQLException e) {
-			System.out.println("Connection to database failed.");
+			LOG.log(e, LogLevel.WARNING, "Connection to database failed.");
 		}
 		return results;
 	}

@@ -8,12 +8,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.winona.cs.log.Log.LogLevel;
+import edu.winona.cs.log.LogTest;
+
 /**
  * Tests the UserTable class
  * 
  * @author Kyle Jon Aure
  */
 public class UserTableTest {
+	private static final LogTest LOG = new LogTest("UserTableTest"); 
 	private UserTable ut = new UserTable();
 	private String username = "Kyle";
 	private String password = "Test1";
@@ -38,13 +42,13 @@ public class UserTableTest {
 	@Test
 	public void createUserTest() {
 		//Print list of tables
-		System.out.println(DatabaseManager.getTables());
+		LOG.log(LogLevel.INFO, DatabaseManager.getTables());
 		
 		//Create user
 		ut.createUser(username, password);
 		
 		//Print list of users
-		System.out.println(ut.toString());
+		LOG.log(LogLevel.INFO, ut.toString());
 		
 		//Assert Kyle can be verified
 		assertTrue("Kyle should be in userTable.", ut.verifyUser(username, password));

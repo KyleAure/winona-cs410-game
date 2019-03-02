@@ -1,7 +1,10 @@
 
 package edu.winona.cs.component;
 
+import edu.winona.cs.log.Log;
+
 public class GameSettings {
+	private static final Log LOG = new Log("GameSettings");
     
     private String backgroundColor;
     private boolean highScoreTracking;

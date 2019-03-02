@@ -4,7 +4,10 @@ package edu.winona.cs.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.winona.cs.log.Log;
+
 public class Player {
+	private static final Log LOG = new Log("Player");
 
     private String username;
     private List<Score> highScores = new ArrayList<>();

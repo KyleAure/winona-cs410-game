@@ -3,7 +3,10 @@ package edu.winona.cs.component;
 
 import javax.swing.Icon;
 
+import edu.winona.cs.log.Log;
+
 public class GameSession {
+	private static final Log LOG = new Log("GameSession");
     
     private String difficulty;
     private Icon imageChosen;
