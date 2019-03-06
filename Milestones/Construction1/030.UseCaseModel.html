@@ -1,4 +1,111 @@
-<h2 id="UseCaseModel">UseCaseModel</h2>
+<h2 id="UseCaseModel">Use Case Models</h2>
+<!-- Introduction to the Use Case Model Section -->
 <p>
-This is the current use case model. </p>
+   This should contain most use case diagrams as well as the most of the text description of your use cases.
+</p>
+<p> 
+    Most use cases should be identified and 60% of use case descriptions should be completed
+</p>
 <hr>
+<!-- Login Use Case -->
+<h3 id="loginUseCaseModel">Casual Login Model</h3>
+<p>
+    A user that wants to create a new profile will be able to do so through the Login system by choosing the "Create a New Profile" option. 
+    Upon choosing this option the user will be prompted to create a new username and password.  
+    Once a username and password is created it will be saved to a persistant storage system.
+</p>
+<p>
+    A user that has previously created a profile and login to their profile through the Login system by choosing the "Login to Existing Profile" option.
+    Upon choosing this option the user will be prompted via the authenticaion subsystem to enter their username and password.
+    The authenticaion subsystem will check the user's credentials.
+    If the authenticaion is a successful, the user will be brought to the Main Menu.
+    If the authentication fails, the user will be notified and will need to re-enter their username and password.
+</p>
+<p>
+    A user can choose to play as a guest.
+    Upon choosing this option the system will notify the user that their progress and high scores will not be saved.
+    The user will be be brought to the Main Menu.
+</p>
+<img src="../assets/Login_UseCaseDiagram.png" alt="Login Use Case Model">
+<!-- Main Menu Use Case -->
+<h3 id="mainMenuUseCaseModel">Main Menu Casual Use Case</h3>
+<p>
+    Upon logging in, the user will be given five different options to choose from.
+    <ol>
+        <li>The first option is to play a new game. After selecting this, the Game Setup screen (reference the Game Setup Use Case) will be opened.</li>
+        <li>A second option is to load a previously played and saved game. If the user chooses to load a preexisting game file, the File Chooser subsystem will prompt the user to choose a file from their local file system. If the user cancels the File Chooser subsystem, the user will be taken back to the main menu. If the user chooses a file that not in an acceptable save format, the user will be asked to choose another file. If the user chooses a file that is in an acceptable format, the File Chooser subsystem will then load the previously played game.</li>
+        <li>A third option is to check high-scores. This will result in a pop-up window appearing on the screen displaying various statistics regarding previously played games. If the user is logged in as a player, the high-scores will only be from their previously played games. If no previous scores exist, then the high-scores list will be empty. If the user is logged in as a guest, then fictional stats will be provided.</li>
+        <li>A fourth option is to access game settings. These are various settings that alter features that aren’t critical to gameplay. These may include background display themes, music, or sound effects.</li>
+        <li>The fifth option is to logout. This option simply takes the user back to the initial Login screen (reference the Login Use Case).</li>
+    </ol>
+</p>
+<img src="../assets/MainMenu_UseCaseDiagram.png" alt="Main Menu Use Case Model">
+<!-- Game Setup Use Case -->
+<h3 id="gameSetupUseCaseModel">Casual Game Setup Use Case Model</h3>
+<p>
+    A user that has chosen to start a New Game from the Main Menu or from the Win Game Menu will be prompted to set up their game options.
+    A user can choose the difficulty of their New Game which will determine the number of squares the chosen image will be split.
+    Upon choosing a difficulty, a user will be able to choose an image from a pre-defined set or upload their own image.
+    If the user chooses a pre-defined image they will be brought to the Game Screen.
+    If the user chooses to upload an image the File Chooser subsystem will prompt the user to choose a file from their local file system.
+    If the user cancels the File Chooser subsystem, the user will once again be prompted to choose an image from a pre-defined set or upload their own image.
+    If the user chooses a file that not in an acceptable image format, the user will be asked to choose another file.
+    If the user chooses a file that is in an acceptable image format, the File Chooser subsystem will then upload the image and make it a choosable option from the pre-defined list.
+</p>
+<img src="../assets/GameSetup_UseCaseDiagram.png" alt="Game Setup Use Case Model">
+<!-- Win Screen Use Case -->
+<h3 id="winScreenUseCaseModel">Win Screen Casual Use Case</h3>
+<p>
+	In the event the user successfully completes a game, they will be presented with the victory screen which contains several options to choose from.
+	If the user selects the “View Time” button, the app will display the amount of time it took the user to complete the game as text.
+	If the user selects the “View Turn Count” button, the app will display the number of turns (or moves) the user took to complete the game.
+	If the user selects the “Play Again” button, the victory screen will disappear and the app will restart the user’s current game as if it were never completed, allowing the user to play the same game again.
+	If the user selects the “Start New” button, the victory screen will disappear and the game setup screen will appear, allowing the user to adjust the settings of their new game.
+	If the user selects the “Return to Main” button, the victory screen will disappear and the app will take the user to the main menu screen.
+</p>
+<img src="../assets/WinScreenUseCaseDiagram.png" alt="Win Screen Use Case Model">
+
+<!-- Game Screen Use Case model -->
+<h3 id="gameScreenUseCaseModel">Casual Game Screen Model</h3>
+<p>
+    A user that has started a new game will see many options on this game screen. First the user will have the option to pause the current game.
+	When the user pauses the game, the timer will stop counting and the game will temporarily stop until "Resume" is clicked. The user also has the
+	option to save and exit the current game. Upon this selection, the game will save the current state and will exit the game screen. This will then
+	return the user to the main menu screen.
+</p>
+<p>
+    A user has the option to select a "Game Settings" option from the Game Screen. This option will prompt the user options to change the theme of the game screen
+	(red, blue, purple, or pink). This will only change the settings of the game screen and not the login, main menu, or win condition screen. The theme
+	selected from a user will include a save state for the current theme selected, meaning if they exit the game, log out and then log back in the theme will be the
+	same as when they exited.
+</p>
+<p>
+    A user has the option to restart the current game on the Game Screen. Upon this selection the user will be prompted with a yes or no
+	button that will ask "Are you sure you want to restart? Your progress will be lost.". If the user selects "yes", the current game will restart
+	and they will not be able to undo this action. If the user should select "no", the prompt will exit and the current game on the Game Screen will
+	continue as normal until the puzzle is solved.
+</p>
+<img src="../assets/GameScreen_UseCaseDiagram.png" alt="Login Use Case Model">
+
+<!-- Game Screen Use Case model -->
+<h3 id="gameScreenUseCaseModel">Casual Game Screen Model</h3>
+<p>
+    A user that has started a new game will see many options on this game screen. First the user will have the option to pause the current game.
+	When the user pauses the game, the timer will stop counting and the game will temporarily stop until "Resume" is clicked. The user also has the
+	option to save and exit the current game. Upon this selection, the game will save the current state and will exit the game screen. This will then
+	return the user to the main menu screen.
+</p>
+<p>
+    A user has the option to select a "Game Settings" option from the Game Screen. This option will prompt the user options to change the theme of the game screen
+	(red, blue, purple, or pink). This will only change the settings of the game screen and not the login, main menu, or win condition screen. The theme
+	selected from a user will include a save state for the current theme selected, meaning if they exit the game, log out and then log back in the theme will be the
+	same as when they exited.
+</p>
+<p>
+    A user has the option to restart the current game on the Game Screen. Upon this selection the user will be prompted with a yes or no
+	button that will ask "Are you sure you want to restart? Your progress will be lost.". If the user selects "yes", the current game will restart
+	and they will not be able to undo this action. If the user should select "no", the prompt will exit and the current game on the Game Screen will
+	continue as normal until the puzzle is solved.
+</p>
+<img src="../assets/GameScreen_UseCaseDiagram.png" alt="Login Use Case Model">
+
