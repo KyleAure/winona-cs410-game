@@ -1,4 +1,4 @@
-//package edu.winona.cs.app;
+package edu.winona.cs.app;
 //package org.eclipse.ui.internal;
 //
 //import org.eclipse.swt.widgets.Display;
@@ -22,6 +22,8 @@
 //import org.eclipse.ui.internal.ImageCycleFeedbackBase;
 //import org.eclipse.ui.internal.AnimationEngine;
 //
+
+//FIXME This package is being fixed by Erika
 public class MainMenuScreen {
 //	private CLabel label;
 //	
