@@ -22,8 +22,6 @@ public class DatabaseManager {
 	public static final String DBNAME = "puzzledb";
 	public static final String DBURL = "jdbc:derby:" + DBNAME;
 	public static final String JDBCDRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-	
-	//Private variables
 	private static final Log LOG = new Log("DatabaseManager");
 	private static final String DBCREATEURL = "jdbc:derby:" + DBNAME + ";create=true";
 	private static boolean created = false;
@@ -31,7 +29,7 @@ public class DatabaseManager {
 	/**
 	 * Creates database and will set the created variable to True if successful.
 	 */
-	public static void createDatabase() {
+	public void createDatabase() {
 		LOG.log(LogLevel.INFO,"Attempting database connection from: createDatabase");
 		//If database has not been created
 		if(!created) {
@@ -68,7 +66,7 @@ public class DatabaseManager {
 		}
 	}
 	
-	public static boolean isCreated() {
+	public boolean isCreated() {
 		return created;
 	}
 	
@@ -76,7 +74,7 @@ public class DatabaseManager {
 	 * Returns a string representation of the database by the
 	 * tables that the database has included.
 	 */
-	public static String getTables() {
+	public String getTablesString() {
 		String results = "Printing Tables";
 		results += "\n---------------------\n";
 		Connection conn;
@@ -91,5 +89,65 @@ public class DatabaseManager {
 			LOG.log(e, LogLevel.WARNING, "Connection to database failed.");
 		}
 		return results;
+	}
+	
+	public UserTable getUserTable() {
+		UserTable ut = new UserTable();
+		LOG.log(LogLevel.INFO, "Request for UserTable from DatabaseManager recieved.");
+		if(!ut.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating UserTable.");
+			ut.createTable();
+		}
+		return ut;
+	}
+	
+	public UserSettingsTable getUserSettingsTable() {
+		UserSettingsTable ust = new UserSettingsTable();
+		LOG.log(LogLevel.INFO, "Request for UserSettingsTable from DatabaseManager recieved.");
+		if(!ust.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.");
+			ust.createTable();
+		}
+		return ust;
+	}
+	
+	public ScoreTable getScoreTable() {
+		ScoreTable st = new ScoreTable();
+		LOG.log(LogLevel.INFO, "Request for ScoreTable from DatabaseManager recieved.");
+		if(!st.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating ScoreTable.");
+			st.createTable();
+		}
+		return st;
+	}
+	
+	public SaveStateTable getSaveStateTable() {
+		SaveStateTable sst = new SaveStateTable();
+		LOG.log(LogLevel.INFO, "Request for SaveStateTable from DatabaseManager recieved.");
+		if(!sst.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating SaveStateTable.");
+			sst.createTable();
+		}
+		return sst;
+	}
+	
+	public ImageTable getImageTable() {
+		ImageTable it = new ImageTable();
+		LOG.log(LogLevel.INFO, "Request for ImageTable from DatabaseManager recieved.");
+		if(!it.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating ImageTable.");
+			it.createTable();
+		}
+		return it;
+	}
+	
+	public GameSettingsTable getGameSettingsTable() {
+		GameSettingsTable gst = new GameSettingsTable();
+		LOG.log(LogLevel.INFO, "Request for GameSettingsTable from DatabaseManager recieved.");
+		if(!gst.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating GameSettingsTable.");
+			gst.createTable();
+		}
+		return gst;
 	}
 }
