@@ -1,27 +1,29 @@
 
 package edu.winona.cs.component;
 
+import java.awt.Color;
+
 import edu.winona.cs.log.Log;
 
 public class GameSettings {
 	private static final Log LOG = new Log("GameSettings");
     
-    private String backgroundColor;
+    private Color backgroundColor;
     private boolean highScoreTracking;
 
     public GameSettings() {
     }
 
-    public GameSettings(String backgroundColor, boolean highScoreTracking) {
+    public GameSettings(Color backgroundColor, boolean highScoreTracking) {
         this.backgroundColor = backgroundColor;
         this.highScoreTracking = highScoreTracking;
     }
 
-    public String getBackgroundColor() {
+    public Color getBackgroundColor() {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(String backgroundColor) {
+    public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 

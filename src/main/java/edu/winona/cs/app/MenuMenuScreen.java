@@ -152,32 +152,30 @@ public class MenuMenuScreen extends javax.swing.JFrame {
     
     
     private void playGameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameBtnActionPerformed
-        // TODO add your handling code here:
+        // TODO complete button action
         
         
     }//GEN-LAST:event_playGameBtnActionPerformed
 
     private void loadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadBtnActionPerformed
-        // TODO add your handling code here:
+    	// TODO complete button action
         
     }//GEN-LAST:event_loadBtnActionPerformed
 
     private void highscoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highscoreBtnActionPerformed
-        // TODO add your handling code here:
         
-        int highscore = 0;//ScoresTable.getHighScore(); method to calculate/get highscore??
+        int highscore = 0;//FIXME ScoresTable.getHighScore(); method to calculate/get highscore??
         ImageIcon icon = new ImageIcon("src/main/resources/trophy.jpg");
         JOptionPane.showMessageDialog(null, "Your current high-score is: " + highscore, "HIGH-SCORE!", JOptionPane.INFORMATION_MESSAGE, icon);
         
     }//GEN-LAST:event_highscoreBtnActionPerformed
 
     private void gameSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSettingsBtnActionPerformed
-        // TODO add your handling code here:
+    	// TODO complete button action
         
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
         LoginScreen ls = new LoginScreen();
         ls.setVisible(true);

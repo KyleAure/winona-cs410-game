@@ -197,7 +197,6 @@ public class LoginScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
        UserTable user = new UserTable();
        boolean result = user.verifyUser(usernameInput.getText().trim(), passwordInput.getText().trim());
         
@@ -216,7 +215,6 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
-        // TODO add your handling code here:
         boolean success = false;
         try {
             UserTable newUser = new UserTable();
@@ -234,28 +232,23 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_signupBtnActionPerformed
 
     private void guestLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginBtnActionPerformed
-        // TODO add your handling code here:
         MenuMenuScreen mainMenu = new MenuMenuScreen();
         mainMenu.setVisible(true);
     }//GEN-LAST:event_guestLoginBtnActionPerformed
 
     private void usernameInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFocusGained
-        // TODO add your handling code here:
         usernameInput.setText("");
     }//GEN-LAST:event_usernameInputFocusGained
 
     private void passwordInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordInputFocusGained
-        // TODO add your handling code here:
         passwordInput.setText("");
     }//GEN-LAST:event_passwordInputFocusGained
 
     private void signupInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signupInputFocusGained
-        // TODO add your handling code here:
         signupInput.setText("");
     }//GEN-LAST:event_signupInputFocusGained
 
     private void passwordSignupInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordSignupInputFocusGained
-        // TODO add your handling code here:
         passwordSignupInput.setText("");
     }//GEN-LAST:event_passwordSignupInputFocusGained
 
