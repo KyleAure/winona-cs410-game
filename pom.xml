@@ -5,6 +5,9 @@
   <artifactId>puzzle.game</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Orange Project</name>
+  <properties>
+  	<swt.version>4.3</swt.version>
+  </properties>
   <!-- Dependencies -->
   <dependencies>
   	<!-- Junit for automated testing -->
