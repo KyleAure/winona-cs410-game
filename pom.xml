@@ -66,6 +66,13 @@
 			   </configuration>
 		  </plugin>
 	  </plugins>
+        <repositories>
+            <repository>
+              <id>netbeans</id>
+              <name>Netbeans rep</name>
+              <url>http://bits.netbeans.org/maven2/</url>
+            </repository>
+        </repositories>
   </build>
 </project>
 
