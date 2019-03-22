@@ -5,6 +5,7 @@
  */
 package edu.winona.cs.app;
 
+import edu.winona.cs.db.DatabaseManager;
 import java.awt.Color;
 import java.awt.Container;
 import javax.swing.ImageIcon;
@@ -153,7 +154,9 @@ public class MenuMenuScreen extends javax.swing.JFrame {
     
     private void playGameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameBtnActionPerformed
         // TODO add your handling code here:
-        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_playGameBtnActionPerformed
 
@@ -164,8 +167,9 @@ public class MenuMenuScreen extends javax.swing.JFrame {
 
     private void highscoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highscoreBtnActionPerformed
         // TODO add your handling code here:
+        DatabaseManager highscore = new DatabaseManager();
+        highscore.getScoreTable();
         
-        int highscore = 0;//ScoresTable.getHighScore(); method to calculate/get highscore??
         ImageIcon icon = new ImageIcon("src/main/resources/trophy.jpg");
         JOptionPane.showMessageDialog(null, "Your current high-score is: " + highscore, "HIGH-SCORE!", JOptionPane.INFORMATION_MESSAGE, icon);
         
@@ -173,6 +177,8 @@ public class MenuMenuScreen extends javax.swing.JFrame {
 
     private void gameSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSettingsBtnActionPerformed
         // TODO add your handling code here:
+        
+        
         
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
