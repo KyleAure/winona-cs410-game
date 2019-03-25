@@ -6,10 +6,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Representation of the image data structure which holds the Points that represent image location
+ * on board, and the key to check if user has solved the puzzle.
+ * 
+ *
+ */
 public class MoveLogic {
 
     private static final Log LOG = new Log("WinCondition");
 
+    //TODO switch from points to buffered images
     private List<Point> keyList = new ArrayList<Point>();
     private List<Point> userList = new ArrayList<Point>();
 
@@ -35,7 +42,7 @@ public class MoveLogic {
         return userList;
     }
     
-    public boolean compareLists(List<Point> keyList, List<Point> userList) {
+    public boolean hasWon() {
         if(keyList == userList) {
             return true;
             //insert code for game over, display win screen GUI

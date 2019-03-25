@@ -10,6 +10,7 @@ public class Randomize {
 
     private static final Log LOG = new Log("Randomize");
 
+    //TODO change from Point to BufferedImage
     public List<Point> userList = new ArrayList<>();
 
     public List<Point> randomize() {

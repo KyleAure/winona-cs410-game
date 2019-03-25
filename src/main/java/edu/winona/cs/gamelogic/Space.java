@@ -11,6 +11,7 @@ public class Space {
     
     public int spaceNumber;
     public List<Space> adjacencyList = new ArrayList<Space>();
+    //TODO add an empty flag
 
     public Space() {
     }

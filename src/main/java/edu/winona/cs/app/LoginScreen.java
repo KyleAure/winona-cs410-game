@@ -205,7 +205,7 @@ public class LoginScreen extends javax.swing.JFrame {
           
            
            
-           MenuMenuScreen mainMenu = new MenuMenuScreen();
+           MainMenuScreen mainMenu = new MainMenuScreen();
            mainMenu.setVisible(true);
            this.dispose();
        }else{
@@ -225,14 +225,14 @@ public class LoginScreen extends javax.swing.JFrame {
         }
         
         if(success){
-            MenuMenuScreen mainMenu = new MenuMenuScreen();
+            MainMenuScreen mainMenu = new MainMenuScreen();
             mainMenu.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_signupBtnActionPerformed
 
     private void guestLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginBtnActionPerformed
-        MenuMenuScreen mainMenu = new MenuMenuScreen();
+        MainMenuScreen mainMenu = new MainMenuScreen();
         mainMenu.setVisible(true);
     }//GEN-LAST:event_guestLoginBtnActionPerformed
 

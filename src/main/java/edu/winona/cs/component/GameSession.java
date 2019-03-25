@@ -3,53 +3,38 @@ package edu.winona.cs.component;
 
 import javax.swing.Icon;
 
+import edu.winona.cs.gamelogic.DifficultyLevel;
 import edu.winona.cs.log.Log;
 
 public class GameSession {
 	private static final Log LOG = new Log("GameSession");
     
-    private String difficulty;
-    private Icon imageChosen;
-    private int numOfSquares;
+    private DifficultyLevel difficulty;
 
-    public GameSession() {
+    public GameSession(String username) {
+    	//TODO get users difficulty from database
     }
 
-    public GameSession(String difficulty, Icon imageChosen, int numOfSquares) {
+    public GameSession(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
-        this.imageChosen = imageChosen;
-        this.numOfSquares = numOfSquares;
     }
 
-    public String getDifficulty() {
+    public DifficultyLevel getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
     }
-
-    public Icon getImageChosen() {
-        return imageChosen;
-    }
-
-    public void setImageChosen(Icon imageChosen) {
-        this.imageChosen = imageChosen;
-    }
-
-    public int getNumOfSquares() {
-        return numOfSquares;
-    }
-
-    public void setNumOfSquares(int numOfSquares) {
-        this.numOfSquares = numOfSquares;
+    
+    //TODO Save to database
+    public void save() {
+    	
     }
 
     @Override
     public String toString() {
-        return "Difficulty: " + difficulty + 
-                "Image Chosen: " + imageChosen + 
-                "Number of Square: " + numOfSquares;
+        return "Difficulty: " + difficulty;
     }
     
 }
