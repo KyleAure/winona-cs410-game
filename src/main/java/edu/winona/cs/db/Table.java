@@ -12,17 +12,18 @@ public interface Table {
 	 * Creates this table in the database and 
 	 * will change the created attribute to true if successful.
 	 */
-	public abstract void createTable();
+	public void createTable();
+	
+	/**
+	 * Drops this table if it is in the database and 
+	 * will change the created attribute to false if successful.
+	 */
+	public void dropTable(); 
 	
 	/**
 	 * Returns the created attribute
 	 * @return - boolean: True: table is accessible, False: table is not-accessible.
 	 */
-	public abstract boolean isCreated();
-	
-	/**
-	 * Outputs a string representation of the table.
-	 */
-	public abstract String toString();
+	public boolean isCreated();
 	
 }
