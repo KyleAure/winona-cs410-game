@@ -187,7 +187,6 @@ public class MenuMenuScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
         LoginScreen ls = new LoginScreen();
         ls.setVisible(true);

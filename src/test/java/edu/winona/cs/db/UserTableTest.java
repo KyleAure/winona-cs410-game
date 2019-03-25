@@ -8,29 +8,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.winona.cs.log.Log.LogLevel;
-import edu.winona.cs.log.LogTest;
-
-/**
- * Tests the UserTable class
- * 
- * @author Kyle Jon Aure
- */
 public class UserTableTest {
-	private static final LogTest LOG = new LogTest("UserTableTest"); 
-	private UserTable ut = new UserTable();
 	private String username = "Kyle";
 	private String password = "Test1";
 	private String password2 = "Test2";
+	private static UserTable ut;
+	private static DatabaseManager dbm = new DatabaseManager();
 	
 	@BeforeClass
 	public static void init() {
-		DatabaseManager.createDatabase();
+		dbm.createDatabase();
 	}
+
 	
 	@Before
 	public void setUp() {
-		ut.createTable();
+		ut = dbm.getUserTable();
 	}
 	
 	@After
@@ -40,28 +33,25 @@ public class UserTableTest {
 
 	
 	@Test
-	public void createUserTest() {
-		//Print list of tables
-		LOG.log(LogLevel.INFO, DatabaseManager.getTables());
-		
+	public void createUserTest() {		
 		//Create user
-		ut.createUser(username, password);
-		
-		//Print list of users
-		LOG.log(LogLevel.INFO, ut.toString());
-		
-		//Assert Kyle can be verified
-		assertTrue("Kyle should be in userTable.", ut.verifyUser(username, password));
-		
+		assertTrue("Collision should not occure this user has not been created before.", ut.createUser(username, password));		
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void duplicateUserTest() {		
-		//Create user
+	@Test
+	public void verifyUserTest() {
 		ut.createUser(username, password);
 		
-		//Create user with same name
-		ut.createUser(username, password2);
+		//Assert user can be verified
+		assertTrue("User should be in userTable.", ut.verifyUser(username, password));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void verifyCollision() {
+		ut.createUser(username, password);
+		
+		//Assert false when trying to create another user with the same username
+		assertFalse("User name should be taken.", ut.createUser(username, password2));
 	}
 	
 	@Test
@@ -82,7 +72,7 @@ public class UserTableTest {
 		ut.dropTable();
 		
 		//Ensure that calling createUser gracefully fails.
-		ut.createUser(username, password);
+		assertFalse("Table not created. should return false", ut.createUser(username, password));
 		
 		//Ensure that calling verifyUser gracefully fails.
 		assertFalse("Table not created. Should return false.", ut.verifyUser(username, password));
