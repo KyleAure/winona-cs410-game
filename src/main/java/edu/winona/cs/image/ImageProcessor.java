@@ -15,11 +15,10 @@ import javax.imageio.ImageIO;
  * This class divides the images into multiple smaller images and processes
  * movement
  *
- * How to use: 
- * Step 1) create image processor 
- * Step 2) call assignImage() - pass image URL (file-chooser?), returns true if valid 
- * Step 3) if true, call divideImage() - pass divisions, returns list of images 
- * Step 4) call getCoordinateList() - returns coordinates where images are placed
+ * How to use: Step 1) create image processor Step 2) call assignImage() - pass
+ * image URL (file-chooser?), returns true if valid Step 3) if true, call
+ * divideImage() - pass divisions, returns list of images Step 4) call
+ * getCoordinateList() - returns coordinates where images are placed
  *
  * Copy the dividedImageList, shuffle carefully, then compare lists after user
  * interaction
@@ -35,7 +34,7 @@ public class ImageProcessor {
     private File file;
     private List<BufferedImage> dividedImageList = new ArrayList<BufferedImage>();
     private List<Point> imageCoordinateList = new ArrayList<Point>();
-    private Point point;
+    private Point point = new Point();
 
     /**
      * Assign image
@@ -47,27 +46,24 @@ public class ImageProcessor {
      * @return Returns if the image was selected successfully.
      */
     @SuppressWarnings("empty-statement")
-    public boolean assignImage(String imageURL) throws IOException {
-
-        file = new File(imageURL);
-
-        if (file.exists()) {
-            image = ImageIO.read(new File(imageURL));
-            return isValidURL = true;
-        }
-        return isValidURL = false;
+    public void assignImage(File imageURL) throws IOException {
+        
+        
+            image = ImageIO.read(imageURL);
+       
     }
-
-    /**
-     * Divide image
-     *
-     * @param divisions This is the number of times the images is to be divided.
-     * @require A valid image is preassigned and the division number is valid.
-     * @ensure The associated image is divided according to the chosen
-     * divisions.
-     * @return Returns an array of images that are in correct (unscrambled)
-     * order.
-     */
+        /**
+         * Divide image
+         *
+         * @param divisions This is the number of times the images is to be
+         * divided.
+         * @require A valid image is preassigned and the division number is
+         * valid.
+         * @ensure The associated image is divided according to the chosen
+         * divisions.
+         * @return Returns an array of images that are in correct (unscrambled)
+         * order.
+         */
     public List<BufferedImage> divideImage(int divisions) {
 
         //gets image dimensions inorder to divide the image into equal parts
@@ -421,7 +417,7 @@ public class ImageProcessor {
         }
     }
 
-    /** 
+    /**
      * Get divided image list
      *
      * @require The associated image has already been divided.

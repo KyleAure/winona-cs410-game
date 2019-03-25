@@ -5,6 +5,7 @@
  */
 package edu.winona.cs.app;
 
+import edu.winona.cs.db.DatabaseManager;
 import java.awt.Color;
 import java.awt.Container;
 import javax.swing.ImageIcon;
@@ -152,26 +153,36 @@ public class MenuMenuScreen extends javax.swing.JFrame {
     
     
     private void playGameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameBtnActionPerformed
-        // TODO complete button action
-        
+        // TODO add your handling code here:
+        //TODO this section displays the game settings (easy,medium,hard) and from there
+        //will be taken to the actual GameScreen
+       GameSettings gameSettings = new GameSettings();
+       gameSettings.setVisible(true);
         
     }//GEN-LAST:event_playGameBtnActionPerformed
 
     private void loadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadBtnActionPerformed
-    	// TODO complete button action
+        // TODO add your handling code here: 
+        // TODO This section loads a previous game based on user login information.
         
     }//GEN-LAST:event_loadBtnActionPerformed
 
     private void highscoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highscoreBtnActionPerformed
+        // TODO add your handling code here:
+        // TODO This section shows the high score for the current user logged in.
+        DatabaseManager highscore = new DatabaseManager();
+        highscore.getScoreTable();
         
-        int highscore = 0;//FIXME ScoresTable.getHighScore(); method to calculate/get highscore??
         ImageIcon icon = new ImageIcon("src/main/resources/trophy.jpg");
         JOptionPane.showMessageDialog(null, "Your current high-score is: " + highscore, "HIGH-SCORE!", JOptionPane.INFORMATION_MESSAGE, icon);
         
     }//GEN-LAST:event_highscoreBtnActionPerformed
 
     private void gameSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSettingsBtnActionPerformed
-    	// TODO complete button action
+        // TODO add your handling code here: ???????
+        // TODO does this display game settings (theme color change, timer on/off??)
+        
+        
         
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
