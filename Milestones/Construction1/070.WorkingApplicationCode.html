@@ -1,17 +1,60 @@
 <h2 id="WorkingApplicationCode">Working Application Code</h2>
 <p>This section describes your working code and provides links to it.</p>
 <p>
-	For elaboration 1 we have completed boilerplate application code to ensure that automated testing and build infrastructure is working.  To see documentation for this working please refer to our <a href="../../README.md">README.md</a> documentation.
+    For elaboration 1 we have completed boilerplate application code to ensure that automated testing and build infrastructure is working. To see documentation for this working please refer to our <a href="../../README.md">README.md</a> documentation.
 </p>
 <p>
-	For elaboration 2 we created boilerplate class code for each package's classes.  The package package diagram that we used was developed as part of our <a href="#UMLDiagrams">UML Diagramming.</a>
+    For elaboration 2 we created boilerplate class code for each package's classes. The package package diagram that we used was developed as part of our <a href="#UMLDiagrams">UML Diagramming.</a>
 </p>
 <p>
-	We were able to complete our first GUI for the login system.
-	<img src="../assets/Login_gui.png">
+    We were able to complete our first GUI for the login system.
+    <img src="../assets/Login_gui.png">
 </p>
 <p>
-	As a part of this system we also implemented the use of a Derby JDBC driver to store user login data in a Derby database. Output from automated testing shows the ability for us to connect to the database, create tables, and add/validate users.
-	The output of this testing can be found <a href="../assets/puzzle.txt">here.</a> 
+    As a part of this system we also implemented the use of a Derby JDBC driver to store user login data in a Derby database. Output from automated testing shows the ability for us to connect to the database, create tables, and add/validate users. The output of this testing can be found <a href="../assets/puzzle.txt">here.</a>
+</p>
+<p>
+    Links to working application code:
+    <b>APP:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/App.java">App.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/FileChooser.java">FileChooser.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/GameGUI.java">GameGUI.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/GameScreenEasy.java">GameScreenEasy.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/GameSettings.java">GameSettings.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/GameSetupGUI.java">GameSetupGUI.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/LoginScreen.java">LoginScreen.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/MainMenuScreen.java">MainMenuScreen.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/MenuMenuScreen.java">MenuMenuScreen.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/WinLoseGUI.java">WinLoseGUI.java</a>
+
+    <b>COMPONENT:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/GameSession.java">GameSession.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/GameSettings.java">GameSettings.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/Player.java">Player.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/Score.java">Score.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/UserSettings.java">UserSettings.java</a>
+
+    <b>DB:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/DatabaseManager.java">DatabaseManager.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/DatabaseUtil.java">DatabaseUtil.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/GameSettingsTable.java">GameSettingsTable.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/HighScoreTable.java">HighScoreTable.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/ImageTable.java">ImageTable.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/SaveStateTable.java">SaveStateTable.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/Table.java">Table.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/UserSettingsTable.java">UserSettingsTable.java</a>
+
+    <b>GAMELOGIC:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/DifficultyLevel.java">DifficultyLevel.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/MoveLogic.java">MoveLogic.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/Randomize.java">Randomize.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/Space.java">Space.java</a>
+
+    <b>IMAGE:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/image/ImageProcessor.java">ImageProcessor.java</a>
+
+    <b>LOG:</b>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/log/DebugFormatter.java">DebugFormatter.java</a>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/log/Log.java">Log.java</a>
 </p>
 <hr>
