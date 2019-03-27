@@ -3,6 +3,7 @@
 <head>
 	<title>Construction 1 for Team Project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="../../assets/style.css"/>
 </head>
 <body>
 	<h1>Construction 1 for Team Project</h1>
@@ -18,7 +19,7 @@
 		<li><a href="#TestCode">Test Code</a></li> 
 		<li><a href="#ContributionsSummary">Contributions Summary</a></li> 
 	</ul>
-	<?PHP		
+	<?PHP			
 		foreach (glob("*.html") as $filename) {
 			   echo "<hr>\n"; 
 			   $filecontents = file_get_contents($filename); 
