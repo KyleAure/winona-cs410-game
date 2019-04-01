@@ -1,7 +1,6 @@
 package edu.winona.cs.gamelogic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AdjacencyListMaker {

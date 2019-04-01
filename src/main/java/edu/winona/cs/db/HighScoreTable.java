@@ -23,7 +23,7 @@ import edu.winona.cs.log.Log.LogLevel;
  *
  */
 public class HighScoreTable implements Table{
-	private static final Log LOG = new Log("HighScoreTable");
+	private static final Log LOG = new Log(HighScoreTable.class.getName());
 
 	// Table attributes
 	public static final String NAME = "HighScore";

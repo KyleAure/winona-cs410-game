@@ -1,13 +1,10 @@
 
 package edu.winona.cs.component;
 
-import javax.swing.Icon;
-
 import edu.winona.cs.gamelogic.DifficultyLevel;
-import edu.winona.cs.log.Log;
 
 public class GameSession {
-	private static final Log LOG = new Log("GameSession");
+	//private static final Log LOG = new Log(GameSession.class.getName());
     
     private DifficultyLevel difficulty;
 

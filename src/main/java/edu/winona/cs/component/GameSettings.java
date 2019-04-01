@@ -3,10 +3,9 @@ package edu.winona.cs.component;
 
 import java.awt.Color;
 
-import edu.winona.cs.log.Log;
 
 public class GameSettings {
-	private static final Log LOG = new Log("GameSettings");
+	//private static final Log LOG = new Log(GameSettings.class.getName());
     
     private Color backgroundColor;
     private boolean highScoreTracking;

@@ -1,7 +1,5 @@
 package edu.winona.cs.image;
 
-import edu.winona.cs.log.Log;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,8 +26,7 @@ import org.imgscalr.Scalr;
  * @author Tristin Harvell
  */
 public class ImageProcessor {
-
-    private static final Log LOG = new Log("ImageProcessor");
+    //private static final Log LOG = new Log(ImageProcessor.class.getName());
 
     private BufferedImage image;
     private Boolean isValidURL;
@@ -47,7 +44,6 @@ public class ImageProcessor {
      * @ensure The associated image is selected.
      * @return Returns if the image was selected successfully.
      */
-    @SuppressWarnings("empty-statement")
     public void assignImage(File imageURL) throws IOException {
 
         //assign the image to be divided
