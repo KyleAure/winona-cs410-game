@@ -1,6 +1,5 @@
 package edu.winona.cs.gamelogic;
 
-import edu.winona.cs.log.Log;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,12 +8,9 @@ import java.util.List;
 /**
  * Representation of the image data structure which holds the Points that represent image location
  * on board, and the key to check if user has solved the puzzle.
- * 
- *
  */
 public class MoveLogic {
-
-    private static final Log LOG = new Log("WinCondition");
+    //private static final Log LOG = new Log(MoveLogic.class.getName());
 
     //TODO switch from points to buffered images
     private List<Point> keyList = new ArrayList<Point>();

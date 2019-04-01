@@ -1,7 +1,6 @@
 package edu.winona.cs.app;
 
 import edu.winona.cs.db.UserTable;
-import javax.swing.JOptionPane;
 
 public class App {
 
