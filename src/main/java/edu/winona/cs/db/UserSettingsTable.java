@@ -40,6 +40,8 @@ public class UserSettingsTable implements Table {
 	@Override
 	public void createTable() {
 		LOG.log(LogLevel.INFO, "Attempting database connection from: UserSettingsTable.createTable");
+		
+		//TODO check here to see if table is alread created from previous session
 
 		if (!created) {
 			String sql = "CREATE TABLE " + NAME 

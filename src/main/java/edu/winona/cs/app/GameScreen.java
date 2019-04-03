@@ -10,6 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
+import edu.winona.cs.gamelogic.MoveLogic;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Point;
 import javax.swing.JFileChooser;
 
 /**
@@ -27,7 +31,7 @@ public class GameScreen extends javax.swing.JFrame {
     public GameScreen() {
         try {
             initComponents();
-
+            
             JFileChooser jfc = new JFileChooser(new File("."));
             //int returnVal = -1;
             int returnVal = jfc.showOpenDialog(this);
@@ -52,7 +56,7 @@ public class GameScreen extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     /**
@@ -90,6 +94,7 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton2.setMaximumSize(new java.awt.Dimension(25, 25));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +144,7 @@ public class GameScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
 
         pack();

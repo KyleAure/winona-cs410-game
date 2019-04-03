@@ -43,6 +43,8 @@ public class SaveStateTable implements Table {
 	@Override
 	public void createTable() {
 		LOG.log(LogLevel.INFO, "Attempting database connection from: SaveStateTable.createTable");
+		
+		//TODO check here to see if table is alread created from previous session
 
 		// Check to see if table has not previously been created
 		if (!created) {

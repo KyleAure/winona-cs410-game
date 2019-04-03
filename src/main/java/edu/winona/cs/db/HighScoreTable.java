@@ -41,6 +41,9 @@ public class HighScoreTable implements Table{
 	@Override
 	public void createTable() {
 		LOG.log(LogLevel.INFO, "Attempting database connection from: HighScoreTable.createTable");
+		
+		//TODO check here to see if table is alread created from previous session
+		
 		if (!created) {
 			// STEP 1: Create variables
 			String sql = "CREATE TABLE " + NAME 
