@@ -3,15 +3,19 @@ package edu.winona.cs.component;
 
 import java.awt.Color;
 
-
+/**
+ * Variables here match those stored in the GameSettingsTable.
+ * Background Color - is a color object
+ * High Score Tracking - true - we are tracking, false - we are not tracking.
+ * 
+* @author Tristin Harvell
+ * @version 1.1
+ */
 public class GameSettings {
 	//private static final Log LOG = new Log(GameSettings.class.getName());
     
     private Color backgroundColor;
     private boolean highScoreTracking;
-
-    public GameSettings() {
-    }
 
     public GameSettings(Color backgroundColor, boolean highScoreTracking) {
         this.backgroundColor = backgroundColor;

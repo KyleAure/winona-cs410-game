@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.winona.cs.app;
 
+import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.db.DatabaseManager;
+import edu.winona.cs.db.GameSettingsTable;
 import edu.winona.cs.db.UserTable;
 import java.awt.Color;
 import java.awt.Container;
@@ -13,14 +11,29 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ai7321lr
+ * Login Screen - This is the starting point for our application.
+ * Allows users to create an account,
+ * Login to an existing account,
+ * or JUST PLAY!
+ * 
+ * TODO: Maybe instead of having 4 fields (2 username and 2 password) we could
+ * just use 1 username field and 1 password field.  Then we just have a Create Account
+ * or Login button each of which use the same username/password fields.
+ * Slimmer design?
+ * 
+ * @author Erika Tix and Kyle Aure
  */
 public class LoginScreen extends JFrame {
+	//Used to serialize the LoginScreen
 	private static final long serialVersionUID = -4328073729350178743L;
+	
+	//Database Manager
+	private DatabaseManager dbm = new DatabaseManager();
+
 	/**
-     * Creates new form LoginScreen
-     */
+	 * Constructor for the LoginScreen.
+	 * Since the user has not chosen settings yet, the login screen will not depend on user settings.
+	 */
     public LoginScreen() {
         initComponents();
         
@@ -195,15 +208,36 @@ public class LoginScreen extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Called when login button is clicked
+     * @param evt - Button Click
+     */
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-       UserTable user = new UserTable();
-       boolean result = user.verifyUser(usernameInput.getText().trim(), new String(passwordInput.getPassword()));
-        
+       //STEP 1: Get UserTable and Verify User
+       UserTable ut = dbm.getUserTable();
+       String username = usernameInput.getText().trim();
+       //FIXME We should pass the hashed password to database instead of string.
+       boolean result = ut.verifyUser(username, new String(passwordInput.getPassword()));
+       
+       //Step 2: Clear password field for security
+       passwordInput.setText("");
+       
+       //STEP 3: If Verified
        if(result == true) {
-           JOptionPane.showMessageDialog(null, "Success!");
-          
-           
-           
+    	   //STEP 3.1 setUsername with APP
+    	   App.setUsername(username);
+    	   
+    	   //STEP 3.2 Get users GameSettings and setSettings with APP
+    	   GameSettingsTable gst = dbm.getGameSettingsTable();
+    	   GameSettings settings = gst.getGameSetting(App.getUsername());
+    	   if(settings != null) {
+    		   App.setSettings(settings);
+    	   } else {
+    		   gst.recordGameSetting(App.getUsername(), App.DEFAULT_SETTINGS);
+    		   App.setSettings(App.DEFAULT_SETTINGS);
+    	   }
+    	   
+    	   //STEP 3.3 Open Main Menu and close this Menu
            MainMenuScreen mainMenu = new MainMenuScreen();
            mainMenu.setVisible(true);
            this.dispose();
@@ -213,26 +247,56 @@ public class LoginScreen extends JFrame {
         
     }//GEN-LAST:event_loginBtnActionPerformed
 
+    /**
+     * Called when signup button is clicked
+     * @param evt - Button Click
+     */
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
-        boolean success = false;
+    	//Step 1: Set up variables
+        boolean success = false; //Assume failure
+        String username = null;
+        
+        //Step 2: Try to create user, if exception warn user to retry.
         try {
-            UserTable newUser = new UserTable();
-            newUser.createUser(signupInput.getText().trim(), new String(passwordSignupInput.getPassword()));
-            success = true;
+            UserTable ut = dbm.getUserTable();
+            username = signupInput.getText().trim();
+            //FIXME we should be passing the hashed password here instead of the cleartext password.
+            success = ut.createUser(username, new String(passwordSignupInput.getPassword()));
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(null, "That username has already been taken!");
         }
         
+        //Step 3: If successfully created
         if(success){
+        	//Step 3.1: setUsername with APP
+        	App.setUsername(username);
+        	
+        	//Step 3.2: set default settings in APP and in database
+        	GameSettingsTable gst = dbm.getGameSettingsTable();
+        	gst.recordGameSetting(App.getUsername(), App.DEFAULT_SETTINGS);
+        	App.setSettings(App.DEFAULT_SETTINGS);
+        	
+        	//Step 3.3 Open Main Menu and close this menu
             MainMenuScreen mainMenu = new MainMenuScreen();
             mainMenu.setVisible(true);
             this.dispose();
+        } else {
+        	JOptionPane.showMessageDialog(null, "Unable to create user.  Please try again.");
         }
     }//GEN-LAST:event_signupBtnActionPerformed
 
+    /**
+     * Called when guest login button is clicked.
+     * @param evt - Button Click
+     */
     private void guestLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginBtnActionPerformed
+    	//Step 1: Set default settings with APP
+    	App.setSettings(App.DEFAULT_SETTINGS);
+    	
+    	//Step 2: Open main menu and close this menu
         MainMenuScreen mainMenu = new MainMenuScreen();
         mainMenu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_guestLoginBtnActionPerformed
 
     private void usernameInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFocusGained
@@ -251,10 +315,9 @@ public class LoginScreen extends JFrame {
         passwordSignupInput.setText("");
     }//GEN-LAST:event_passwordSignupInputFocusGained
 
-   public String getUsername(){
-       return usernameInput.getName();
-   }
     /**
+     * Main Method.
+     * TODO: Decide if we need a main method in this class.  This frame should be invoked via App.java
      * @param args the command line arguments
      */
     public static void main(String args[]) {
