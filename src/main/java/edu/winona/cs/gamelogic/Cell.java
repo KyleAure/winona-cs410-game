@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.winona.cs.temp;
+package edu.winona.cs.gamelogic;
 
 import javax.swing.*;
+
+import edu.winona.cs.temp.GUI;
 
 /**
  * FIXME - Remove this class and package, just for testing.

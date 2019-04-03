@@ -30,8 +30,7 @@ public class GameScreen extends javax.swing.JFrame {
      */
     public GameScreen() {
         try {
-            initComponents();
-            
+        	//Getting image from file system.
             JFileChooser jfc = new JFileChooser(new File("."));
             //int returnVal = -1;
             int returnVal = jfc.showOpenDialog(this);
@@ -52,6 +51,8 @@ public class GameScreen extends javax.swing.JFrame {
             jButton2.setIcon(new ImageIcon(imageList.get(1)));
             jButton3.setIcon(new ImageIcon(imageList.get(2)));
             jButton4.setIcon(new ImageIcon(imageList.get(3)));
+            
+            initComponents();
             
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);

@@ -6,10 +6,10 @@ import javax.swing.JFrame;
  * New Game Settings
  * This screen should let users:
  * - Choose their difficulty
- * - Choose the picture they want to user
- * - Launch a new GameScreen
+ * - Click a button to upload photo, and display photo once chosen
+ * - Button to launch game, but is disabled until both of the other options are chosen. 
  * 
- * @author Erika Trix
+ * @author Erika Tix
  */
 public class NewGameSettings extends JFrame {
 	private static final long serialVersionUID = 7664729301277149568L;

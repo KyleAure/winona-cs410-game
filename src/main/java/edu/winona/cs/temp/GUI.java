@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import edu.winona.cs.gamelogic.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
 
