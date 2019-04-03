@@ -12,8 +12,6 @@ import org.junit.Test;
 public class SaveStateTableTest {
 	private String username = "Kyle";
 	private String serializedFile = "puzzle.log"; 
-	private int clickCount = 100;
-	private int clickCountUpdated = 150;
 	private static SaveStateTable sst;
 	private static DatabaseManager dbm = new DatabaseManager();
 	
@@ -36,17 +34,7 @@ public class SaveStateTableTest {
 	@Test
 	public void createSaveStateTest() {
 		File file = new File(serializedFile);
-		sst.createSaveState(username, file, clickCount);
+		sst.createSaveState(username, file);
 		assertEquals(sst.getSaveState(username).getAbsolutePath(), file.getAbsolutePath());
-		assertEquals(sst.getClickCount(username), clickCount);
 	}
-	
-	@Test
-	public void updateSaveStateTest() {
-		File file = new File(serializedFile);
-		sst.createSaveState(username, file, clickCount);
-		sst.createSaveState(username, file, clickCountUpdated);
-		assertEquals(sst.getClickCount(username), clickCountUpdated);
-	}
-
 }

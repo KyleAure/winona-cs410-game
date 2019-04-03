@@ -25,13 +25,14 @@ public class AuthenticationHash {
 
     /**
      * Generate salt
+     * TODO Does salt need to be stored for later verification?
      *
      * @param length This is the length of the password.
      * @require A password has to be entered.
      * @ensure The associated password has a salt generated with it.
      * @return Returns the generated salt as a string.
      */
-    public Optional<String> generateSalt(final int length) {
+    public static Optional<String> generateSalt(final int length) {
 
         if (length < 1) {
             System.err.println("error in generateSalt: length must be > 0");
@@ -53,7 +54,7 @@ public class AuthenticationHash {
      * @ensure The the password and salt get concatenated and hashed together.
      * @return Returns the resulting stored hash that includes both password and salt.
      */
-    public Optional<String> hashPassword(String password, String salt) {
+    public static Optional<String> hashPassword(String password, String salt) {
 
         char[] chars = password.toCharArray();
         byte[] bytes = salt.getBytes();
@@ -87,16 +88,11 @@ public class AuthenticationHash {
      * @ensure The the password and salt get concatenated and hashed together.
      * @return Returns the resulting hash that includes both password and salt.
      */
-    public boolean verifyPassword(String password, String key, String salt) {
+    public static boolean verifyPassword(String password, String key, String salt) {
         Optional<String> optEncrypted = hashPassword(password, salt);
         if (!optEncrypted.isPresent()) {
             return false;
         }
         return optEncrypted.get().equals(key);
-    }
-
-    //store in db
-    public void addLoginToDB(String customerID, String securePassword) {
-
     }
 }

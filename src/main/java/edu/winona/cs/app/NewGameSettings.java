@@ -1,22 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.winona.cs.app;
 
 import javax.swing.JFrame;
 
 /**
- *
- * @author ai7321lr
+ * New Game Settings
+ * This screen should let users:
+ * - Choose their difficulty
+ * - Choose the picture they want to user
+ * - Launch a new GameScreen
+ * 
+ * @author Erika Trix
  */
-public class GameSettings extends JFrame {
+public class NewGameSettings extends JFrame {
 	private static final long serialVersionUID = 7664729301277149568L;
 	/**
      * Creates new form GameSettings
      */
-    public GameSettings() {
+    public NewGameSettings() {
         initComponents();
     }
 
@@ -132,20 +132,20 @@ public class GameSettings extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GameSettings().setVisible(true);
+                new NewGameSettings().setVisible(true);
             }
         });
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.winona.cs.app;
 
 import edu.winona.cs.image.ImageProcessor;
@@ -18,16 +13,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 /**
- *
- * @author ai7321lr
+ * This is the main game screen.
+ * - This is where users play the sliding game
+ * 
+ * @author Erika Tix
  */
-public class GameScreenEasy extends javax.swing.JFrame {
+public class GameScreen extends javax.swing.JFrame {
 	private static final long serialVersionUID = 8287565246570842716L;
 	
 	/**
      * Creates new form GameScreen
      */
-    public GameScreenEasy() {
+    public GameScreen() {
         try {
             initComponents();
 
@@ -53,7 +50,7 @@ public class GameScreenEasy extends javax.swing.JFrame {
             jButton4.setIcon(new ImageIcon(imageList.get(3)));
             
         } catch (IOException ex) {
-            Logger.getLogger(GameScreenEasy.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -181,13 +178,13 @@ public class GameScreenEasy extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameScreenEasy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameScreenEasy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameScreenEasy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameScreenEasy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -195,7 +192,7 @@ public class GameScreenEasy extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GameScreenEasy().setVisible(true);
+                new GameScreen().setVisible(true);
             }
         });
     }

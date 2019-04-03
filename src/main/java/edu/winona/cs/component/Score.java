@@ -1,9 +1,16 @@
 package edu.winona.cs.component;
 
+/**
+ * Variables here match those stored in the HighScoreTable.
+ * HighScore (int) - lowest number of moves made to complete puzzle.
+ * 
+ * @author Tristin Harvell
+ * @version 1.1
+ */
 public class Score {
 	//private static final Log LOG = new Log(Score.class.getName());
 
-    private double highScore;
+    private int highScore;
 
     public Score() {
     }
@@ -12,7 +19,7 @@ public class Score {
         return highScore;
     }
 
-    public void setHighScore(double highScore) {
+    public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
 
