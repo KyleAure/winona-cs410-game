@@ -14,11 +14,11 @@ public class HighScoreTableTest {
 	private int lowerHighScore = 200;
 	private int higherHighScore = 2000;
 	private static HighScoreTable hst;
-	private static DatabaseManager dbm;
+	private static DatabaseManager dbm = new DatabaseManager();
 	
 	@BeforeClass
 	public static void init() {
-		dbm = DatabaseManager.getDatabaseManager();
+		dbm.createDatabase();
 	}
 	
 	@Before

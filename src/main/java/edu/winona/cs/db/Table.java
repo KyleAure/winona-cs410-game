@@ -26,10 +26,4 @@ public interface Table {
 	 */
 	public boolean isCreated();
 	
-	/**
-	 * Set the created status for this table.
-	 * @param status 
-	 */
-	public void setCreated(boolean status);
-	
 }

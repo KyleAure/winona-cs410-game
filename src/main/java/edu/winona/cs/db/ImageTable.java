@@ -27,7 +27,7 @@ public class ImageTable implements Table{
 	private static final Log LOG = new Log(ImageTable.class.getName());
 
 	// Table attributes
-	public static final String NAME = "IMAGES";
+	public static final String NAME = "Images";
 	private static boolean created = false;
 
 	// Column Attributes
@@ -37,11 +37,6 @@ public class ImageTable implements Table{
 	@Override
 	public boolean isCreated() {
 		return created;
-	}
-	
-	@Override
-	public void setCreated(boolean status) {
-		ImageTable.created = status;
 	}
 
 	@Override

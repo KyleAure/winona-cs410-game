@@ -14,11 +14,11 @@ public class UserSettingsTableTest {
 	private DifficultyLevel difficulty = DifficultyLevel.HARD;
 	private DifficultyLevel updateDifficulty = DifficultyLevel.EASY;
 	private static UserSettingsTable ust;
-	private static DatabaseManager dbm;
+	private static DatabaseManager dbm = new DatabaseManager();
 	
 	@BeforeClass
 	public static void init() {
-		dbm = DatabaseManager.getDatabaseManager();
+		dbm.createDatabase();
 	}
 	
 	@Before

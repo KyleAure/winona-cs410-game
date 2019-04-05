@@ -26,7 +26,7 @@ public class HighScoreTable implements Table{
 	private static final Log LOG = new Log(HighScoreTable.class.getName());
 
 	// Table attributes
-	public static final String NAME = "HIGHSCORES";
+	public static final String NAME = "HighScore";
 	private static boolean created = false;
 
 	// Column Attributes
@@ -36,11 +36,6 @@ public class HighScoreTable implements Table{
 	@Override
 	public boolean isCreated() {
 		return created;
-	}
-	
-	@Override
-	public void setCreated(boolean status) {
-		HighScoreTable.created = status;
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class LoginScreen extends JFrame {
 	private static final long serialVersionUID = -4328073729350178743L;
 	
 	//Database Manager
-	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
+	private DatabaseManager dbm = new DatabaseManager();
 
 	/**
 	 * Constructor for the LoginScreen.

@@ -18,11 +18,11 @@ public class GameSettingsTableTest {
 	private boolean tracking1 = true;
 	private boolean tracking2 = false;
 	private static GameSettingsTable gst;
-	private static DatabaseManager dbm;
+	private static DatabaseManager dbm = new DatabaseManager();
 	
 	@BeforeClass
 	public static void init() {
-		dbm = DatabaseManager.getDatabaseManager();
+		dbm.createDatabase();
 	}
 	
 	@Before

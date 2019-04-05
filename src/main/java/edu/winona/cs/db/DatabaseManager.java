@@ -5,14 +5,12 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import edu.winona.cs.log.Log;
 import edu.winona.cs.log.Log.LogLevel;
 
 /**
  * Database Manager Class
- * Singleton, only one database manager exists.
  * 
  * This class creates the puzzledb.
  * Defines the database Name, URL, driver, and creation status of the database.
@@ -25,122 +23,52 @@ public class DatabaseManager {
 	public static final String DBURL = "jdbc:derby:" + DBNAME;
 	public static final String JDBCDRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String DBCREATEURL = "jdbc:derby:" + DBNAME + ";create=true";
-	private static DatabaseManager obj = null;
-	private static HashMap<String,Table> tables = new HashMap<>();
+	private static boolean created = false;
 	
-	public static DatabaseManager getDatabaseManager() {
-		if(obj==null){
-		    obj= new DatabaseManager();
-		}
-	    return obj;
+	/**
+	 * Determines whether or not database has been created or not.
+	 */
+	public boolean isCreated() {
+		return created;
 	}
 	
 	/**
-	 * Private constructor only run once during program execution.
+	 * Creates database and will set the created variable to True if successful.
 	 */
-	private DatabaseManager() {
-		createDatabase();
-		loadTables();
-	}
+	public void createDatabase() {
+		LOG.log(LogLevel.INFO,"Attempting database connection from DatabaseManager.createDatabase");
+		if(!created) {
+			//STEP 1: Create JDBC variables
+		   Connection conn = null;
+		   try{
+		      //STEP 2: Register JDBC driver
+			  Class.forName(JDBCDRIVER);
 	
-	/**
-	 * Loads tables into HashMap if they already exist
-	 */
-	private void loadTables() {
-		LOG.log(LogLevel.INFO,"Attempting to load tables.");
-		Connection conn = null;
-		try {
-			LOG.log(LogLevel.INFO,"Getting Database Connection...");
-			conn = DriverManager.getConnection(DBURL);
-			LOG.log(LogLevel.INFO,"Getting Metadata...");
-			DatabaseMetaData md = conn.getMetaData();
-			LOG.log(LogLevel.INFO,"Getting tables results....");
-			ResultSet rs = md.getTables(null, null, "%", null);
-			while(rs.next()) {
-				switch(rs.getString(3)) {
-				case UserTable.NAME:
-					LOG.log(LogLevel.INFO,"UserTable found...");
-					UserTable ut = new UserTable();
-					ut.setCreated(true);
-					tables.put(UserTable.NAME, ut);
-					break;
-				case UserSettingsTable.NAME:
-					LOG.log(LogLevel.INFO,"UserSettingsTable found...");
-					UserSettingsTable ust = new UserSettingsTable();
-					ust.setCreated(true);
-					tables.put(UserSettingsTable.NAME, ust);
-					break;
-				case SaveStateTable.NAME:
-					LOG.log(LogLevel.INFO,"SaveStateTable found...");
-					SaveStateTable sst = new SaveStateTable();
-					sst.setCreated(true);
-					tables.put(SaveStateTable.NAME, sst);
-					break;
-				case ImageTable.NAME:
-					LOG.log(LogLevel.INFO,"ImageTable found...");
-					ImageTable it = new ImageTable();
-					it.setCreated(true);
-					tables.put(ImageTable.NAME, it);
-					break;
-				case HighScoreTable.NAME:
-					LOG.log(LogLevel.INFO,"HighScoreTable found...");
-					HighScoreTable hst = new HighScoreTable();
-					hst.setCreated(true);
-					tables.put(HighScoreTable.NAME, hst);
-					break;
-				case GameSettingsTable.NAME:
-					LOG.log(LogLevel.INFO,"GameSettingsTable found...");
-					GameSettingsTable gst = new GameSettingsTable();
-					gst.setCreated(true);
-					tables.put(GameSettingsTable.NAME, gst);
-					break;
-				}
-			}
-		} catch (SQLException e) {
-			LOG.log(e, LogLevel.WARNING, "");
-		} finally {
-			try{
-				if(conn!=null)
+		      //STEP 3: Open a connection and create database
+		      LOG.log(LogLevel.INFO,"Connecting to database...");
+		      conn = DriverManager.getConnection(DBCREATEURL);
+		      LOG.log(LogLevel.INFO, "Database created successfully...");
+		      created = true;
+		   }catch(SQLException e){
+		      //Handle errors for JDBC
+		      LOG.log(e, LogLevel.SEVERE, "");
+		   }catch(Exception e){
+		      //Handle errors for Class.forName
+		     LOG.log(e, LogLevel.SEVERE, "");
+		   }finally{
+		      //finally block used to close resources
+		      try{
+		         if(conn!=null)
 		            conn.close();
-			}catch(SQLException e){
+		      }catch(SQLException e){
 		         LOG.log(e, LogLevel.WARNING, "");
-			}//end finally try
+		      }//end finally try
+		   }//end try
+		   LOG.log(LogLevel.INFO, "End database creation.\n");
+		//If the database has been created
+		} else {
+			LOG.log(LogLevel.WARNING, "Attempted to create database even though flag is true.");
 		}
-		LOG.log(LogLevel.WARNING,tables.toString());
-		LOG.log(LogLevel.INFO,"Done loading tables.\n");
-		
-	}
-	
-	/**
-	 * Creates database
-	 */
-	private void createDatabase() {
-		LOG.log(LogLevel.INFO,"Attempting database connection from DatabaseManager:CreateDatabase");
-		//STEP 1: Create JDBC variables
-	   Connection conn = null;
-	   try{
-	      //STEP 2: Register JDBC driver
-		  Class.forName(JDBCDRIVER);
-	      //STEP 3: Open a connection and create database
-	      LOG.log(LogLevel.INFO,"Connecting to database...");
-	      conn = DriverManager.getConnection(DBCREATEURL);
-	      LOG.log(LogLevel.INFO, "Database created successfully...");
-	   }catch(SQLException e){
-	      //Handle errors for JDBC
-	      LOG.log(e, LogLevel.SEVERE, "");
-	   }catch(Exception e){
-	      //Handle errors for Class.forName
-	     LOG.log(e, LogLevel.SEVERE, "");
-	   }finally{
-	      //finally block used to close resources
-	      try{
-	         if(conn!=null)
-	            conn.close();
-	      }catch(SQLException e){
-	         LOG.log(e, LogLevel.WARNING, "");
-	      }//end finally try
-	   }//end try
-	   LOG.log(LogLevel.INFO, "End database creation.\n");
 	}
 	
 	/**
@@ -169,17 +97,13 @@ public class DatabaseManager {
 	 * @return UserTable
 	 */
 	public UserTable getUserTable() {
+		UserTable ut = new UserTable();
 		LOG.log(LogLevel.INFO, "Request for UserTable from DatabaseManager received.");
-		if(tables.containsKey(UserTable.NAME) && tables.get(UserTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (UserTable) tables.get(UserTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating UserTable.\n");
-			UserTable ut = new UserTable();
+		if(!ut.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating UserTable.");
 			ut.createTable();
-			tables.put(UserTable.NAME, ut);
-			return ut;
 		}
+		return ut;
 	}
 	
 	/**
@@ -187,17 +111,13 @@ public class DatabaseManager {
 	 * @return UserSettingsTable
 	 */
 	public UserSettingsTable getUserSettingsTable() {
+		UserSettingsTable ust = new UserSettingsTable();
 		LOG.log(LogLevel.INFO, "Request for UserSettingsTable from DatabaseManager received.");
-		if(tables.containsKey(UserSettingsTable.NAME) && tables.get(UserSettingsTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (UserSettingsTable) tables.get(UserSettingsTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.\n");
-			UserSettingsTable ust = new UserSettingsTable();
+		if(!ust.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.");
 			ust.createTable();
-			tables.put(UserSettingsTable.NAME, ust);
-			return ust;
 		}
+		return ust;
 	}
 	
 	/**
@@ -205,17 +125,13 @@ public class DatabaseManager {
 	 * @return HighScoreTable
 	 */
 	public HighScoreTable getScoreTable() {
-		LOG.log(LogLevel.INFO, "Request for HighScoreTable from DatabaseManager received.");
-		if(tables.containsKey(HighScoreTable.NAME) && tables.get(HighScoreTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (HighScoreTable) tables.get(HighScoreTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating HighScoreTable.\n");
-			HighScoreTable hst = new HighScoreTable();
-			hst.createTable();
-			tables.put(HighScoreTable.NAME, hst);
-			return hst;
+		HighScoreTable st = new HighScoreTable();
+		LOG.log(LogLevel.INFO, "Request for ScoreTable from DatabaseManager received.");
+		if(!st.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating ScoreTable.");
+			st.createTable();
 		}
+		return st;
 	}
 	
 	/**
@@ -223,17 +139,13 @@ public class DatabaseManager {
 	 * @return SaveStateTable
 	 */
 	public SaveStateTable getSaveStateTable() {
+		SaveStateTable sst = new SaveStateTable();
 		LOG.log(LogLevel.INFO, "Request for SaveStateTable from DatabaseManager received.");
-		if(tables.containsKey(SaveStateTable.NAME) && tables.get(SaveStateTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (SaveStateTable) tables.get(SaveStateTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating SaveStateTable.\n");
-			SaveStateTable sst = new SaveStateTable();
+		if(!sst.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating SaveStateTable.");
 			sst.createTable();
-			tables.put(SaveStateTable.NAME, sst);
-			return sst;
 		}
+		return sst;
 	}
 	
 	/**
@@ -241,17 +153,13 @@ public class DatabaseManager {
 	 * @return ImageTable
 	 */
 	public ImageTable getImageTable() {
+		ImageTable it = new ImageTable();
 		LOG.log(LogLevel.INFO, "Request for ImageTable from DatabaseManager received.");
-		if(tables.containsKey(ImageTable.NAME) && tables.get(ImageTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (ImageTable) tables.get(ImageTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating ImageTable.\n");
-			ImageTable it = new ImageTable();
+		if(!it.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating ImageTable.");
 			it.createTable();
-			tables.put(ImageTable.NAME, it);
-			return it;
 		}
+		return it;
 	}
 	
 	/**
@@ -259,17 +167,12 @@ public class DatabaseManager {
 	 * @return GameSettingsTable
 	 */
 	public GameSettingsTable getGameSettingsTable() {
+		GameSettingsTable gst = new GameSettingsTable();
 		LOG.log(LogLevel.INFO, "Request for GameSettingsTable from DatabaseManager received.");
-		if(tables.containsKey(GameSettingsTable.NAME) && tables.get(GameSettingsTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (GameSettingsTable) tables.get(GameSettingsTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating GameSettingsTable.\n");
-			GameSettingsTable gst = new GameSettingsTable();
+		if(!gst.isCreated()) {
+			LOG.log(LogLevel.INFO, "DatabaseManager creating GameSettingsTable.");
 			gst.createTable();
-			tables.put(GameSettingsTable.NAME, gst);
-			return gst;
 		}
+		return gst;
 	}
-	
 }

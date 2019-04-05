@@ -13,11 +13,11 @@ public class SaveStateTableTest {
 	private String username = "Kyle";
 	private String serializedFile = "puzzle.log"; 
 	private static SaveStateTable sst;
-	private static DatabaseManager dbm;
+	private static DatabaseManager dbm = new DatabaseManager();
 	
 	@BeforeClass
 	public static void init() {
-		dbm = DatabaseManager.getDatabaseManager();
+		dbm.createDatabase();
 	}
 
 	
