@@ -228,7 +228,7 @@ public class MainMenuScreen extends JFrame {
         	//TODO determine what data needs to be serialized and saved and how to load it here!
         	
         	//Step 1.3: Open Game Screen
-        	GameScreen game = new GameScreen();
+        	GameScreenEasy game = new GameScreenEasy();
         	game.setVisible(true);
         	//TODO determine if we want to keep main menu open in background?
     		

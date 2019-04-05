@@ -11,8 +11,8 @@ public class Space {
     
     public int spaceNumber;
     public List<Space> adjacencyList = new ArrayList<Space>();
-    //TODO add an empty flag
-
+    public Boolean isOpen = false;
+    
     public Space() {
     }
 
@@ -37,11 +37,14 @@ public class Space {
     }
 
     public Boolean isAdjacent(Space moveTo) {
-        return true;
+        if(adjacencyList.contains(moveTo)){
+            return true;
+        }
+        return false;
     }
 
     public Boolean isOpen(Space moveTo) {
-        return true;
+        return isOpen;
     }
 
 }
