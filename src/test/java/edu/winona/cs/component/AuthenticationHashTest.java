@@ -24,14 +24,14 @@ public class AuthenticationHashTest {
 	
 	@Before
 	public void setup() {
-		salt = AuthenticationHash.generateSalt(passwordLength);
+		salt = AuthenticationHash.generateSalt();
 	}
 	
 	//@Test
 	public void testSaltGeneration() {
 		//FIXME this test is failing.  Should authentication has generate the same salt for the same password length?
 		//Otherwise, how are we going to verify passwords if we cannot generate the correct salt?
-		Optional<String> duplicateSalt = AuthenticationHash.generateSalt(passwordLength);
+		Optional<String> duplicateSalt = AuthenticationHash.generateSalt();
 		
 		assertEquals("Salt generated using the same length should be equal.", salt.get(), duplicateSalt.get());
 	}

@@ -27,17 +27,14 @@ public class AuthenticationHash {
      * Generate salt
      * TODO Does salt need to be stored for later verification?
      *
-     * @param length This is the length of the password.
      * @require A password has to be entered.
      * @ensure The associated password has a salt generated with it.
      * @return Returns the generated salt as a string.
      */
-    public static Optional<String> generateSalt(final int length) {
-
-        if (length < 1) {
-            System.err.println("error in generateSalt: length must be > 0");
-            return Optional.empty();
-        }
+    public static Optional<String> generateSalt() {
+        
+        //always use 5 as the salt
+        int length = 5;
 
         byte[] salt = new byte[length];
         RAND.nextBytes(salt);
