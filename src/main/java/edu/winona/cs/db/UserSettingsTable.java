@@ -25,7 +25,7 @@ public class UserSettingsTable implements Table {
 	private static final Log LOG = new Log(UserSettingsTable.class.getName());
 
 	// Table attributes
-	public static final String NAME = "UserSettings";
+	public static final String NAME = "USERSETTINGS";
 	private static boolean created = false;
 
 	// Column Attributes
@@ -35,6 +35,11 @@ public class UserSettingsTable implements Table {
 	@Override
 	public boolean isCreated() {
 		return created;
+	}
+	
+	@Override
+	public void setCreated(boolean status) {
+		UserSettingsTable.created = status;
 	}
 
 	@Override

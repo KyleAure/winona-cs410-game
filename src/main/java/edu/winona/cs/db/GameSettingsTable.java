@@ -27,7 +27,7 @@ public class GameSettingsTable implements Table{
 	private static final Log LOG = new Log(GameSettingsTable.class.getName());
 
 	// Table attributes
-	public static final String NAME = "gamesettings";
+	public static final String NAME = "GAMESETTINGS";
 	private static boolean created = false;
 
 	// Column Attributes
@@ -38,6 +38,11 @@ public class GameSettingsTable implements Table{
 	@Override
 	public boolean isCreated() {
 		return created;
+	}
+	
+	@Override
+	public void setCreated(boolean status) {
+		GameSettingsTable.created = status;
 	}
 
 	@Override
