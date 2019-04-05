@@ -30,15 +30,9 @@ public class GameScreen extends javax.swing.JFrame {
      */
     public GameScreen() {
         try {
-        	//Getting image from file system.
-            JFileChooser jfc = new JFileChooser(new File("."));
-            //int returnVal = -1;
-            int returnVal = jfc.showOpenDialog(this);
-            while (returnVal != JFileChooser.APPROVE_OPTION) {
-                jfc.showOpenDialog(null);
-            }
+        
 
-            File file = jfc.getSelectedFile();
+           
 
             List<BufferedImage> imageList = new ArrayList<>();
 

@@ -204,7 +204,7 @@ public class MainMenuScreen extends JFrame {
     	
     	//Step 2: If user is starting a new game display Game Settings
     	if(startNewGame) {
-    		NewGameSettings gameSettings = new NewGameSettings();
+    		NewGame gameSettings = new NewGame();
     	    gameSettings.setVisible(true);
     	    this.dispose();
     	}
@@ -270,7 +270,7 @@ public class MainMenuScreen extends JFrame {
      */
     private void gameSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSettingsBtnActionPerformed
         //Step 1: Show GameSettingsMenu
-    	NewGameSettings settingsMenu = new NewGameSettings();
+    	NewGame settingsMenu = new NewGame();
     	settingsMenu.setVisible(true);
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
