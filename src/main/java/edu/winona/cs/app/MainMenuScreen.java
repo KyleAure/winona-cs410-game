@@ -33,7 +33,7 @@ public class MainMenuScreen extends JFrame {
 	private static final long serialVersionUID = 8807260843644535683L;
 	
 	//Database Manager
-	private DatabaseManager dbm = new DatabaseManager();
+	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
 
 	/**
 	 * Constructor for MainMenuScreen class
