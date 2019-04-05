@@ -13,11 +13,11 @@ public class UserTableTest {
 	private String password = "Test1";
 	private String password2 = "Test2";
 	private static UserTable ut;
-	private static DatabaseManager dbm = new DatabaseManager();
+	private static DatabaseManager dbm;
 	
 	@BeforeClass
 	public static void init() {
-		dbm.createDatabase();
+		dbm = DatabaseManager.getDatabaseManager();
 	}
 
 	

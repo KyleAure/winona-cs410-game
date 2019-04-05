@@ -28,7 +28,7 @@ public class SaveStateTable implements Table {
 	private static final Log LOG = new Log(SaveStateTable.class.getName());
 
 	// Table attributes
-	public static final String NAME = "savestate";
+	public static final String NAME = "SAVESTATE";
 	private static boolean created = false;
 
 	// Column Attributes
@@ -38,6 +38,11 @@ public class SaveStateTable implements Table {
 	@Override
 	public boolean isCreated() {
 		return created;
+	}
+	
+	@Override
+	public void setCreated(boolean status) {
+		SaveStateTable.created = status;
 	}
 
 	@Override
