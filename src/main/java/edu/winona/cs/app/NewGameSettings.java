@@ -197,6 +197,7 @@ public class NewGameSettings extends javax.swing.JFrame {
 
     private void easyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_easyBtnActionPerformed
         // TODO add your handling code here:
+       
         easyBtn.setSelected(true);
         difficulty = "easy";
         
