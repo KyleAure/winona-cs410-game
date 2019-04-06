@@ -38,7 +38,7 @@ public class DatabaseManager {
 	/**
 	 * Private constructor only run once during program execution.
 	 */
-	private DatabaseManager() {
+	public DatabaseManager() {
 		createDatabase();
 		loadTables();
 	}

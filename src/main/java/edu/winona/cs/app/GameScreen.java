@@ -1,58 +1,224 @@
 package edu.winona.cs.app;
 
+import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.gamelogic.Cell;
+import edu.winona.cs.gamelogic.AdjacencyListMaker;
+import edu.winona.cs.gamelogic.DifficultyLevel;
+import edu.winona.cs.gamelogic.Randomize;
+import edu.winona.cs.gamelogic.Space;
 import edu.winona.cs.image.ImageProcessor;
+import edu.winona.cs.db.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
-import javax.swing.JFileChooser;
-
-/**
- * This is the main game screen.
- * - This is where users play the sliding game
- * 
- * @author Erika Tix
- */
 public class GameScreen extends javax.swing.JFrame {
-	private static final long serialVersionUID = 8287565246570842716L;
-	
-	/**
-     * Creates new form GameScreen
+
+    private static final long serialVersionUID = -2097350155286375640L;
+    public static final int WINDOW_MIN_X = 240;
+    public static final int WINDOW_MIN_Y = 200;
+
+    public static int COLS = 4;
+    public static int ROWS = 4;
+    public static int HGAP = 3;
+    public static int VGAP = 3;
+
+    public static int NUMBER_OF_CELLS = ROWS * COLS;
+
+    private final JFrame frame;
+    private final JFrame frame2;
+    private final List<Cell> buttons = new ArrayList<>();
+    private final List<Cell> correct = new ArrayList<>();
+    private Cell emptyButton;
+
+    private int movesCounter;
+    private int levelInt;
+    private DifficultyLevel level;
+
+    //image/game processing
+    List<BufferedImage> imageList = new ArrayList<>();
+    List<BufferedImage> keyList = imageList;
+    ImageProcessor image = new ImageProcessor();
+    AdjacencyListMaker adjacency = new AdjacencyListMaker();
+    List<Space> spaces = new ArrayList();
+    Randomize randomize = new Randomize();
+
+    //database
+    //DatabaseManager dbm = new DatabaseManager();
+    /**
+     * Creates new form GUI TODO: get level input
      */
-    public GameScreen() {
-        try {
-            initComponents();
+    public GameScreen() throws IOException {
 
-            JFileChooser jfc = new JFileChooser(new File("."));
-            //int returnVal = -1;
-            int returnVal = jfc.showOpenDialog(this);
-            while (returnVal != JFileChooser.APPROVE_OPTION) {
-                jfc.showOpenDialog(null);
-            }
-
-            File file = jfc.getSelectedFile();
-
-            List<BufferedImage> imageList = new ArrayList<>();
-
-            ImageProcessor image = new ImageProcessor();
-
-            image.assignImage(file);
-            imageList = image.divideImage(4);
-
-            jButton1.setIcon(new ImageIcon(imageList.get(0)));
-            jButton2.setIcon(new ImageIcon(imageList.get(1)));
-            jButton3.setIcon(new ImageIcon(imageList.get(2)));
-            jButton4.setIcon(new ImageIcon(imageList.get(3)));
-            
-        } catch (IOException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        //TODO: temporary, fix input of difficulty
+        //levelInt = level.EASY.getDifficulty();
+        //set rows and columns
+        switch (5) {
+            case 2:
+                COLS = 2;
+                ROWS = 2;
+                HGAP = 1;
+                VGAP = 1;
+                break;
+            case 3:
+                COLS = 3;
+                ROWS = 3;
+                HGAP = 2;
+                VGAP = 2;
+                break;
+            case 4:
+                COLS = 4;
+                ROWS = 4;
+                HGAP = 3;
+                VGAP = 3;
+                break;
+            case 5:
+                COLS = 5;
+                ROWS = 5;
+                HGAP = 4;
+                VGAP = 4;
+                break;
         }
 
+        //set up window
+        frame = new JFrame("Puzzle Slider Game");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(WINDOW_MIN_X, WINDOW_MIN_Y));
+        frame.setLayout(new GridLayout(ROWS, COLS, HGAP, VGAP));
+
+        frame2 = new JFrame("Game Options");
+        frame2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame2.setMinimumSize(new Dimension(375, 60));
+
+        //calculate number of cells
+        NUMBER_OF_CELLS = ROWS * COLS;
+
+        //filechooser
+        JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
+        //int returnVal = -1;
+        int returnVal = jfc.showOpenDialog(this);
+        while (returnVal != JFileChooser.APPROVE_OPTION) {
+            jfc.showOpenDialog(null);
+        }
+
+        //get file
+        File file = jfc.getSelectedFile();
+
+        //assign file
+        image.assignImage(file);
+
+        //TODO: change 4, 9, 16, or 25 to difficulty number
+        //divide image
+        imageList = image.divideImage(25);
+
+        createCellsList();
+
+        //set icons for each button
+        assignIcons();
+
+        //remove the last cell
+        emptyButton = buttons.get(NUMBER_OF_CELLS - 1);
+
+        frame.setVisible(true);
+        frame.pack();
+
+        setVictoryCondition();
+
+        //imageList = randomize.randomize(imageList);
+        initComponents();
+        buildButtons();
+        frame.add(frame2);
+
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (checkNeighbor((Cell) e.getSource())) {
+            swap((Cell) e.getSource());
+            movesCounter++;
+            checkVictory();
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+        }
+    }
+
+    private void createCell(int v) {
+        Cell c = new Cell(v);
+        c.addActionListener(
+                (ActionEvent e) -> {
+                    actionPerformed(e);
+                }
+        );
+        buttons.add(c);
+        frame.add(c);
+    }
+
+    //TODO: replace, doesn't work with difficulties besides medium
+    private boolean checkNeighbor(Cell c) {
+        int x = Math.abs(c.getCol() - emptyButton.getCol());
+        int y = Math.abs(c.getRow() - emptyButton.getRow());
+
+        if (!(x == 0 && y == 1 || y == 0 && x == 1)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void swap(Cell c) {
+
+        // swap c text and empty
+        //String tmpString = emptyButton.getText();
+        //emptyButton.setText(c.getText());
+        //c.setText(tmpString);
+        // swap c icon and empty
+        Icon tmpIcon = emptyButton.getIcon();
+        emptyButton.setIcon(c.getIcon());
+        c.setIcon(tmpIcon);
+        // update reference to empty button
+        emptyButton = c;
+
+        checkVictory();
+    }
+
+    private void setVictoryCondition() {
+        for (Integer i = 1; i < NUMBER_OF_CELLS; i++) {
+            correct.add(new Cell(i));
+        }
+        correct.add(new Cell(0));
+    }
+
+    //TODO: not working
+    private void checkVictory() {
+        for (int i = 0; i < NUMBER_OF_CELLS; i++) {
+            if (!(buttons.get(i).getText().equals(correct.get(i).getIcon()))) {
+                return;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "You achieved victory in " + movesCounter + " moves.",
+                "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void assignIcons() {
+        //set icons for each button
+        for (int i = 0; i < buttons.size() - 1; i++) {
+            buttons.get(i).setIcon(new ImageIcon(imageList.get(i)));
+            buttons.get(i).setEnabled(!buttons.get(i).isEnabled());
+        }
+    }
+
+    private void createCellsList() {
+        for (Integer i = NUMBER_OF_CELLS - 1; i >= 0; i--) {
+            createCell(i);
+        }
     }
 
     /**
@@ -63,103 +229,145 @@ public class GameScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setBorder(null);
-        jButton1.setMaximumSize(new java.awt.Dimension(25, 25));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setMaximumSize(new java.awt.Dimension(25, 25));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setMaximumSize(new java.awt.Dimension(25, 25));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setMaximumSize(new java.awt.Dimension(25, 25));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(137, Short.MAX_VALUE))
+            .addGap(0, 466, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(190, Short.MAX_VALUE))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void buildButtons() {
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        JPanel main = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        JPanel panel1 = new JPanel();
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        JButton Play = new javax.swing.JButton();
+        JButton Save = new javax.swing.JButton();
+        JButton Settings = new javax.swing.JButton();
+        JButton mainMenu = new javax.swing.JButton();
+        JButton Restart = new javax.swing.JButton();
+
+        panel1.add(Play);
+        panel1.add(Save);
+        panel1.add(Settings);
+        panel1.add(mainMenu);
+        panel1.add(Restart);
+
+        main.add(panel1);
+
+        main.setVisible(true);
+
+        frame2.add(main);
+        frame2.setVisible(true);
+
+        //frame.add(main);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Play.setText("Play");
+        Play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayActionPerformed(evt);
+            }
+
+            private void PlayActionPerformed(ActionEvent evt) {
+                System.out.print("Play");
+                randomize.randomize(imageList);
+                //set icons for each button
+                assignIcons();
+                Play.setEnabled(false);
+            }
+        });
+
+        Save.setText("Save");
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveActionPerformed(evt);
+            }
+
+            private void SaveActionPerformed(ActionEvent evt) {
+                System.out.print("Save");
+                //TODO: save logic
+                JOptionPane.showMessageDialog(null, "Game saved successfully",
+                        "Saved Game Confirmation", 1);
+            }
+        });
+
+        Settings.setText("Settings");
+        Settings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SettingsActionPerformed(evt);
+            }
+
+            private void SettingsActionPerformed(ActionEvent evt) {
+                System.out.print("Settings");
+                GameSettingsMenu settings = new GameSettingsMenu();
+                settings.setVisible(true);
+            }
+        });
+
+        mainMenu.setText("Main Menu");
+        mainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainMenuActionPerformed(evt);
+            }
+
+            private void mainMenuActionPerformed(ActionEvent evt) {
+                System.out.print("Main Menu");
+                int result = JOptionPane.showConfirmDialog((Component) null, "Save before returning to main menu?",
+                        "alert", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    //TODO: save logic
+
+                    //close game screen and open menu
+                    frame.dispose();
+                    frame2.dispose();
+                    MainMenuScreen menu = new MainMenuScreen();
+                    menu.setVisible(true);
+                } else if (result == JOptionPane.NO_OPTION) {
+                    //don't save
+                    //close game screen and open menu
+                    frame.dispose();
+                    frame2.dispose();
+                    MainMenuScreen menu = new MainMenuScreen();
+                    menu.setVisible(true);
+                }
+            }
+        });
+
+        Restart.setText("Restart");
+        Restart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestartActionPerformed(evt);
+            }
+
+            private void RestartActionPerformed(ActionEvent evt) {
+                System.out.print("Restart");
+                int result = JOptionPane.showConfirmDialog((Component) null, "Are you sure you'd like to restart the current game?",
+                        "alert", JOptionPane.OK_CANCEL_OPTION);
+
+                if (result == JOptionPane.OK_OPTION) {
+                    //restart logic
+                    imageList = keyList;
+                    assignIcons();
+                    Play.setEnabled(true);
+                }
+            }
+        });
+
+        pack();
+    }// </editor-fold> 
 
     /**
      * @param args the command line arguments
@@ -192,16 +400,15 @@ public class GameScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GameScreen().setVisible(true);
+                try {
+                    new GameScreen().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JFrame jFrame1;
     // End of variables declaration//GEN-END:variables
 }

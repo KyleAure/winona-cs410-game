@@ -5,6 +5,7 @@
  */
 package edu.winona.cs.temp;
 
+import edu.winona.cs.gamelogic.Cell;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

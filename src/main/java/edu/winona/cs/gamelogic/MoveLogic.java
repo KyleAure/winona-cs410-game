@@ -17,15 +17,13 @@ public class MoveLogic {
     private List<BufferedImage> keyList = new ArrayList<BufferedImage>();
     private List<BufferedImage> userList = new ArrayList<BufferedImage>();
 
-    //keyList  = PLACEHOLDER.getImageCoordinateList();
-    //userList = PLACEHOLDER.getRandomizedCoordinateList();
-    public List<BufferedImage> move(Space moveFrom, Space moveTo) {
-
+    public List<BufferedImage> move(List<BufferedImage> userList, Space moveFrom, Space moveTo) {
+        
         Space temp = moveFrom;
 
         int indexMoveFrom = userList.indexOf(moveFrom);
         int indexMoveTwo = userList.indexOf(moveTo);
-        
+
         //check adjacency
         if (temp.isAdjacent(moveTo)) {
             Collections.swap(userList, indexMoveFrom, indexMoveTwo);
