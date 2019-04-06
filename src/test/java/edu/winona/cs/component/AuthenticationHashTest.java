@@ -50,12 +50,5 @@ public class AuthenticationHashTest {
 		String altHashPass = hash.hashPassword(altPassword, salt.toString());
 		assertNotEquals("Hashed passwords should not be the same.", hashedPass.toString(), altHashPass.toString());
 	}
-	
-	@Test
-	public void testVerification() {
-		String hashedPass = hash.hashPassword(testPassword, salt.toString());
-		boolean result = AuthenticationHash.verifyPassword(testPassword, hashedPass.toString(), salt.toString());
-		assertTrue("Verification should have returned true.", result);
-	}
 
 }
