@@ -285,6 +285,7 @@ public class GameScreen extends javax.swing.JFrame {
                 randomize.randomize(imageList);
                 //set icons for each button
                 assignIcons();
+                Play.setEnabled(false);
             }
         });
 
@@ -297,6 +298,8 @@ public class GameScreen extends javax.swing.JFrame {
             private void SaveActionPerformed(ActionEvent evt) {
                 System.out.print("Save");
                 //TODO: save logic
+                JOptionPane.showMessageDialog(null, "Game saved successfully",
+                        "Saved Game Confirmation", 1);
             }
         });
 
@@ -327,12 +330,16 @@ public class GameScreen extends javax.swing.JFrame {
                 if (result == JOptionPane.YES_OPTION) {
                     //TODO: save logic
 
-                    //exit
+                    //close game screen and open menu
+                    frame.dispose();
+                    frame2.dispose();
                     MainMenuScreen menu = new MainMenuScreen();
                     menu.setVisible(true);
                 } else if (result == JOptionPane.NO_OPTION) {
                     //don't save
-                    //exit
+                    //close game screen and open menu
+                    frame.dispose();
+                    frame2.dispose();
                     MainMenuScreen menu = new MainMenuScreen();
                     menu.setVisible(true);
                 }
@@ -354,6 +361,7 @@ public class GameScreen extends javax.swing.JFrame {
                     //restart logic
                     imageList = keyList;
                     assignIcons();
+                    Play.setEnabled(true);
                 }
             }
         });
