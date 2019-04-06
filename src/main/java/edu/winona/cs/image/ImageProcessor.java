@@ -32,7 +32,6 @@ public class ImageProcessor {
     private Boolean isValidURL;
     private File file;
     private List<BufferedImage> dividedImageList = new ArrayList<BufferedImage>();
-    //private List<Point> imageCoordinateList = new ArrayList<Point>();
     private Point point = new Point();
 
     /**
@@ -42,7 +41,6 @@ public class ImageProcessor {
      * @throws java.io.IOException
      * @require A valid URL that links directs to an image.
      * @ensure The associated image is selected.
-     * @return Returns if the image was selected successfully.
      */
     public void assignImage(File imageURL) throws IOException {
 
@@ -76,24 +74,11 @@ public class ImageProcessor {
         dividedImageList.clear();
         int sectionWidth = 0;
         int sectionHeight = 0;
-        //imageCoordinateList.clear();
 
         switch (divisions) {
             case 4: //not meant to be implemented, but left for testing purposes
                 sectionWidth = imageWidth / 2;
                 sectionHeight = imageHeight / 2;
-
-                /*TODO: delete
-                //add matching coordinates
-                point.setLocation(0, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(0, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight);
-                imageCoordinateList.add(point);
-                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
@@ -111,31 +96,6 @@ public class ImageProcessor {
             case 9: //when the user selects "easy" the image is divided 9 times
                 sectionWidth = imageWidth / 3;
                 sectionHeight = imageHeight / 3;
-
-                /*TODO: delete
-                //add matching coordinates
-                //row 1
-                point.setLocation(0, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, 0);
-                imageCoordinateList.add(point);
-                //row 2
-                point.setLocation(0, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight);
-                imageCoordinateList.add(point);
-                //row 3
-                point.setLocation(0, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
@@ -168,46 +128,6 @@ public class ImageProcessor {
             case 16: //when the user selects "medium" the image is divided 16 times
                 sectionWidth = imageWidth / 4;
                 sectionHeight = imageHeight / 4;
-
-                /*TODO: delete
-                //add matching coordinates
-                //row 1
-                point.setLocation(0, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, 0);
-                imageCoordinateList.add(point);
-                //row 2
-                point.setLocation(0, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight);
-                imageCoordinateList.add(point);
-                //row 3
-                point.setLocation(0, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                //row 4
-                point.setLocation(0, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight * 4);
-                imageCoordinateList.add(point);
-                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
@@ -262,64 +182,6 @@ public class ImageProcessor {
                 sectionWidth = imageWidth / 5;
                 sectionHeight = imageHeight / 5;
 
-                /*TODO: delete
-                //add matching coordinates
-                //row 1
-                point.setLocation(0, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, 0);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 4, 0);
-                imageCoordinateList.add(point);
-                //row 2
-                point.setLocation(0, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 4, sectionHeight);
-                imageCoordinateList.add(point);
-                //row 3
-                point.setLocation(0, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 4, sectionHeight * 2);
-                imageCoordinateList.add(point);
-                //row 4
-                point.setLocation(0, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight * 4);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 4, sectionHeight * 5);
-                imageCoordinateList.add(point);
-                //row 4
-                point.setLocation(0, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 2, sectionHeight * 3);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 3, sectionHeight * 4);
-                imageCoordinateList.add(point);
-                point.setLocation(sectionWidth * 4, sectionHeight * 5);
-                imageCoordinateList.add(point);
-                 */
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
@@ -405,24 +267,6 @@ public class ImageProcessor {
         }
         return dividedImageList;
     }
-
-    /*TODO: delete
-     * Get image coordinates list
-     *
-     * @require The associated image has already been divided.
-     * @ensure All the coordinates are listed according to the number of
-     * divisions.
-     * @return Returns an array of image coordinates for the layout
-     
-    public List<Point> getCoordinateList() {
-        if (imageCoordinateList != null) {
-            return imageCoordinateList;
-        } else {
-            System.out.print("Error: imageCoordinateList is null");
-            return null;
-        }
-    }
-    */
 
     /**
      * Get divided image list

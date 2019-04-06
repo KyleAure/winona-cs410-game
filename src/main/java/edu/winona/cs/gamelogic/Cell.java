@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.winona.cs.temp;
+package edu.winona.cs.gamelogic;
 
+import edu.winona.cs.app.GameScreen;
 import javax.swing.*;
 
 /**
@@ -19,13 +20,13 @@ public class Cell extends JButton {
     public Cell (Integer value)
     {
         if (value == 0) {
-            setText (" "); 
+            //setText (" "); 
         } else {
-            setText(value.toString());
+            //setText(value.toString());
         }
 
-        row = GUI.NUMBER_OF_CELLS / GUI.COLS-1 - ( value / GUI.COLS);
-        col = GUI.NUMBER_OF_CELLS-1 - (row*GUI.COLS + value);
+        row = GameScreen.NUMBER_OF_CELLS / GameScreen.COLS-1 - ( value / GameScreen.COLS);
+        col = GameScreen.NUMBER_OF_CELLS-1 - (row*GameScreen.COLS + value);
 
     }
 

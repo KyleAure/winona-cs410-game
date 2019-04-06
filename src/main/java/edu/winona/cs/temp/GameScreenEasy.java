@@ -5,7 +5,7 @@ import edu.winona.cs.gamelogic.DifficultyLevel;
 import edu.winona.cs.gamelogic.MoveLogic;
 import edu.winona.cs.gamelogic.Space;
 import edu.winona.cs.image.ImageProcessor;
-import edu.winona.cs.temp.Cell;
+import edu.winona.cs.gamelogic.Cell;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
