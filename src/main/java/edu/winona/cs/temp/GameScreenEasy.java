@@ -1,4 +1,4 @@
-package edu.winona.cs.app;
+package edu.winona.cs.temp;
 
 import edu.winona.cs.gamelogic.AdjacencyListMaker;
 import edu.winona.cs.gamelogic.DifficultyLevel;

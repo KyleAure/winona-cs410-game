@@ -32,7 +32,7 @@ public class ImageProcessor {
     private Boolean isValidURL;
     private File file;
     private List<BufferedImage> dividedImageList = new ArrayList<BufferedImage>();
-    private List<Point> imageCoordinateList = new ArrayList<Point>();
+    //private List<Point> imageCoordinateList = new ArrayList<Point>();
     private Point point = new Point();
 
     /**
@@ -76,13 +76,14 @@ public class ImageProcessor {
         dividedImageList.clear();
         int sectionWidth = 0;
         int sectionHeight = 0;
-        imageCoordinateList.clear();
+        //imageCoordinateList.clear();
 
         switch (divisions) {
             case 4: //not meant to be implemented, but left for testing purposes
                 sectionWidth = imageWidth / 2;
                 sectionHeight = imageHeight / 2;
 
+                /*TODO: delete
                 //add matching coordinates
                 point.setLocation(0, 0);
                 imageCoordinateList.add(point);
@@ -92,6 +93,7 @@ public class ImageProcessor {
                 imageCoordinateList.add(point);
                 point.setLocation(sectionWidth, sectionHeight);
                 imageCoordinateList.add(point);
+                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
@@ -110,6 +112,7 @@ public class ImageProcessor {
                 sectionWidth = imageWidth / 3;
                 sectionHeight = imageHeight / 3;
 
+                /*TODO: delete
                 //add matching coordinates
                 //row 1
                 point.setLocation(0, 0);
@@ -132,39 +135,41 @@ public class ImageProcessor {
                 imageCoordinateList.add(point);
                 point.setLocation(sectionWidth * 2, sectionHeight * 2);
                 imageCoordinateList.add(point);
+                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle 2
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 2, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top right 3
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 3, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle left 4
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle middle 5
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 2, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle right 6
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 3, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom left 7
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle 8
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 2, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom right 9
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 3, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 break;
             case 16: //when the user selects "medium" the image is divided 16 times
                 sectionWidth = imageWidth / 4;
                 sectionHeight = imageHeight / 4;
 
+                /*TODO: delete
                 //add matching coordinates
                 //row 1
                 point.setLocation(0, 0);
@@ -202,60 +207,62 @@ public class ImageProcessor {
                 imageCoordinateList.add(point);
                 point.setLocation(sectionWidth * 3, sectionHeight * 4);
                 imageCoordinateList.add(point);
+                */
 
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle-left 2
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 2, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle-right 3
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 3, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top right 4
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 0, sectionWidth * 4, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top left 5
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top middle-left 6
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 2, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top middle-right 7 
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 3, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top right 8
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 1, sectionWidth * 4, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom left 9
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom middle-left 10
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 2, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom middle-right 11
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 3, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom right 12
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 2, sectionWidth * 4, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom left 13
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle-left 14
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 2, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle-right 15
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 3, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom right 16
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 4, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 break;
             case 25: //when the user selects "hard" the image is divided 25 times
                 sectionWidth = imageWidth / 5;
                 sectionHeight = imageHeight / 5;
 
+                /*TODO: delete
                 //add matching coordinates
                 //row 1
                 point.setLocation(0, 0);
@@ -312,85 +319,85 @@ public class ImageProcessor {
                 imageCoordinateList.add(point);
                 point.setLocation(sectionWidth * 4, sectionHeight * 5);
                 imageCoordinateList.add(point);
-
+                 */
                 //top left 1
                 croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle-left 2
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 2, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle-middle 3
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 3, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top middle-right 4
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 0, sectionWidth * 4, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //top right 5
-                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 0, sectionWidth * 5, sectionHeight * 1);
+                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 0, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
 
                 //middle-top left 6
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top middle-left 7
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 2, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top middle-middle 8 
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 3, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top middle-right 9
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 1, sectionWidth * 4, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-top right 10
-                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 1, sectionWidth * 5, sectionHeight * 2);
+                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 1, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
 
                 //middle-midle left 11
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-middle middle-left 12
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 2, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-middle middle-middle 13
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 3, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-middle middle-right 14
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 2, sectionWidth * 4, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-middle right 15
-                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 2, sectionWidth * 5, sectionHeight * 3);
+                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 2, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
 
                 //middle-bottom left 16
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom middle-left 17
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 2, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom middle-middle 18
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 3, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom middle-right 19
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 4, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //middle-bottom right 20
-                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 3, sectionWidth * 5, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
 
                 //bottom left 21
-                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 0, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle-left 22
-                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 2, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 1, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle-middle 23
-                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 3, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 2, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom middle-right 24
-                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 4, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 3, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 //bottom right 25
-                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 3, sectionWidth * 5, sectionHeight * 4);
+                croppedImage = image.getSubimage(sectionWidth * 4, sectionHeight * 3, sectionWidth * 1, sectionHeight * 1);
                 dividedImageList.add(croppedImage);
                 break;
             default:
@@ -399,14 +406,14 @@ public class ImageProcessor {
         return dividedImageList;
     }
 
-    /**
+    /*TODO: delete
      * Get image coordinates list
      *
      * @require The associated image has already been divided.
      * @ensure All the coordinates are listed according to the number of
      * divisions.
      * @return Returns an array of image coordinates for the layout
-     */
+     
     public List<Point> getCoordinateList() {
         if (imageCoordinateList != null) {
             return imageCoordinateList;
@@ -415,6 +422,7 @@ public class ImageProcessor {
             return null;
         }
     }
+    */
 
     /**
      * Get divided image list
