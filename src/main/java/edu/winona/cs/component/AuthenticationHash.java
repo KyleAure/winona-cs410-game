@@ -13,6 +13,11 @@ import javax.crypto.spec.PBEKeySpec;
  * Hash Authentication Class
  *
  * This is used to verify passwords
+ * 1) Create hash object
+ * 2) Generate the salt
+ * 3) Hash the password + salt
+ * 4) Store the hash
+ * 5) Use to verify password
  *
  * @author Tristin Harvell
  */
@@ -25,7 +30,6 @@ public class AuthenticationHash {
 
     /**
      * Generate salt
-     * TODO Does salt need to be stored for later verification?
      *
      * @require A password has to be entered.
      * @ensure The associated password has a salt generated with it.
@@ -42,7 +46,7 @@ public class AuthenticationHash {
         return Optional.of(Base64.getEncoder().encodeToString(salt));
     }
 
-    /**
+    /**TODO: delete?
      * Hash password
      *
      * @param password This is the clear-text password the user inputs.    

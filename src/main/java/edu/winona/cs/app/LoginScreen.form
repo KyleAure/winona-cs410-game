@@ -119,7 +119,6 @@
     <Component class="javax.swing.JTextField" name="usernameInput">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enter username"/>
-        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Events>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="usernameInputFocusGained"/>
@@ -142,7 +141,6 @@
     <Component class="javax.swing.JTextField" name="signupInput">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enter username"/>
-        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Events>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="signupInputFocusGained"/>
