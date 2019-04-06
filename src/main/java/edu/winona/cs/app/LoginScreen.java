@@ -1,6 +1,6 @@
 package edu.winona.cs.app;
 
-import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.component.*;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.db.GameSettingsTable;
 import edu.winona.cs.db.UserTable;
@@ -225,7 +225,7 @@ public class LoginScreen extends JFrame {
        
        //authenticate
        salt = authentication.generateSalt();
-       hash = authentication.hashPassword(passwordInput.getPassword(), salt);
+       hash = authentication.hashPassword(new String(passwordInput.getPassword()), salt);
        
        boolean result = ut.verifyUser(username, new String(hash));
        
@@ -273,7 +273,7 @@ public class LoginScreen extends JFrame {
 
             //authenticate
             salt = authentication.generateSalt();
-            hash = authentication.hashPassword(passwordSignupInput.getPassword(), salt);
+            hash = authentication.hashPassword(new String(passwordSignupInput.getPassword()), salt);
             
             //create user with hashed password
             success = ut.createUser(username, new String(hash));

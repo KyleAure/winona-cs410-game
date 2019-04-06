@@ -35,7 +35,7 @@ public class AuthenticationHash {
      * @ensure The associated password has a salt generated with it.
      * @return Returns the generated salt as a string.
      */
-    public static Optional<String> generateSalt() {
+    public String generateSalt() {
         
         //always use 5 as the salt
         int length = 5;
@@ -43,10 +43,10 @@ public class AuthenticationHash {
         byte[] salt = new byte[length];
         RAND.nextBytes(salt);
 
-        return Optional.of(Base64.getEncoder().encodeToString(salt));
+        return Base64.getEncoder().encodeToString(salt);
     }
 
-    /**TODO: delete?
+    /**
      * Hash password
      *
      * @param password This is the clear-text password the user inputs.    
@@ -55,7 +55,7 @@ public class AuthenticationHash {
      * @ensure The the password and salt get concatenated and hashed together.
      * @return Returns the resulting stored hash that includes both password and salt.
      */
-    public static Optional<String> hashPassword(String password, String salt) {
+    public String hashPassword(String password, String salt) {
 
         char[] chars = password.toCharArray();
         byte[] bytes = salt.getBytes();
@@ -68,32 +68,14 @@ public class AuthenticationHash {
             SecretKeyFactory fac = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] securePassword = fac.generateSecret(spec).getEncoded();
 
-            return Optional.of(Base64.getEncoder().encodeToString(securePassword));
+            return Base64.getEncoder().encodeToString(securePassword);
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             System.err.println("Exception encountered in hashPassword()");
-            return Optional.empty();
+            return String.valueOf("x");
 
         } finally {
             spec.clearPassword();
         }
-    }
-
-    /**
-     * Verify password
-     *
-     * @param password This is the clear-text password the user inputs.    
-     * @param key This is the stored hashed password and salt together.
-     * @param salt This is the stored salt that was generated with the password.
-     * @require Password is entered, while associated key and salt are already stored.
-     * @ensure The the password and salt get concatenated and hashed together.
-     * @return Returns the resulting hash that includes both password and salt.
-     */
-    public static boolean verifyPassword(String password, String key, String salt) {
-        Optional<String> optEncrypted = hashPassword(password, salt);
-        if (!optEncrypted.isPresent()) {
-            return false;
-        }
-        return optEncrypted.get().equals(key);
     }
 }
