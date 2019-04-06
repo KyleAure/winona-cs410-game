@@ -49,7 +49,7 @@ public class MainMenuScreen extends JFrame {
         
     	//Step 2: setBackground using users preferences
         Container a = MainMenuScreen.this.getContentPane();
-        if(App.settingsSet()) {
+        if(App.isSettingsSet()) {
         	a.setBackground(App.getSettings().getBackgroundColor());
         } else {
         	a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
@@ -216,6 +216,9 @@ public class MainMenuScreen extends JFrame {
     	    this.dispose();
     	}
     	
+    	//Step 3: if the user is loading a game load it
+    	//TODO: Figure out how to load a game.
+    	
     }//GEN-LAST:event_playGameBtnActionPerformed
 
     
@@ -277,8 +280,14 @@ public class MainMenuScreen extends JFrame {
      */
     private void gameSettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameSettingsBtnActionPerformed
         //Step 1: Show GameSettingsMenu
-    	NewGameSettings settingsMenu = new NewGameSettings();
-    	settingsMenu.setVisible(true);
+    	if(App.isUser()) {
+    		Settings settingsMenu = new Settings();
+        	settingsMenu.setVisible(true);
+        	//Do not close this window.  Game settings window will float on top.
+    	} else {
+    		JOptionPane.showMessageDialog(null, "You need to be logged in to personalize game settings.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
+    	}
+    	
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
     /**

@@ -3,6 +3,7 @@ package edu.winona.cs.app;
 import java.awt.Color;
 
 import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.gamelogic.DifficultyLevel;
 
 /**
  * Application class is the starting point for the program.
@@ -19,6 +20,7 @@ public class App {
 	
 	//Used to keep track of current users game settings
 	private static GameSettings settings = null;
+	private static DifficultyLevel level = null;
 	
 
 	/**
@@ -78,7 +80,35 @@ public class App {
 		App.settings = settings;
 	}
 	
-	public static boolean settingsSet() {
+	/**
+	 * Check to see if settings have been set
+	 * @return boolean: true = set, false = not set
+	 */
+	public static boolean isSettingsSet() {
 		return settings != null;
+	}
+
+	/**
+	 * Returns the difficulty level set by user.
+	 * @return
+	 */
+	public static DifficultyLevel getDifficultyLevel() {
+		return level;
+	}
+
+	/**
+	 * Set the difficulty level.
+	 * @param level - DifficultyLevel
+	 */
+	public static void setDifficultyLevel(DifficultyLevel level) {
+		App.level = level;
+	}
+	
+	/**
+	 * Check to see if a difficulty level has been set.
+	 * @return boolean: true = set, false = not set.
+	 */
+	public static boolean isDifficultyLevelSet() {
+		return level != null;
 	}
 }

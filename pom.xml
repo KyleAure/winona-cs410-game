@@ -34,6 +34,18 @@
       <artifactId>imgscalr-lib</artifactId>
       <version>4.2</version>
     </dependency>
+	<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms -->
+	<dependency>
+	    <groupId>com.jgoodies</groupId>
+	    <artifactId>jgoodies-forms</artifactId>
+	    <version>1.9.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common -->
+	<dependency>
+	    <groupId>com.jgoodies</groupId>
+	    <artifactId>jgoodies-common</artifactId>
+	    <version>1.8.1</version>
+	</dependency>
   </dependencies>
   <!-- Build Properties -->
   <build>
