@@ -1,6 +1,5 @@
 package edu.winona.cs.image;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +28,7 @@ public class ImageProcessor {
     //private static final Log LOG = new Log(ImageProcessor.class.getName());
 
     private BufferedImage image;
-    private Boolean isValidURL;
-    private File file;
     private List<BufferedImage> dividedImageList = new ArrayList<BufferedImage>();
-    private Point point = new Point();
 
     /**
      * Assign image

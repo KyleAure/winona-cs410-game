@@ -1,6 +1,5 @@
 package edu.winona.cs.gamelogic;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +20,7 @@ public class MoveLogic {
         
         Space temp = moveFrom;
 
+        //FIXME resolve these errors
         int indexMoveFrom = userList.indexOf(moveFrom);
         int indexMoveTwo = userList.indexOf(moveTo);
 
@@ -29,7 +29,6 @@ public class MoveLogic {
             Collections.swap(userList, indexMoveFrom, indexMoveTwo);
         }
 
-        //TODO check win
         hasWon();
 
         return userList;

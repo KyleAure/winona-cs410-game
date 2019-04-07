@@ -21,7 +21,7 @@ public class Log {
     public void log(Exception ex, LogLevel level, String msg){
         FileHandler fh = null;
         try {
-            fh = new FileHandler("puzzle.log",true);
+            fh = new FileHandler(".puzzle.log",true);
             fh.setFormatter(new DebugFormatter());
             logger.addHandler(fh);
             switch (level) {
@@ -72,7 +72,7 @@ public class Log {
     public void log(LogLevel level, String msg) {
     	FileHandler fh = null;
     	try {
-            fh = new FileHandler("puzzle.log",true);
+            fh = new FileHandler(".puzzle.log",true);
             fh.setFormatter(new DebugFormatter());
             logger.addHandler(fh);
             switch (level) {

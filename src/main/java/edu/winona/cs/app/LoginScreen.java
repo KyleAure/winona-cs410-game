@@ -3,7 +3,10 @@ package edu.winona.cs.app;
 import edu.winona.cs.component.*;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.db.GameSettingsTable;
+import edu.winona.cs.db.UserSettingsTable;
 import edu.winona.cs.db.UserTable;
+import edu.winona.cs.gamelogic.DifficultyLevel;
+
 import java.awt.Color;
 import java.awt.Container;
 
@@ -200,7 +203,12 @@ public class LoginScreen extends JFrame {
     		   App.setSettings(App.DEFAULT_SETTINGS);
     	   }
     	   
-    	   //STEP 3.3 Open Main Menu and close this Menu
+    	   //STEP 3.3 Get userSettings and setSettings with APP
+    	   UserSettingsTable ust = dbm.getUserSettingsTable();
+    	   DifficultyLevel level = ust.getDifficultyLevel(App.getUsername());
+    	   App.setDifficultyLevel(level);
+    	   
+    	   //STEP 3.4 Open Main Menu and close this Menu
            MainMenuScreen mainMenu = new MainMenuScreen();
            mainMenu.setVisible(true);
            this.dispose();
@@ -274,43 +282,6 @@ public class LoginScreen extends JFrame {
     private void passwordInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordInputFocusGained
         passwordInput.setText("");
     }//GEN-LAST:event_passwordInputFocusGained
-
-    /**
-     * Main Method.
-     * TODO: Decide if we need a main method in this class.  This frame should be invoked via App.java
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginScreen().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton guestLoginBtn;

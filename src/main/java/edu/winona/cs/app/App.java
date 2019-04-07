@@ -101,7 +101,11 @@ public class App {
 	 * @param level - DifficultyLevel
 	 */
 	public static void setDifficultyLevel(DifficultyLevel level) {
-		session.setDifficulty(level);
+		if(session == null) {
+			session = new GameSession(username, level, 0, null, null);
+		} else {
+			session.setDifficulty(level);
+		}	
 	}
 	
 	/**
@@ -109,33 +113,63 @@ public class App {
 	 * @return boolean: true = set, false = not set.
 	 */
 	public static boolean isDifficultyLevelSet() {
+		if(session == null) {
+			return false;
+		}
 		return session.getDifficulty() != null;
 	}
 
+	/**
+	 * Returns imageURL
+	 * @return String - imageURL
+	 */
 	public static String getImgFileURL() {
 		return imageURL;
 	}
 
+	/**
+	 * Set imageURL 
+	 * @param fileURL
+	 */
 	public static void setImgFileURL(String fileURL) {
 		App.imageURL = fileURL;
 	}
 	
+	/**
+	 * Checks to see if imageURL has been set.
+	 * @return boolean: True = set, False = not set.
+	 */
 	public static boolean isImgFileSet() {
 		return imageURL != null;
 	}
 	
+	/**
+	 * Returns current game session
+	 * @return GameSession object
+	 */
 	public static GameSession getSession() {
 		return session;
 	}
-	
+	 /**
+	  * Overrides the current gameSession with a new gameSession
+	  * @param session
+	  */
 	public static void setGameSession(GameSession session) {
 		App.session = session;
 	}
 
+	/**
+	 * Checks to see if this is a new game or not.
+	 * @return boolean: True = newGame, False = loadedGame
+	 */
 	public static boolean isNewGame() {
 		return isNewGame;
 	}
 
+	/**
+	 * Sets the isNewGame check flag.
+	 * @param isNewGame
+	 */
 	public static void setNewGame(boolean isNewGame) {
 		App.isNewGame = isNewGame;
 	}

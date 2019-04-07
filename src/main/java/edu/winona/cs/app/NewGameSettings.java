@@ -4,16 +4,13 @@ package edu.winona.cs.app;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -32,20 +29,35 @@ import edu.winona.cs.gamelogic.DifficultyLevel;
  * @author Erika Tix
  */
 public class NewGameSettings extends javax.swing.JFrame {
+	//Serialized variable
     private static final long serialVersionUID = 7664729301277149568L;
     
+    //Button group
+    private ButtonGroup buttonGroup = new ButtonGroup();
     
-    ButtonGroup buttonGroup = new ButtonGroup();
-    File file = null;
+    //image file handling
+    private File imgfile = null;
+    
+
+    //UI variables
+    private javax.swing.JRadioButton easyBtn;
+    private javax.swing.JRadioButton hardBtn;
+    private javax.swing.JLabel imageDisplay;
+    private javax.swing.JFileChooser fileChooser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton mediumBtn;
+    private javax.swing.JButton playBtn;
 
     /**
      * Creates new form NewGameSettings
      */
     public NewGameSettings() {
-    	
+    	//STEP 1: Initialize UI variables
     	initComponents();
     	
-        //set background color to user's choice
+        //STEP 2: Set background color to user's choice
         Container a = NewGameSettings.this.getContentPane();
         if(App.isUser()) {
             a.setBackground(App.getSettings().getBackgroundColor());
@@ -53,12 +65,30 @@ public class NewGameSettings extends javax.swing.JFrame {
         	a.setBackground(Color.pink);
         }
         
-        //add radio buttons to the button group
+        //STEP 3: Add radio buttons to the button group
         buttonGroup.add(easyBtn);
         buttonGroup.add(mediumBtn);
         buttonGroup.add(hardBtn);
         
-        //automatically set the playButton to be unclickable
+        if(App.isUser() && App.isDifficultyLevelSet()) {
+			switch(App.getDifficultyLevel()) {
+			case EASY:
+				buttonGroup.setSelected(easyBtn.getModel(), true);
+				break;
+			case MEDIUM:
+				buttonGroup.setSelected(mediumBtn.getModel(), true);
+				break;
+			case HARD:
+				buttonGroup.setSelected(hardBtn.getModel(), true);
+				break;
+			case TEST:
+				break;
+			default:
+				break;
+			}
+        }
+        
+        //STEP 4: Automatically set the playButton to be unclickable
         playBtn.setEnabled(false);
     }
 
@@ -69,30 +99,28 @@ public class NewGameSettings extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        buttonGroup1 = new javax.swing.ButtonGroup();
         easyBtn = new javax.swing.JRadioButton();
         mediumBtn = new javax.swing.JRadioButton();
         hardBtn = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser("./src/main/resources");
+        fileChooser = new javax.swing.JFileChooser("./src/main/resources");
         imageDisplay = new javax.swing.JLabel();
         playBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonGroup1.add(easyBtn);
+        buttonGroup.add(easyBtn);
         easyBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         easyBtn.setSelected(true);
         easyBtn.setText("Easy");
 
-        buttonGroup1.add(mediumBtn);
+        buttonGroup.add(mediumBtn);
         mediumBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         mediumBtn.setText("Medium");
 
-        buttonGroup1.add(hardBtn);
+        buttonGroup.add(hardBtn);
         hardBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         hardBtn.setText("Hard");
 
@@ -104,9 +132,9 @@ public class NewGameSettings extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Noteworthy", 1, 36)); // NOI18N
         jLabel2.setText("Choose a photo:");
 
-        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+        fileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser1ActionPerformed(evt);
+                fileChooserActionPerformed(evt);
             }
         });
 
@@ -140,7 +168,7 @@ public class NewGameSettings extends javax.swing.JFrame {
         					.addGap(18)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
         						.addComponent(jLabel2)
-        						.addComponent(jFileChooser1, GroupLayout.PREFERRED_SIZE, 451, GroupLayout.PREFERRED_SIZE)))
+        						.addComponent(fileChooser, GroupLayout.PREFERRED_SIZE, 451, GroupLayout.PREFERRED_SIZE)))
         				.addGroup(layout.createSequentialGroup()
         					.addGap(31)
         					.addComponent(playBtn, GroupLayout.PREFERRED_SIZE, 277, GroupLayout.PREFERRED_SIZE))))
@@ -165,7 +193,7 @@ public class NewGameSettings extends javax.swing.JFrame {
         					.addGap(15)
         					.addComponent(jLabel2)
         					.addGap(18)
-        					.addComponent(jFileChooser1, GroupLayout.PREFERRED_SIZE, 313, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(fileChooser, GroupLayout.PREFERRED_SIZE, 313, GroupLayout.PREFERRED_SIZE)
         					.addGap(18)
         					.addComponent(playBtn, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
         			.addContainerGap())
@@ -175,17 +203,21 @@ public class NewGameSettings extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-            file = jFileChooser1.getSelectedFile();
+    /**
+     * file chooser action
+     * @param evt
+     */
+    private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+            imgfile = fileChooser.getSelectedFile();
             
             //check to make sure the file can be read.
-            if(file.isFile()){
+            if(imgfile.isFile()){
                 playBtn.setEnabled(true);
             }
             
             //set the icon of jLabel(imageDisplay) to image chosen from jFileChooser
             try{
-                imageDisplay.setIcon(new ImageIcon(ImageIO.read(file).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                imageDisplay.setIcon(new ImageIcon(ImageIO.read(imgfile).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
             }catch (IOException e){
                e.printStackTrace();
             }
@@ -193,6 +225,10 @@ public class NewGameSettings extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
+    /**
+     * play button action
+     * @param evt
+     */
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
     	//Step 1: get difficulty
     	DifficultyLevel level;
@@ -204,14 +240,18 @@ public class NewGameSettings extends javax.swing.JFrame {
 			level = DifficultyLevel.HARD;
 		}
 		
-		//Step 2: get file
-		App.setImgFileURL(file.getAbsolutePath());
+		//Step 2: get image file
+		App.setImgFileURL(imgfile.getAbsolutePath());
+		System.out.println(imgfile.getAbsolutePath());
 		
 		//Step 3: set game session
 		GameSession session = new GameSession(App.getUsername(), level, 0, null, null);
 		App.setGameSession(session);
+		
+		//Step 4: set app flag isNewGame
+		App.setNewGame(true);
         
-        //Step 4: display the game screen
+        //Step 5: display the game screen
         GameScreen gameScreen = null;
         try {
             gameScreen = new GameScreen(App.getSession());
@@ -221,53 +261,4 @@ public class NewGameSettings extends javax.swing.JFrame {
             Logger.getLogger(NewGameSettings.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_playBtnActionPerformed
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewGameSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewGameSettings().setVisible(true);
-            }
-        });
-        
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JRadioButton easyBtn;
-    private javax.swing.JRadioButton hardBtn;
-    private javax.swing.JLabel imageDisplay;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JRadioButton mediumBtn;
-    private javax.swing.JButton playBtn;
-    // End of variables declaration//GEN-END:variables
 }
