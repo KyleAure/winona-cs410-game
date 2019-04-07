@@ -1,6 +1,6 @@
 package edu.winona.cs.app;
 
-import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.component.*;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.db.GameSettingsTable;
 import edu.winona.cs.db.UserTable;
@@ -29,6 +29,12 @@ public class LoginScreen extends JFrame {
 	
 	//Database Manager
 	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
+        
+        //Authentication
+        AuthenticationHash authentication = new AuthenticationHash();
+        String salt;
+        String hash;
+        Boolean isVerified;
 
 	/**
 	 * Constructor for the LoginScreen.
@@ -216,8 +222,12 @@ public class LoginScreen extends JFrame {
        //STEP 1: Get UserTable and Verify User
        UserTable ut = dbm.getUserTable();
        String username = usernameInput.getText().trim();
-       //FIXME We should pass the hashed password to database instead of string.
-       boolean result = ut.verifyUser(username, new String(passwordInput.getPassword()));
+       
+       //authenticate
+       salt = authentication.generateSalt();
+       hash = authentication.hashPassword(new String(passwordInput.getPassword()), salt);
+       
+       boolean result = ut.verifyUser(username, new String(hash));
        
        //Step 2: Clear password field for security
        passwordInput.setText("");
@@ -260,8 +270,13 @@ public class LoginScreen extends JFrame {
         try {
             UserTable ut = dbm.getUserTable();
             username = signupInput.getText().trim();
-            //FIXME we should be passing the hashed password here instead of the cleartext password.
-            success = ut.createUser(username, new String(passwordSignupInput.getPassword()));
+
+            //authenticate
+            salt = authentication.generateSalt();
+            hash = authentication.hashPassword(new String(passwordSignupInput.getPassword()), salt);
+            
+            //create user with hashed password
+            success = ut.createUser(username, new String(hash));
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(null, "That username has already been taken!");
         }
