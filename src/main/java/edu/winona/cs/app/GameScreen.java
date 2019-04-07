@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 public class GameScreen extends JFrame {
 
     private static final long serialVersionUID = -2097350155286375640L;
-    public static final int WINDOW_MIN_X = 240;
-    public static final int WINDOW_MIN_Y = 200;
+    public static final int WINDOW_MIN_X = 400;
+    public static final int WINDOW_MIN_Y = 350;
 
     public static int COLS = 4;
     public static int ROWS = 4;
@@ -35,8 +35,7 @@ public class GameScreen extends JFrame {
 
     public static int NUMBER_OF_CELLS = ROWS * COLS;
 
-    private final JFrame frame;
-    private final JFrame frame2;
+    //private final JFrame frame;
     private final List<Cell> buttons = new ArrayList<>();
     private final List<Cell> correct = new ArrayList<>();
     private Cell emptyButton;
@@ -74,14 +73,12 @@ public class GameScreen extends JFrame {
     	ROWS = level.getDifficulty();
 
         //set up window
-        frame = new JFrame("Puzzle Slider Game");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(WINDOW_MIN_X, WINDOW_MIN_Y));
-        frame.setLayout(new GridLayout(ROWS, COLS, HGAP, VGAP));
-
-        frame2 = new JFrame("Game Options");
-        frame2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame2.setMinimumSize(new Dimension(375, 60));
+        //frame = new JFrame("Puzzle Slider Game");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(WINDOW_MIN_X, WINDOW_MIN_Y));
+        this.setLayout(new GridLayout(ROWS, COLS, HGAP, VGAP));
+        this.setJMenuBar(jMenuBar1);
+        
 
         //calculate number of cells
         NUMBER_OF_CELLS = ROWS * COLS;
@@ -118,14 +115,14 @@ public class GameScreen extends JFrame {
         //remove the last cell
         emptyButton = buttons.get(NUMBER_OF_CELLS - 1);
 
-        frame.setVisible(true);
-        frame.pack();
+        this.setVisible(true);
+        this.pack();
+        
 
         setVictoryCondition();
 
         initComponents();
-        buildButtons();
-        frame.add(frame2);
+        //frame.add(frame2);
 
         
         //Save initial game session
@@ -151,7 +148,7 @@ public class GameScreen extends JFrame {
                 }
         );
         buttons.add(c);
-        frame.add(c);
+        this.add(c);
     }
 
     private boolean checkNeighbor(Cell c) {
@@ -221,7 +218,61 @@ public class GameScreen extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        optionsMenu = new javax.swing.JMenu();
+        play = new javax.swing.JMenuItem();
+        save = new javax.swing.JMenuItem();
+        settings = new javax.swing.JMenuItem();
+        mainMenu = new javax.swing.JMenuItem();
+        restart = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        optionsMenu.setText("File");
+
+        play.setText("Play");
+        play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(play);
+
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(save);
+
+        settings.setText("Settings");
+        settings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(settings);
+
+        mainMenu.setText("Main Menu");
+        mainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainMenuActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(mainMenu);
+
+        restart.setText("Restart");
+        restart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(restart);
+
+        jMenuBar1.add(optionsMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,55 +282,21 @@ public class GameScreen extends JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 278, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void buildButtons() {
-
-        JPanel main = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
-        JPanel panel1 = new JPanel();
-
-        JButton Play = new javax.swing.JButton();
-        JButton Save = new javax.swing.JButton();
-        JButton Settings = new javax.swing.JButton();
-        JButton mainMenu = new javax.swing.JButton();
-        JButton Restart = new javax.swing.JButton();
-
-        panel1.add(Play);
-        panel1.add(Save);
-        panel1.add(Settings);
-        panel1.add(mainMenu);
-        panel1.add(Restart);
-
-        main.add(panel1);
-
-        main.setVisible(true);
-
-        frame2.add(main);
-        frame2.setVisible(true);
-
-        //frame.add(main);
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Play.setText("Play");
-        Play.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PlayActionPerformed(evt);
-            }
-
-            private void PlayActionPerformed(ActionEvent evt) {
-                System.out.print("Play");
+    private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
+        // TODO add your handling code here:
+        System.out.print("Play");
                 randomize.randomize(imageList);
                 //set icons for each button
                 assignIcons();
-                Play.setEnabled(false);
-            }
-        });
+                
+        
+    }//GEN-LAST:event_playActionPerformed
 
         Save.setText("Save");
         Save.addActionListener(new java.awt.event.ActionListener() {
@@ -339,8 +356,10 @@ public class GameScreen extends JFrame {
                 mainMenuActionPerformed(evt);
             }
 
-            private void mainMenuActionPerformed(ActionEvent evt) {
-                System.out.print("Main Menu");
+    private void mainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuActionPerformed
+        // TODO add your handling code here:
+        
+       System.out.print("Main Menu");
                 int result = JOptionPane.showConfirmDialog((Component) null, "Save before returning to main menu?",
                         "alert", JOptionPane.YES_NO_CANCEL_OPTION);
 
@@ -348,29 +367,24 @@ public class GameScreen extends JFrame {
                     //TODO: save logic
 
                     //close game screen and open menu
-                    frame.dispose();
-                    frame2.dispose();
+                    this.dispose();
+                   
                     MainMenuScreen menu = new MainMenuScreen();
                     menu.setVisible(true);
                 } else if (result == JOptionPane.NO_OPTION) {
                     //don't save
                     //close game screen and open menu
-                    frame.dispose();
-                    frame2.dispose();
+                    this.dispose();
+                   
                     MainMenuScreen menu = new MainMenuScreen();
                     menu.setVisible(true);
                 }
-            }
-        });
+    }//GEN-LAST:event_mainMenuActionPerformed
 
-        Restart.setText("Restart");
-        Restart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RestartActionPerformed(evt);
-            }
-
-            private void RestartActionPerformed(ActionEvent evt) {
-                System.out.print("Restart");
+    private void restartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartActionPerformed
+        // TODO add your handling code here:
+        
+        System.out.print("Restart");
                 int result = JOptionPane.showConfirmDialog((Component) null, "Are you sure you'd like to restart the current game?",
                         "alert", JOptionPane.OK_CANCEL_OPTION);
 
@@ -378,13 +392,10 @@ public class GameScreen extends JFrame {
                     //restart logic
                     imageList = keyList;
                     assignIcons();
-                    Play.setEnabled(true);
+                    play.setEnabled(true);
                 }
-            }
-        });
+    }//GEN-LAST:event_restartActionPerformed
 
-        pack();
-    }// </editor-fold> 
 
     /**
      * @param args the command line arguments
@@ -427,5 +438,12 @@ public class GameScreen extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mainMenu;
+    private javax.swing.JMenu optionsMenu;
+    private javax.swing.JMenuItem play;
+    private javax.swing.JMenuItem restart;
+    private javax.swing.JMenuItem save;
+    private javax.swing.JMenuItem settings;
     // End of variables declaration//GEN-END:variables
 }
