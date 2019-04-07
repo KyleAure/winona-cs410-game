@@ -219,7 +219,6 @@ public class Settings extends JFrame implements ChangeListener {
      * @param e
      */
     private void btnSubmitActionPerformed(ActionEvent e) {
-		//TODO add button handeling code here.
 		//Step 1: get color - color is auto updated when user selects a new color
 		//Step 2: get difficulty
 		if(rdbtnEasy.isSelected()) {
@@ -246,7 +245,6 @@ public class Settings extends JFrame implements ChangeListener {
     }
 	
     /**
-     * TODO get rid of this
      * @param args the command line arguments
      */
     public static void main(String args[]) {

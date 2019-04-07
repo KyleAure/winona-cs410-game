@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DifficultyLevel {
+         TEST(3),
 	 EASY(4),
 	 MEDIUM(5),
 	 HARD(6);
