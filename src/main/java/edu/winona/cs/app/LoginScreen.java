@@ -30,11 +30,11 @@ public class LoginScreen extends JFrame {
 	//Database Manager
 	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
         
-        //Authentication
-        AuthenticationHash authentication = new AuthenticationHash();
-        String salt;
-        String hash;
-        Boolean isVerified;
+    //Authentication
+    AuthenticationHash authentication = new AuthenticationHash();
+    String salt;
+    String hash;
+    Boolean isVerified;
 
 	/**
 	 * Constructor for the LoginScreen.
