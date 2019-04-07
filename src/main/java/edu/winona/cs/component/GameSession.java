@@ -68,6 +68,10 @@ public class GameSession implements Serializable {
     public void setClickCount(int clickCount) {
         this.clickCount = clickCount;
     }
+    
+    public void incrementClick() {
+    	clickCount++;
+    }
 
     public void setFileURL(String fileURL) {
         this.fileURL = fileURL;
@@ -76,9 +80,17 @@ public class GameSession implements Serializable {
     public void setImageList(List<BufferedImage> imageList) {
         this.imageList = imageList;
     }
+    
+    public List<BufferedImage> getImageList() {
+    	return imageList;
+    }
 
     public void setKeyList(List<BufferedImage> keyList) {
         this.keyList = keyList;
+    }
+    
+    public List<BufferedImage> getKeyList() {
+    	return keyList;
     }
 
     /**

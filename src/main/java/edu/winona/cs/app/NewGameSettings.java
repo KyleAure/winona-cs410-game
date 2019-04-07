@@ -4,17 +4,21 @@ package edu.winona.cs.app;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.winona.cs.component.GameSession;
 import edu.winona.cs.gamelogic.DifficultyLevel;
 
 
@@ -38,7 +42,16 @@ public class NewGameSettings extends javax.swing.JFrame {
      * Creates new form NewGameSettings
      */
     public NewGameSettings() {
-        initComponents();
+    	
+    	initComponents();
+    	
+        //set background color to user's choice
+        Container a = NewGameSettings.this.getContentPane();
+        if(App.isUser()) {
+            a.setBackground(App.getSettings().getBackgroundColor());
+        } else {
+        	a.setBackground(Color.pink);
+        }
         
         //add radio buttons to the button group
         buttonGroup.add(easyBtn);
@@ -47,15 +60,6 @@ public class NewGameSettings extends javax.swing.JFrame {
         
         //automatically set the playButton to be unclickable
         playBtn.setEnabled(false);
-        
-        
-        Container a = NewGameSettings.this.getContentPane();
-        a.setBackground(Color.PINK);
-        
-        Container c = NewGameSettings.this.playBtn;
-        c.setBackground(Color.RED);
-     
-   
     }
 
     /**
@@ -73,7 +77,7 @@ public class NewGameSettings extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser1 = new javax.swing.JFileChooser("./src/main/resources");
         imageDisplay = new javax.swing.JLabel();
         playBtn = new javax.swing.JButton();
 
@@ -190,28 +194,32 @@ public class NewGameSettings extends javax.swing.JFrame {
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
-		//Step 1: get difficulty
+    	//Step 1: get difficulty
+    	DifficultyLevel level;
 		if(easyBtn.isSelected()) {
-			App.setDifficultyLevel(DifficultyLevel.EASY);
+			level = DifficultyLevel.EASY;
 		} else if (mediumBtn.isSelected()) {
-			App.setDifficultyLevel(DifficultyLevel.MEDIUM);
+			level = DifficultyLevel.MEDIUM;
 		} else {
-			App.setDifficultyLevel(DifficultyLevel.HARD);
+			level = DifficultyLevel.HARD;
 		}
 		
 		//Step 2: get file
 		App.setImgFileURL(file.getAbsolutePath());
 		
+		//Step 3: set game session
+		GameSession session = new GameSession(App.getUsername(), level, 0, null, null);
+		App.setGameSession(session);
         
-        //Step 3: display the game screen
-            GameScreen gameScreen = null;
+        //Step 4: display the game screen
+        GameScreen gameScreen = null;
         try {
-            gameScreen = new GameScreen();
-        } catch (IOException ex) {
-            Logger.getLogger(NewGameSettings.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            gameScreen = new GameScreen(App.getSession());
             gameScreen.setVisible(true);
             this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(NewGameSettings.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_playBtnActionPerformed
     
     /**

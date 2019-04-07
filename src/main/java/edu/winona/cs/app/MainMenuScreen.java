@@ -250,7 +250,7 @@ public class MainMenuScreen extends JFrame {
 			}
           
         	//Step 1.3: Open Game Screen
-        	GameScreen game = new GameScreen();
+        	GameScreen game = new GameScreen(App.getSession());
         	game.setVisible(true);
     		
     	} else {

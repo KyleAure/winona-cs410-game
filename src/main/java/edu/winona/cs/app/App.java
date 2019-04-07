@@ -18,13 +18,10 @@ public class App {
 	
 	//Used to keep track of username if user is logged in.
 	private static String username = null; 
-	
 	private static GameSettings settings = null;
-	
 	private static GameSession session = null;
-	
 	private static String imageURL = null;
-	
+	private static boolean isNewGame = true;
 
 	/**
 	 * Main Method - Launches LoginScreen.
@@ -104,7 +101,7 @@ public class App {
 	 * @param level - DifficultyLevel
 	 */
 	public static void setDifficultyLevel(DifficultyLevel level) {
-		session.setDifficulty(level);;
+		session.setDifficulty(level);
 	}
 	
 	/**
@@ -133,5 +130,13 @@ public class App {
 	
 	public static void setGameSession(GameSession session) {
 		App.session = session;
+	}
+
+	public static boolean isNewGame() {
+		return isNewGame;
+	}
+
+	public static void setNewGame(boolean isNewGame) {
+		App.isNewGame = isNewGame;
 	}
 }
