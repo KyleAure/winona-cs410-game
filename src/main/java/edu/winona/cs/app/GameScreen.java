@@ -311,8 +311,8 @@ public class GameScreen extends javax.swing.JFrame {
 
             private void SettingsActionPerformed(ActionEvent evt) {
                 System.out.print("Settings");
-                GameSettingsMenu settings = new GameSettingsMenu();
-                settings.setVisible(true);
+                //GameSettingsMenu settings = new GameSettingsMenu();
+                //settings.setVisible(true);
             }
         });
 
