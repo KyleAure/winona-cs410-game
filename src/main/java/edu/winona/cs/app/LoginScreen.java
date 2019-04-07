@@ -55,6 +55,9 @@ public class LoginScreen extends JFrame {
         Container d = LoginScreen.this.signupBtn;
         d.setBackground(Color.PINK);
         
+        Container e = LoginScreen.this.jTextPane1;
+        e.setBackground(Color.ORANGE);
+        
     }
 
     /**
@@ -65,22 +68,15 @@ public class LoginScreen extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
         passwordInput = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         usernameInput = new javax.swing.JTextField();
         guestLoginBtn = new javax.swing.JButton();
-        signupInput = new javax.swing.JTextField();
-        passwordSignupInput = new javax.swing.JPasswordField();
         signupBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         passwordInput.setText("password");
         passwordInput.setToolTipText("");
@@ -114,21 +110,6 @@ public class LoginScreen extends JFrame {
             }
         });
 
-        signupInput.setText("Enter username");
-        signupInput.setOpaque(true);
-        signupInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                signupInputFocusGained(evt);
-            }
-        });
-
-        passwordSignupInput.setText("password");
-        passwordSignupInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                passwordSignupInputFocusGained(evt);
-            }
-        });
-
         signupBtn.setFont(new java.awt.Font("Noteworthy", 0, 18)); // NOI18N
         signupBtn.setText("SIGN UP");
         signupBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -140,75 +121,48 @@ public class LoginScreen extends JFrame {
         jScrollPane1.setBorder(null);
 
         jTextPane1.setEditable(false);
-        jTextPane1.setBackground(new java.awt.Color(255, 204, 102));
         jTextPane1.setBorder(null);
         jTextPane1.setFont(new java.awt.Font("Noteworthy", 1, 24)); // NOI18N
-        jTextPane1.setText("Returning Users:");
+        jTextPane1.setText("Puzzle Slider");
         jScrollPane1.setViewportView(jTextPane1);
-
-        jTextPane2.setEditable(false);
-        jTextPane2.setBackground(new java.awt.Color(255, 204, 102));
-        jTextPane2.setBorder(null);
-        jTextPane2.setFont(new java.awt.Font("Noteworthy", 1, 24)); // NOI18N
-        jTextPane2.setText("Create an account: ");
-        jScrollPane2.setViewportView(jTextPane2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(passwordInput)
-                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(usernameInput)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
-                .addGap(42, 42, 42)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addComponent(guestLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(passwordSignupInput)
+                            .addComponent(passwordInput)
+                            .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(usernameInput, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                             .addComponent(signupBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(signupInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(guestLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(signupInput, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(passwordSignupInput, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(signupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                        .addComponent(guestLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(signupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(guestLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -269,11 +223,11 @@ public class LoginScreen extends JFrame {
         //Step 2: Try to create user, if exception warn user to retry.
         try {
             UserTable ut = dbm.getUserTable();
-            username = signupInput.getText().trim();
+            username = usernameInput.getText().trim();
 
             //authenticate
             salt = authentication.generateSalt();
-            hash = authentication.hashPassword(new String(passwordSignupInput.getPassword()), salt);
+            hash = authentication.hashPassword(new String(passwordInput.getPassword()), salt);
             
             //create user with hashed password
             success = ut.createUser(username, new String(hash));
@@ -322,14 +276,6 @@ public class LoginScreen extends JFrame {
         passwordInput.setText("");
     }//GEN-LAST:event_passwordInputFocusGained
 
-    private void signupInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signupInputFocusGained
-        signupInput.setText("");
-    }//GEN-LAST:event_signupInputFocusGained
-
-    private void passwordSignupInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordSignupInputFocusGained
-        passwordSignupInput.setText("");
-    }//GEN-LAST:event_passwordSignupInputFocusGained
-
     /**
      * Main Method.
      * TODO: Decide if we need a main method in this class.  This frame should be invoked via App.java
@@ -370,15 +316,10 @@ public class LoginScreen extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton guestLoginBtn;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField passwordInput;
-    private javax.swing.JPasswordField passwordSignupInput;
     private javax.swing.JButton signupBtn;
-    private javax.swing.JTextField signupInput;
     public javax.swing.JTextField usernameInput;
     // End of variables declaration//GEN-END:variables
 }
