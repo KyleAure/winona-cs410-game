@@ -172,7 +172,6 @@ public class NewGameSettings extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
             file = jFileChooser1.getSelectedFile();
             
             //check to make sure the file can be read.
@@ -201,7 +200,7 @@ public class NewGameSettings extends javax.swing.JFrame {
 		}
 		
 		//Step 2: get file
-		App.setFileURL(file.getAbsolutePath());
+		App.setImgFileURL(file.getAbsolutePath());
 		
         
         //Step 3: display the game screen

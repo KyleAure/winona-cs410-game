@@ -1,6 +1,8 @@
 package edu.winona.cs.app;
 
 import edu.winona.cs.gamelogic.Cell;
+import edu.winona.cs.component.GameSession;
+import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.gamelogic.AdjacencyListMaker;
 import edu.winona.cs.gamelogic.DifficultyLevel;
 import edu.winona.cs.gamelogic.Randomize;
@@ -10,7 +12,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GameScreen extends javax.swing.JFrame {
+public class GameScreen extends JFrame {
 
     private static final long serialVersionUID = -2097350155286375640L;
     public static final int WINDOW_MIN_X = 240;
@@ -26,8 +30,8 @@ public class GameScreen extends javax.swing.JFrame {
 
     public static int COLS = 4;
     public static int ROWS = 4;
-    public static int HGAP = 3;
-    public static int VGAP = 3;
+    public static final int  HGAP = 1;
+    public static final int  VGAP = 1;
 
     public static int NUMBER_OF_CELLS = ROWS * COLS;
 
@@ -39,20 +43,20 @@ public class GameScreen extends javax.swing.JFrame {
 
     private int movesCounter;
     private int levelInt;
-    private DifficultyLevel level;
+    private DifficultyLevel level = App.getDifficultyLevel();
 
     //image/game processing
-    List<BufferedImage> imageList = new ArrayList<>();
-    List<BufferedImage> keyList = imageList;
+    public List<BufferedImage> imageList = new ArrayList<>();
+    public List<BufferedImage> keyList = imageList;
     ImageProcessor image = new ImageProcessor();
     AdjacencyListMaker adjacency = new AdjacencyListMaker();
-    List<Space> spaces = new ArrayList();
     Randomize randomize = new Randomize();
+    GameSession session;
 
     //database
-    //DatabaseManager dbm = new DatabaseManager();
+    private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
     /**
-     * Creates new form GUI TODO: get level input
+     * Creates new form GUI
      */
     public GameScreen() throws IOException {
     	//Step 1: Set window color
@@ -65,35 +69,9 @@ public class GameScreen extends javax.swing.JFrame {
             }
     	}
 
-        //TODO: temporary, fix input of difficulty
-        //levelInt = level.EASY.getDifficulty();
         //set rows and columns
-        switch (5) {
-            case 2:
-                COLS = 2;
-                ROWS = 2;
-                HGAP = 1;
-                VGAP = 1;
-                break;
-            case 3:
-                COLS = 3;
-                ROWS = 3;
-                HGAP = 2;
-                VGAP = 2;
-                break;
-            case 4:
-                COLS = 4;
-                ROWS = 4;
-                HGAP = 3;
-                VGAP = 3;
-                break;
-            case 5:
-                COLS = 5;
-                ROWS = 5;
-                HGAP = 4;
-                VGAP = 4;
-                break;
-        }
+    	COLS = level.getDifficulty();
+    	ROWS = level.getDifficulty();
 
         //set up window
         frame = new JFrame("Puzzle Slider Game");
@@ -111,8 +89,8 @@ public class GameScreen extends javax.swing.JFrame {
         File file;
 
         //filechooser
-        if(App.isFileSet()) {
-        	file = new File(App.getFileURL());
+        if(App.isImgFileSet()) {
+        	file = new File(App.getImgFileURL());
         } else {
         	JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
             //int returnVal = -1;
@@ -129,9 +107,8 @@ public class GameScreen extends javax.swing.JFrame {
         //assign file
         image.assignImage(file);
 
-        //TODO: change 4, 9, 16, or 25 to difficulty number
         //divide image
-        imageList = image.divideImage(25);
+        imageList = image.divideImage(level.getDifficulty() * level.getDifficulty());
 
         createCellsList();
 
@@ -146,11 +123,14 @@ public class GameScreen extends javax.swing.JFrame {
 
         setVictoryCondition();
 
-        //imageList = randomize.randomize(imageList);
         initComponents();
         buildButtons();
         frame.add(frame2);
 
+        
+        //Save initial game session
+        session = new GameSession(App.getUsername(), App.getDifficultyLevel(), movesCounter, imageList, keyList);
+        App.setGameSession(session);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -174,7 +154,6 @@ public class GameScreen extends javax.swing.JFrame {
         frame.add(c);
     }
 
-    //TODO: replace, doesn't work with difficulties besides medium
     private boolean checkNeighbor(Cell c) {
         int x = Math.abs(c.getCol() - emptyButton.getCol());
         int y = Math.abs(c.getRow() - emptyButton.getRow());
@@ -187,12 +166,6 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     private void swap(Cell c) {
-
-        // swap c text and empty
-        //String tmpString = emptyButton.getText();
-        //emptyButton.setText(c.getText());
-        //c.setText(tmpString);
-        // swap c icon and empty
         Icon tmpIcon = emptyButton.getIcon();
         emptyButton.setIcon(c.getIcon());
         c.setIcon(tmpIcon);
@@ -212,7 +185,7 @@ public class GameScreen extends javax.swing.JFrame {
     //TODO: not working
     private void checkVictory() {
         for (int i = 0; i < NUMBER_OF_CELLS; i++) {
-            if (!(buttons.get(i).getText().equals(correct.get(i).getIcon()))) {
+            if (!(buttons.get(i).getIcon().equals(correct.get(i).getIcon()))) {
                 return;
             }
         }
@@ -233,6 +206,11 @@ public class GameScreen extends javax.swing.JFrame {
         for (Integer i = NUMBER_OF_CELLS - 1; i >= 0; i--) {
             createCell(i);
         }
+    }
+
+    public void setSessionDetails() {
+    	session = new GameSession(App.getUsername(), App.getDifficultyLevel(), movesCounter, imageList, keyList);
+    	App.setGameSession( session );
     }
 
     /**
@@ -311,9 +289,34 @@ public class GameScreen extends javax.swing.JFrame {
 
             private void SaveActionPerformed(ActionEvent evt) {
                 System.out.print("Save");
-                //TODO: save logic
-                JOptionPane.showMessageDialog(null, "Game saved successfully",
-                        "Saved Game Confirmation", 1);
+
+                //save session: score, keylist, imagelist
+                setSessionDetails();
+
+                //create a serialized file
+                try {
+                    // create a new file with an ObjectOutputStream
+                    File file = new File(App.getUsername() + ".ser");
+
+                    //TODO: delete
+                    System.out.println("BEFORE: " + file.toString());
+
+                    FileOutputStream out = new FileOutputStream(file);
+                    try (ObjectOutputStream oout = new ObjectOutputStream(out)) {
+                        oout.writeObject(session);
+                    }
+
+                    //TODO: delete
+                    System.out.println("AFTER: " + file.toString());
+
+                    //add the serialized file to the database
+                    dbm.getSaveStateTable().createSaveState(App.getUsername(), file);
+
+                    JOptionPane.showMessageDialog(null, "Game saved successfully",
+                            "Saved Game Confirmation", 1);
+
+                } catch (HeadlessException | IOException ex) {
+                }
             }
         });
 
@@ -325,8 +328,8 @@ public class GameScreen extends javax.swing.JFrame {
 
             private void SettingsActionPerformed(ActionEvent evt) {
                 System.out.print("Settings");
-                //GameSettingsMenu settings = new GameSettingsMenu();
-                //settings.setVisible(true);
+                Settings settings = new Settings();
+                settings.setVisible(true);
             }
         });
 

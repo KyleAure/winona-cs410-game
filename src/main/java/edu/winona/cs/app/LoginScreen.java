@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
  * Login to an existing account,
  * or JUST PLAY!
  * 
- * TODO: Maybe instead of having 4 fields (2 username and 2 password) we could
  * just use 1 username field and 1 password field.  Then we just have a Create Account
  * or Login button each of which use the same username/password fields.
  * Slimmer design?

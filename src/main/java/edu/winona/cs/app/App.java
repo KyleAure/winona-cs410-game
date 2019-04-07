@@ -2,6 +2,7 @@ package edu.winona.cs.app;
 
 import java.awt.Color;
 
+import edu.winona.cs.component.GameSession;
 import edu.winona.cs.component.GameSettings;
 import edu.winona.cs.gamelogic.DifficultyLevel;
 
@@ -18,12 +19,11 @@ public class App {
 	//Used to keep track of username if user is logged in.
 	private static String username = null; 
 	
-	//Used to keep track of current users game settings
 	private static GameSettings settings = null;
-	private static DifficultyLevel level = null;
 	
-	//Used to keep track of file path 
-	private static String fileURL = null;
+	private static GameSession session = null;
+	
+	private static String imageURL = null;
 	
 
 	/**
@@ -96,7 +96,7 @@ public class App {
 	 * @return
 	 */
 	public static DifficultyLevel getDifficultyLevel() {
-		return level;
+		return session.getDifficulty();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class App {
 	 * @param level - DifficultyLevel
 	 */
 	public static void setDifficultyLevel(DifficultyLevel level) {
-		App.level = level;
+		session.setDifficulty(level);;
 	}
 	
 	/**
@@ -112,18 +112,26 @@ public class App {
 	 * @return boolean: true = set, false = not set.
 	 */
 	public static boolean isDifficultyLevelSet() {
-		return level != null;
+		return session.getDifficulty() != null;
 	}
 
-	public static String getFileURL() {
-		return fileURL;
+	public static String getImgFileURL() {
+		return imageURL;
 	}
 
-	public static void setFileURL(String fileURL) {
-		App.fileURL = fileURL;
+	public static void setImgFileURL(String fileURL) {
+		App.imageURL = fileURL;
 	}
 	
-	public static boolean isFileSet() {
-		return fileURL != null;
+	public static boolean isImgFileSet() {
+		return imageURL != null;
+	}
+	
+	public static GameSession getSession() {
+		return session;
+	}
+	
+	public static void setGameSession(GameSession session) {
+		App.session = session;
 	}
 }

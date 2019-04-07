@@ -1,12 +1,15 @@
 package edu.winona.cs.app;
 
+import edu.winona.cs.component.GameSession;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.db.HighScoreTable;
 import edu.winona.cs.db.SaveStateTable;
 
 import java.awt.Container;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -234,13 +237,21 @@ public class MainMenuScreen extends JFrame {
         	File saveState = sst.getSaveState(App.getUsername());
         	
         	//Step 1.2
-        	//TODO file should be a serialized file
-        	//TODO determine what data needs to be serialized and saved and how to load it here!
-        	
+            FileInputStream fileInputStream = new FileInputStream(saveState.getAbsolutePath());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            try {
+				GameSession gs = (GameSession) objectInputStream.readObject();
+				App.setGameSession(gs);
+			} catch (ClassNotFoundException e) {
+				
+				e.printStackTrace();
+			} finally {
+				objectInputStream.close(); 
+			}
+          
         	//Step 1.3: Open Game Screen
         	GameScreen game = new GameScreen();
         	game.setVisible(true);
-        	//TODO determine if we want to keep main menu open in background?
     		
     	} else {
     		JOptionPane.showMessageDialog(null, "You need to be logged in to load a saved game.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
