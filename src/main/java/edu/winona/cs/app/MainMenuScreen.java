@@ -216,8 +216,8 @@ public class MainMenuScreen extends JFrame {
     	    this.dispose();
     	}
     	
-    	//Step 3: if the user is loading a game load it
-    	//TODO: Figure out how to load a game.
+    	//Step 3: Dispose this
+    	this.dispose();
     	
     }//GEN-LAST:event_playGameBtnActionPerformed
 
@@ -245,6 +245,9 @@ public class MainMenuScreen extends JFrame {
     	} else {
     		JOptionPane.showMessageDialog(null, "You need to be logged in to load a saved game.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
     	}
+    	
+    	//Step 2: dispose this
+    	this.dispose();
     	
         
     }//GEN-LAST:event_loadBtnActionPerformed
@@ -288,6 +291,9 @@ public class MainMenuScreen extends JFrame {
     		JOptionPane.showMessageDialog(null, "You need to be logged in to personalize game settings.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
     	}
     	
+    	//Step 2: Dispose this
+    	this.dispose();
+    	
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
     /**
@@ -305,6 +311,9 @@ public class MainMenuScreen extends JFrame {
         //Step 3: Open login screen
         LoginScreen ls = new LoginScreen();
         ls.setVisible(true);
+        
+        //Step 4: dispose this
+        this.dispose();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     /**
