@@ -1,11 +1,9 @@
 package edu.winona.cs.component;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Optional;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
@@ -22,8 +20,6 @@ import javax.crypto.spec.PBEKeySpec;
  * @author Tristin Harvell
  */
 public class AuthenticationHash {
-
-    private static final SecureRandom RAND = new SecureRandom();
     private static final int ITERATIONS = 65536;
     private static final int KEY_LENGTH = 255;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
@@ -36,12 +32,10 @@ public class AuthenticationHash {
      * @return Returns the generated salt as a string.
      */
     public String generateSalt() {
-        
         //always use 5 as the salt
         int length = 5;
 
         byte[] salt = new byte[length];
-        RAND.nextBytes(salt);
 
         return Base64.getEncoder().encodeToString(salt);
     }
