@@ -1,13 +1,11 @@
 package edu.winona.cs.app;
 
-import edu.winona.cs.component.GameSettings;
 import edu.winona.cs.gamelogic.Cell;
 import edu.winona.cs.gamelogic.AdjacencyListMaker;
 import edu.winona.cs.gamelogic.DifficultyLevel;
 import edu.winona.cs.gamelogic.Randomize;
 import edu.winona.cs.gamelogic.Space;
 import edu.winona.cs.image.ImageProcessor;
-import edu.winona.cs.db.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -57,6 +55,15 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GUI TODO: get level input
      */
     public GameScreen() throws IOException {
+    	//Step 1: Set window color
+    	if(App.isSettingsSet()) {
+            Container a = GameScreen.this.getContentPane();
+            if(App.isSettingsSet()) {
+            	a.setBackground(App.getSettings().getBackgroundColor());
+            } else {
+            	a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
+            }
+    	}
 
         //TODO: temporary, fix input of difficulty
         //levelInt = level.EASY.getDifficulty();
@@ -100,17 +107,24 @@ public class GameScreen extends javax.swing.JFrame {
 
         //calculate number of cells
         NUMBER_OF_CELLS = ROWS * COLS;
+        
+        File file;
 
         //filechooser
-        JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
-        //int returnVal = -1;
-        int returnVal = jfc.showOpenDialog(this);
-        while (returnVal != JFileChooser.APPROVE_OPTION) {
-            jfc.showOpenDialog(null);
-        }
+        if(App.isFileSet()) {
+        	file = new File(App.getFileURL());
+        } else {
+        	JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
+            //int returnVal = -1;
+            int returnVal = jfc.showOpenDialog(this);
+            while (returnVal != JFileChooser.APPROVE_OPTION) {
+                jfc.showOpenDialog(null);
+            }
 
-        //get file
-        File file = jfc.getSelectedFile();
+            //get file
+            file = jfc.getSelectedFile();	
+        }
+        
 
         //assign file
         image.assignImage(file);

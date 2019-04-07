@@ -29,11 +29,12 @@ import java.awt.event.ActionListener;
  */
 public class Settings extends JFrame implements ChangeListener {
 	private static final long serialVersionUID = 598611529258548986L;
-	private Color color = Color.blue;
+	private Color color = Color.WHITE;
 	private boolean isHighScoreTracking = true;
 	private DifficultyLevel level = DifficultyLevel.EASY;
 	private JColorChooser colorChooser;
 	private JLabel lblTitle;
+	private Container a;
 	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
 	private GameSettingsTable gst = dbm.getGameSettingsTable();
 	private UserSettingsTable ust = dbm.getUserSettingsTable();
@@ -49,6 +50,12 @@ public class Settings extends JFrame implements ChangeListener {
 	 */
 	public Settings() {
 		if(App.isUser()) {
+	        a = Settings.this.getContentPane();
+	        if(App.isSettingsSet()) {
+	        	a.setBackground(App.getSettings().getBackgroundColor());
+	        } else {
+	        	a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
+	        }
 			init();
 		} else {
 			JOptionPane.showMessageDialog(null, 
@@ -78,7 +85,7 @@ public class Settings extends JFrame implements ChangeListener {
 		lblTitle = new JLabel("Game Settings");
 		lblTitle.setFont(new Font("Lucida Grande", Font.BOLD, 28));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setForeground(color);
+		lblTitle.setForeground(Color.WHITE);
 		getContentPane().add(lblTitle, BorderLayout.NORTH);
 		
 		//Tabbed Pane
@@ -203,7 +210,8 @@ public class Settings extends JFrame implements ChangeListener {
 	
     public void stateChanged(ChangeEvent e) {
         color = colorChooser.getColor();
-        lblTitle.setForeground(color);
+        a.setBackground(color);
+        
     }
     
     /**
@@ -231,7 +239,10 @@ public class Settings extends JFrame implements ChangeListener {
 		gst.recordGameSetting(App.getUsername(), gs);
 		ust.recordUserDifficultyLevel(App.getUsername(), level);
 		//Step 6: close window
+		MainMenuScreen mms = new MainMenuScreen();
+		mms.setVisible(true);
 		this.dispose();
+		
     }
 	
     /**

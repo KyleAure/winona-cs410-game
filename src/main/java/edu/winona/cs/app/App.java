@@ -22,6 +22,9 @@ public class App {
 	private static GameSettings settings = null;
 	private static DifficultyLevel level = null;
 	
+	//Used to keep track of file path 
+	private static String fileURL = null;
+	
 
 	/**
 	 * Main Method - Launches LoginScreen.
@@ -110,5 +113,17 @@ public class App {
 	 */
 	public static boolean isDifficultyLevelSet() {
 		return level != null;
+	}
+
+	public static String getFileURL() {
+		return fileURL;
+	}
+
+	public static void setFileURL(String fileURL) {
+		App.fileURL = fileURL;
+	}
+	
+	public static boolean isFileSet() {
+		return fileURL != null;
 	}
 }
