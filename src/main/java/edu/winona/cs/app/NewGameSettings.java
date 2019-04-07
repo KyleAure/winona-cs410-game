@@ -11,6 +11,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import edu.winona.cs.gamelogic.DifficultyLevel;
 
 
 /**
@@ -26,7 +31,6 @@ public class NewGameSettings extends javax.swing.JFrame {
     private static final long serialVersionUID = 7664729301277149568L;
     
     boolean fileCheck = false;
-    String difficulty = "easy";
     ButtonGroup buttonGroup = new ButtonGroup();
 
     /**
@@ -46,9 +50,6 @@ public class NewGameSettings extends javax.swing.JFrame {
         
         Container a = NewGameSettings.this.getContentPane();
         a.setBackground(Color.PINK);
-        
-        Container b = NewGameSettings.this.selectBtn;
-        b.setBackground(Color.MAGENTA);
         
         Container c = NewGameSettings.this.playBtn;
         c.setBackground(Color.RED);
@@ -74,7 +75,6 @@ public class NewGameSettings extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
         imageDisplay = new javax.swing.JLabel();
-        selectBtn = new javax.swing.JButton();
         playBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,29 +83,14 @@ public class NewGameSettings extends javax.swing.JFrame {
         easyBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         easyBtn.setSelected(true);
         easyBtn.setText("Easy");
-        easyBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                easyBtnActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(mediumBtn);
         mediumBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         mediumBtn.setText("Medium");
-        mediumBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mediumBtnActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(hardBtn);
         hardBtn.setFont(new java.awt.Font("Noteworthy", 0, 14)); // NOI18N
         hardBtn.setText("Hard");
-        hardBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hardBtnActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Noteworthy", 1, 18)); // NOI18N
         jLabel1.setText("Choose your difficulty:");
@@ -121,16 +106,8 @@ public class NewGameSettings extends javax.swing.JFrame {
             }
         });
 
-        selectBtn.setFont(new java.awt.Font("Noteworthy", 1, 14)); // NOI18N
-        selectBtn.setText("SELECT");
-        selectBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectBtnActionPerformed(evt);
-            }
-        });
-
         playBtn.setFont(new java.awt.Font("Noteworthy", 1, 14)); // NOI18N
-        playBtn.setText("Let's play a " + difficulty + "game!");
+        playBtn.setText("Let's play a " + App.getDifficultyLevel() + "game!");
         playBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playBtnActionPerformed(evt);
@@ -138,84 +115,61 @@ public class NewGameSettings extends javax.swing.JFrame {
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(easyBtn)
-                            .addComponent(mediumBtn)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(hardBtn)
-                            .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(imageDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(playBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        						.addComponent(easyBtn)
+        						.addComponent(mediumBtn)
+        						.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        						.addComponent(hardBtn)))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(12)
+        					.addComponent(imageDisplay, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)))
+        			.addPreferredGap(ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
+        			.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jLabel2)
+        						.addComponent(jFileChooser1, GroupLayout.PREFERRED_SIZE, 451, GroupLayout.PREFERRED_SIZE)))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(31)
+        					.addComponent(playBtn, GroupLayout.PREFERRED_SIZE, 277, GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(easyBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mediumBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hardBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(imageDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(playBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(22)
+        					.addComponent(jLabel1)
+        					.addGap(18)
+        					.addComponent(easyBtn)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(mediumBtn)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(hardBtn)
+        					.addGap(53)
+        					.addComponent(imageDisplay, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(15)
+        					.addComponent(jLabel2)
+        					.addGap(18)
+        					.addComponent(jFileChooser1, GroupLayout.PREFERRED_SIZE, 313, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
+        					.addComponent(playBtn, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+        			.addContainerGap())
         );
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void easyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_easyBtnActionPerformed
-        // TODO add your handling code here:
-       
-        easyBtn.setSelected(true);
-        difficulty = "easy";
-        
-    }//GEN-LAST:event_easyBtnActionPerformed
-
-    private void mediumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediumBtnActionPerformed
-        // TODO add your handling code here:
-        mediumBtn.setSelected(true);
-        difficulty = "medium";
-    }//GEN-LAST:event_mediumBtnActionPerformed
-
-    private void hardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hardBtnActionPerformed
-        // TODO add your handling code here:
-        hardBtn.setSelected(true);
-        difficulty = "hard";
-    }//GEN-LAST:event_hardBtnActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
@@ -239,38 +193,16 @@ public class NewGameSettings extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
-    private void selectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectBtnActionPerformed
-        // TODO add your handling code here:
-        
-        /*if(selectBtn.getActionCommand().equals("SELECT")){
-            difficulty = buttonGroup.getSelection().toString();
-        }*/
-        
-        //if the easy button is selected, GameScreen with easy settings will display
-        if(easyBtn.isSelected()){
-        	
-            
-        }
-        //if the medium button is selected, GameScreen with medium settings will display
-        else if(mediumBtn.isSelected()){
-            
-        }
-        //if the hard button is selected, GameScreen with hard settings will display
-        else if(hardBtn.isSelected()){
-            
-        }
-        
-        //If the select button has been selected (difficulty chosen) AND the file has been read
-        //the play button is visible, else it is unclickable
-//        if(selectBtn.isSelected() &&  fileCheck){
-//            playBtn.setEnabled(true);
-//        }
-        
-            
-    }//GEN-LAST:event_selectBtnActionPerformed
-
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
         // TODO add your handling code here:
+		//Step 2: get difficulty
+		if(easyBtn.isSelected()) {
+			App.setDifficultyLevel(DifficultyLevel.EASY);
+		} else if (mediumBtn.isSelected()) {
+			App.setDifficultyLevel(DifficultyLevel.MEDIUM);
+		} else {
+			App.setDifficultyLevel(DifficultyLevel.HARD);
+		}
         
         //display the game screen
             GameScreen gameScreen = null;
@@ -281,11 +213,7 @@ public class NewGameSettings extends javax.swing.JFrame {
         }
             gameScreen.setVisible(true);
             this.dispose();
-        
     }//GEN-LAST:event_playBtnActionPerformed
-
-    
-    
     
     /**
      * @param args the command line arguments
@@ -321,8 +249,6 @@ public class NewGameSettings extends javax.swing.JFrame {
             }
         });
         
-       
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -336,6 +262,5 @@ public class NewGameSettings extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JRadioButton mediumBtn;
     private javax.swing.JButton playBtn;
-    private javax.swing.JButton selectBtn;
     // End of variables declaration//GEN-END:variables
 }
