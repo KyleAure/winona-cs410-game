@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Construction 1 for Team Project</title>
+	<title>Construction 2 for Team Project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link rel="stylesheet" href="../../assets/style.css"/>
 </head>
