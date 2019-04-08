@@ -4,6 +4,7 @@ import edu.winona.cs.gamelogic.Cell;
 import edu.winona.cs.component.GameSession;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.gamelogic.DifficultyLevel;
+import edu.winona.cs.gamelogic.MoveLogic;
 import edu.winona.cs.gamelogic.Randomize;
 import edu.winona.cs.image.ImageProcessor;
 import edu.winona.cs.log.Log;
@@ -19,22 +20,24 @@ import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameScreen extends JFrame {
-	//Serialized variable
+    //Serialized variable
+
     private static final long serialVersionUID = -2097350155286375640L;
-    
+
     //Logger
     private static final Log LOG = new Log(GameScreen.class.getName());
-    
+
     //Constants
     private static final int WINDOW_MIN_X = 400;
     private static final int WINDOW_MIN_Y = 350;
-    private static final int  HGAP = 1;
-    private static final int  VGAP = 1;
+    private static final int HGAP = 1;
+    private static final int VGAP = 1;
 
     //Difficulty variable
     public static int COLS = 4;
@@ -52,10 +55,13 @@ public class GameScreen extends JFrame {
     private ImageProcessor image = new ImageProcessor();
     private Randomize randomize = new Randomize();
     private GameSession session;
+    private int movesCounter = 0;
+    private Boolean playing = false;
+    private MoveLogic move = new MoveLogic();
 
     //Databse
     private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
-    
+
     //UI variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mainMenu;
@@ -64,56 +70,55 @@ public class GameScreen extends JFrame {
     private javax.swing.JMenuItem restart;
     private javax.swing.JMenuItem save;
     private javax.swing.JMenuItem settings;
-    
+
     /**
      * Game Screen GUI constructor
      */
     public GameScreen(GameSession session) throws IOException {
-    	initComponents();
-    	
-    	//Step 1: Set window color to users preference
-    	if(App.isSettingsSet()) {
+        initComponents();
+
+        //Step 1: Set window color to users preference
+        if (App.isSettingsSet()) {
             Container a = GameScreen.this.getContentPane();
-            if(App.isSettingsSet()) {
-            	a.setBackground(App.getSettings().getBackgroundColor());
+            if (App.isSettingsSet()) {
+                a.setBackground(App.getSettings().getBackgroundColor());
             } else {
-            	a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
+                a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
             }
-    	} else {
-    		LOG.log(LogLevel.WARNING, "App settings when entering GameScreen.");
-    	}
+        } else {
+            LOG.log(LogLevel.WARNING, "App settings when entering GameScreen.");
+        }
 
         //Step 2: set rows and columns
-    	DifficultyLevel level;
-    	if(App.isDifficultyLevelSet()) {
-    		level = App.getDifficultyLevel();
-    	} else {
-    		LOG.log(LogLevel.WARNING, "Difficulty not set when entering GameScreen. Defaulted to medium.");
-    		level = DifficultyLevel.MEDIUM;
-    	}
-    	COLS = level.getDifficulty();
-    	ROWS = level.getDifficulty();
-    	NUMBER_OF_CELLS = ROWS * COLS;
-    	
+        DifficultyLevel level;
+        if (App.isDifficultyLevelSet()) {
+            level = App.getDifficultyLevel();
+        } else {
+            LOG.log(LogLevel.WARNING, "Difficulty not set when entering GameScreen. Defaulted to EASY.");
+            level = DifficultyLevel.EASY;
+        }
+        COLS = level.getDifficulty();
+        ROWS = level.getDifficulty();
+        NUMBER_OF_CELLS = ROWS * COLS;
 
         //STEP 3: Set up JFrame
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WINDOW_MIN_X, WINDOW_MIN_Y));
         this.setLayout(new GridLayout(ROWS, COLS, HGAP, VGAP));
         this.setJMenuBar(jMenuBar1);
-        
-    	//Step 4: is new game?
-    	if(App.isNewGame()) {
-    		LOG.log(LogLevel.INFO, "New Game");
-            
-    		//STEP 4.1: create new image file
+
+        //Step 4: is new game?
+        if (App.isNewGame()) {
+            LOG.log(LogLevel.INFO, "New Game");
+
+            //STEP 4.1: create new image file
             File file;
-            
+
             //STEP 4.2: Load image 
-            if(App.isImgFileSet()) {
-            	file = new File(App.getImgFileURL());
+            if (App.isImgFileSet()) {
+                file = new File(App.getImgFileURL());
             } else {
-            	JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
+                JFileChooser jfc = new JFileChooser(new File("./src/main/resources"));
                 //int returnVal = -1;
                 int returnVal = jfc.showOpenDialog(this);
                 while (returnVal != JFileChooser.APPROVE_OPTION) {
@@ -121,53 +126,53 @@ public class GameScreen extends JFrame {
                 }
 
                 //get file
-                file = jfc.getSelectedFile();	
+                file = jfc.getSelectedFile();
             }
-            
+
             //STEP 4.3: assign image file to image object
             image.assignImage(file);
-            
+
             //STEP 4.4: divide image
             System.out.println("Number of Cells: " + NUMBER_OF_CELLS);
             session.setImageList(image.divideImage(NUMBER_OF_CELLS));
             session.setKeyList(session.getImageList());
             App.setGameSession(session);
-            
+
             System.out.println("session.getImageList" + session.getImageList().toString());
             System.out.println("session.getImageList" + App.getSession().getImageList().toString());
-            
-    	} else {
-    		LOG.log(LogLevel.INFO, "Loaded Game");
-    		session = App.getSession();
-    	}
-    	
-    	//STEP 5: Create cell list
-    	createCellsList();
-    	
-    	//STEP 6: Assign icons
-        assignIcons();
+
+        } else {
+            LOG.log(LogLevel.INFO, "Loaded Game");
+            session = App.getSession();
+        }
+
+        //STEP 5: Create cell list
+        createCellsList();
 
         //STEP 7: create empty space
         emptyButton = BUTTONS.get(NUMBER_OF_CELLS - 1);
 
+        //STEP 6: Assign icons
+        assignIcons();
+
         //STEP 8: set this screen visible
         this.setVisible(true);
         this.pack();
-        
+
         //Step 9: set victory condition
         setVictoryCondition();
     }
 
     /**
-     * Action performed when button is clicked.
-     * perform swap
+     * Action performed when button is clicked. perform swap
+     *
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
         if (checkNeighbor((Cell) e.getSource())) {
             swap((Cell) e.getSource());
             session.incrementClick();
-            checkVictory();
+            movesCounter++;
         } else {
             Toolkit.getDefaultToolkit().beep();
         }
@@ -175,17 +180,21 @@ public class GameScreen extends JFrame {
 
     /**
      * Create cell subroutine
+     *
      * @param v
      */
     private void createCell(int v) {
         Cell c = new Cell(v);
-        c.addActionListener((ActionEvent e) -> { actionPerformed(e); });
+        c.addActionListener((ActionEvent e) -> {
+            actionPerformed(e);
+        });
         BUTTONS.add(c);
         this.add(c);
     }
 
     /**
      * Check neighbor subroutine
+     *
      * @param c
      * @return
      */
@@ -202,6 +211,7 @@ public class GameScreen extends JFrame {
 
     /**
      * Swap subroutine
+     *
      * @param c
      */
     private void swap(Cell c) {
@@ -210,6 +220,7 @@ public class GameScreen extends JFrame {
         c.setIcon(tmpIcon);
         // update reference to empty button
         emptyButton = c;
+        
         checkVictory();
     }
 
@@ -223,11 +234,8 @@ public class GameScreen extends JFrame {
         CORRECT.add(new Cell(0));
     }
 
-    /**
-     * TODO: not working
-     * check victory condition subroutine
-     */
     private void checkVictory() {
+        
         for (int i = 0; i < NUMBER_OF_CELLS; i++) {
             if (!(BUTTONS.get(i).getIcon().equals(CORRECT.get(i).getIcon()))) {
                 return;
@@ -236,6 +244,8 @@ public class GameScreen extends JFrame {
 
         JOptionPane.showMessageDialog(null, "You achieved victory in " + session.getClickCount() + " moves.",
                 "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+        
+        session.saveHighScores();
     }
 
     /**
@@ -337,36 +347,31 @@ public class GameScreen extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
-        // TODO add your handling code here:
-        System.out.print("Play");
+        session = App.getSession();
         //FIXME how are we randomizing the list?
-        //List<BufferedImage> rand = randomize.randomize(session.getImageList());
-        //session.setImageList(rand);
-        //App.setGameSession(session);
+        List<BufferedImage> rand = randomize.randomize(session.getImageList());
+        session.setImageList(rand);
+        App.setGameSession(session);
         //set icons for each button
-        assignIcons();   
+        assignIcons();
+        playing = true;
     }//GEN-LAST:event_playActionPerformed
 
     private void SaveActionPerformed(ActionEvent evt) {
-        System.out.print("Save");
-        
         App.setGameSession(session);
+        saveGame();
+    }
 
+    private void saveGame() {
         //create a serialized file
         try {
             // create a new file with an ObjectOutputStream
             File file = new File(App.getUsername() + ".ser");
 
-            //TODO: delete
-            System.out.println("BEFORE: " + file.toString());
-
             FileOutputStream out = new FileOutputStream(file);
             try (ObjectOutputStream oout = new ObjectOutputStream(out)) {
                 oout.writeObject(session);
             }
-
-            //TODO: delete
-            System.out.println("AFTER: " + file.toString());
 
             //add the serialized file to the database
             dbm.getSaveStateTable().createSaveState(App.getUsername(), file);
@@ -378,53 +383,52 @@ public class GameScreen extends JFrame {
         }
     }
 
-
     //FIXME the user should not be able to change settings midway through a game.
     private void SettingsActionPerformed(ActionEvent evt) {
-        System.out.print("Settings");
-        Settings settings = new Settings();
-        settings.setVisible(true);
+        if (playing) {//game started
+            JOptionPane.showMessageDialog(null, "Unable to change setting midway through a game...",
+                    "Game Settings", 1);
+        } else {//game not started
+            Settings settings = new Settings();
+            settings.setVisible(true);
+        }
     }
 
 
     private void mainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuActionPerformed
-       System.out.print("Main Menu");
-                int result = JOptionPane.showConfirmDialog((Component) null, "Save before returning to main menu?",
-                        "alert", JOptionPane.YES_NO_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog((Component) null, "Save before returning to main menu?",
+                "alert", JOptionPane.YES_NO_CANCEL_OPTION);
 
-                if (result == JOptionPane.YES_OPTION) {
-                    //TODO: save logic
+        if (result == JOptionPane.YES_OPTION) {
+            saveGame();
 
-                    //close game screen and open menu
-                    this.dispose();
-                   
-                    MainMenuScreen menu = new MainMenuScreen();
-                    menu.setVisible(true);
-                } else if (result == JOptionPane.NO_OPTION) {
-                    //don't save
-                    //close game screen and open menu
-                    this.dispose();
-                   
-                    MainMenuScreen menu = new MainMenuScreen();
-                    menu.setVisible(true);
-                }
+            //close game screen and open menu
+            this.dispose();
+
+            MainMenuScreen menu = new MainMenuScreen();
+            menu.setVisible(true);
+        } else if (result == JOptionPane.NO_OPTION) {
+            //don't save
+            //close game screen and open menu
+            this.dispose();
+
+            MainMenuScreen menu = new MainMenuScreen();
+            menu.setVisible(true);
+        }
     }//GEN-LAST:event_mainMenuActionPerformed
 
     private void restartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartActionPerformed
-        // TODO add your handling code here:
-        
-        System.out.print("Restart");
-                int result = JOptionPane.showConfirmDialog((Component) null, "Are you sure you'd like to restart the current game?",
-                        "alert", JOptionPane.OK_CANCEL_OPTION);
 
-                if (result == JOptionPane.OK_OPTION) {
-                    //restart logic
-                	session.setImageList(session.getKeyList());
-                    assignIcons();
-                    play.setEnabled(true);
-                }
+        int result = JOptionPane.showConfirmDialog((Component) null, "Are you sure you'd like to restart the current game?",
+                "alert", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            session.setImageList(session.getKeyList());
+            assignIcons();
+            movesCounter = 0;
+            session.setClickCount(movesCounter);
+        }
     }//GEN-LAST:event_restartActionPerformed
-
 
     /**
      * @param args the command line arguments

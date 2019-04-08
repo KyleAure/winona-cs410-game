@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DifficultyLevel {
-         TEST(3),
-	 EASY(4),
-	 MEDIUM(5),
-	 HARD(6);
+         TEST(2),
+	 EASY(3),
+	 MEDIUM(4),
+	 HARD(5);
 
 	 private static final Map<Integer,DifficultyLevel> lookup = new HashMap<Integer,DifficultyLevel>();
 
