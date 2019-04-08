@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author eu3035jm
  */
+@Deprecated
 public class Space {
     
     public int spaceNumber;

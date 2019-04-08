@@ -12,6 +12,7 @@ import edu.winona.cs.log.Log.LogLevel;
 
 /**
  * Stores the location(s) of pictures uploaded by a user.
+ * This feature has been deprecated. This class should not be used.
  * 
  * Preferred usage:
  * 
@@ -23,6 +24,7 @@ import edu.winona.cs.log.Log.LogLevel;
  * @author Kyle Aure
  *
  */
+@Deprecated
 public class ImageTable implements Table{
 	private static final Log LOG = new Log(ImageTable.class.getName());
 
