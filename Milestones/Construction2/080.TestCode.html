@@ -5,7 +5,7 @@
 <p>
 	This section should also describe the testing that was not automated.
 </p>
-<h3>Automated Tests</h3>
+<h3>Non-Automated Tests</h3>
 <p>
 	<ul>
 		<li>Test login: Verify user name and password when logging into an account. Throw exceptions for invalid username/password combination.</li>
@@ -13,16 +13,22 @@
 		<li>Test load save game: test selecting a saved game from local directory, throw exception if a previous game is not found. </li>
 		<li>Test upload image: Make sure image uploaded is in correct format and size. Throw exceptions if criteria is not met.</li>
 		<li>Test pause: Validate the pause function is working and stops the timer.</li>
-	</ul>
-</p>
-<h3>Non-automated Tests</h3>
-<p>
-	<ul>
 		<li>Login GUI: Ensure that login GUI accurately notifies user of verification error, username already in use error, and closes correctly.</li>
 		<li>Main Menu GUI: Ensure that all of the main menu options work as expected, and user is able to get back to the login screen if necessary.</li>
 		<li>Game Setup GUI: Ensure that game set options display user preferences correctly, and that these settings are saved between sessions.</li>
 		<li>Game GUI: Ensure that the game GUI displays output correctly and responds to user input in an acceptable fashion.</li>
 		<li>Win Lose GUI: Ensure that the Win/Lose GUI correctly displays the high scores of the user, and the previous game session's results.</li>
+	</ul>
+</p>
+<h3>Automated Tests</h3>
+<p>
+	<ul>
+		<li>AuthenticationHash: Ensure that password hashing and verification works.</li>
+		<li>GameSettingsTable: Test that saving and getting game settings from database is successful.</li>
+		<li>HighScoreTable: Test that saving and getting high scores from database is successful.</li>
+		<li>SaveStateTable: Test that saving and getting save states from database is successful.</li>
+		<li>UserSettingsTable: Test that saving and getting user settings from database is successufl.</li>
+		<li>UserTable: Test that saving and getting user's information from database is successful.</li>
 	</ul>
 </p>
 <hr>
