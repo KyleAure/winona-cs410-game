@@ -236,6 +236,11 @@ public class MainMenuScreen extends JFrame {
     		SaveStateTable sst = dbm.getSaveStateTable();
         	File saveState = sst.getSaveState(App.getUsername());
         	
+        	if(saveState == null) {
+        		JOptionPane.showMessageDialog(null, "We were unable to locate a saved game.", "Saved Game Warning", JOptionPane.WARNING_MESSAGE);
+        		return;
+        	}
+        	
         	//Step 1.2
             FileInputStream fileInputStream = new FileInputStream(saveState.getAbsolutePath());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -243,24 +248,25 @@ public class MainMenuScreen extends JFrame {
 				GameSession gs = (GameSession) objectInputStream.readObject();
 				App.setGameSession(gs);
 			} catch (ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			} finally {
 				objectInputStream.close(); 
 			}
+            
+            //Step 1.3 notify app - not a new game
+            App.setNewGame(false);
+            
           
-        	//Step 1.3: Open Game Screen
+        	//Step 1.4: Open Game Screen
         	GameScreen game = new GameScreen(App.getSession());
         	game.setVisible(true);
+        	
+        	//Step 1.5: dispose this
+        	this.dispose();
     		
     	} else {
     		JOptionPane.showMessageDialog(null, "You need to be logged in to load a saved game.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
     	}
-    	
-    	//Step 2: dispose this
-    	this.dispose();
-    	
-        
     }//GEN-LAST:event_loadBtnActionPerformed
 
     /**
@@ -297,13 +303,13 @@ public class MainMenuScreen extends JFrame {
     	if(App.isUser()) {
     		Settings settingsMenu = new Settings();
         	settingsMenu.setVisible(true);
-        	//Do not close this window.  Game settings window will float on top.
+        	
+        	//Step 2: Dispose this
+        	this.dispose();
     	} else {
     		JOptionPane.showMessageDialog(null, "You need to be logged in to personalize game settings.", "Guest Warning", JOptionPane.WARNING_MESSAGE);
     	}
-    	
-    	//Step 2: Dispose this
-    	this.dispose();
+
     	
     }//GEN-LAST:event_gameSettingsBtnActionPerformed
 
@@ -326,42 +332,6 @@ public class MainMenuScreen extends JFrame {
         //Step 4: dispose this
         this.dispose();
     }//GEN-LAST:event_logoutBtnActionPerformed
-
-    /**
-     * TODO: Decide if we need a main method in this class.  This frame should be invoked via LoginScreen.java
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenuScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenuScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenuScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenuScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainMenuScreen().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton gameSettingsBtn;

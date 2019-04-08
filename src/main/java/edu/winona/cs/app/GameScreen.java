@@ -4,7 +4,6 @@ import edu.winona.cs.gamelogic.Cell;
 import edu.winona.cs.component.GameSession;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.gamelogic.DifficultyLevel;
-import edu.winona.cs.gamelogic.MoveLogic;
 import edu.winona.cs.gamelogic.Randomize;
 import edu.winona.cs.image.ImageProcessor;
 import edu.winona.cs.log.Log;
@@ -20,14 +19,10 @@ import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GameScreen extends JFrame {
     //Serialized variable
-
     private static final long serialVersionUID = -2097350155286375640L;
 
     //Logger
@@ -52,12 +47,11 @@ public class GameScreen extends JFrame {
     private Cell emptyButton;
 
     //image/game processing
-    private ImageProcessor image = new ImageProcessor();
+    private ImageProcessor imageProcessor = new ImageProcessor();
     private Randomize randomize = new Randomize();
     private GameSession session;
     private int movesCounter = 0;
     private Boolean playing = false;
-    private MoveLogic move = new MoveLogic();
 
     //Databse
     private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
@@ -76,17 +70,20 @@ public class GameScreen extends JFrame {
      */
     public GameScreen(GameSession session) throws IOException {
         initComponents();
+        
+        //Step 0: set session
+        this.session = session;
 
         //Step 1: Set window color to users preference
+        Container a = GameScreen.this.getContentPane();
         if (App.isSettingsSet()) {
-            Container a = GameScreen.this.getContentPane();
             if (App.isSettingsSet()) {
                 a.setBackground(App.getSettings().getBackgroundColor());
             } else {
                 a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
             }
         } else {
-            LOG.log(LogLevel.WARNING, "App settings when entering GameScreen.");
+            LOG.log(LogLevel.WARNING, "App settings not set when entering GameScreen.");
         }
 
         //Step 2: set rows and columns
@@ -102,7 +99,6 @@ public class GameScreen extends JFrame {
         NUMBER_OF_CELLS = ROWS * COLS;
 
         //STEP 3: Set up JFrame
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WINDOW_MIN_X, WINDOW_MIN_Y));
         this.setLayout(new GridLayout(ROWS, COLS, HGAP, VGAP));
         this.setJMenuBar(jMenuBar1);
@@ -130,17 +126,12 @@ public class GameScreen extends JFrame {
             }
 
             //STEP 4.3: assign image file to image object
-            image.assignImage(file);
+            imageProcessor.assignImage(file);
 
             //STEP 4.4: divide image
-            System.out.println("Number of Cells: " + NUMBER_OF_CELLS);
-            session.setImageList(image.divideImage(NUMBER_OF_CELLS));
+            session.setImageList(imageProcessor.divideImage(NUMBER_OF_CELLS));
             session.setKeyList(session.getImageList());
             App.setGameSession(session);
-
-            System.out.println("session.getImageList" + session.getImageList().toString());
-            System.out.println("session.getImageList" + App.getSession().getImageList().toString());
-
         } else {
             LOG.log(LogLevel.INFO, "Loaded Game");
             session = App.getSession();
@@ -161,6 +152,22 @@ public class GameScreen extends JFrame {
 
         //Step 9: set victory condition
         setVictoryCondition();
+        
+        //Step 10: set close operation
+        addWindowListener(new WindowAdapter() {
+            @Override
+			public void windowClosing(WindowEvent e) {
+            	super.windowClosing(e);
+                int result = JOptionPane.showConfirmDialog(null, "Save before exiting?",
+                        "alert", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    saveGame();
+                } else if (result == JOptionPane.CANCEL_OPTION) {
+                	return;
+                }
+                System.exit(0);
+            }
+        });
     }
 
     /**
@@ -234,18 +241,35 @@ public class GameScreen extends JFrame {
         CORRECT.add(new Cell(0));
     }
 
+    /**
+     * Check victory subroutine
+     */
     private void checkVictory() {
-        
         for (int i = 0; i < NUMBER_OF_CELLS; i++) {
+        	if (BUTTONS.get(i).getIcon() == null) {
+        		//skip hole
+        		return;
+        	}
             if (!(BUTTONS.get(i).getIcon().equals(CORRECT.get(i).getIcon()))) {
                 return;
             }
         }
-
-        JOptionPane.showMessageDialog(null, "You achieved victory in " + session.getClickCount() + " moves.",
-                "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
         
-        session.saveHighScores();
+        String congratsMessage = "You achieved victory in " + session.getClickCount() + " moves.";
+        
+        if(session.getClickCount() < dbm.getScoreTable().getHighScore(App.getUsername())) {
+        	congratsMessage += "\nThis is a new high score!";
+        	JOptionPane.showMessageDialog(null, 
+        			congratsMessage,
+                    "Congratulations!", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        	dbm.getScoreTable().recordHighScore(App.getUsername(), session.getClickCount());
+        } else {
+        	JOptionPane.showMessageDialog(null, 
+        			congratsMessage,
+                    "Congratulations!", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -253,7 +277,7 @@ public class GameScreen extends JFrame {
      */
     private void assignIcons() {
         //set icons for each button
-        for (int i = 0; i < BUTTONS.size() - 1; i++) {
+        for (int i = 0; i < NUMBER_OF_CELLS - 1; i++) {
             BUTTONS.get(i).setIcon(new ImageIcon(App.getSession().getImageList().get(i)));
             BUTTONS.get(i).setEnabled(!BUTTONS.get(i).isEnabled());
         }
@@ -283,8 +307,6 @@ public class GameScreen extends JFrame {
         settings = new javax.swing.JMenuItem();
         mainMenu = new javax.swing.JMenuItem();
         restart = new javax.swing.JMenuItem();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         optionsMenu.setText("File");
 
@@ -346,9 +368,11 @@ public class GameScreen extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Play Button Clicked
+     * @param evt
+     */
     private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
-        session = App.getSession();
-        //FIXME how are we randomizing the list?
         List<BufferedImage> rand = randomize.randomize(session.getImageList());
         session.setImageList(rand);
         App.setGameSession(session);
@@ -357,16 +381,23 @@ public class GameScreen extends JFrame {
         playing = true;
     }//GEN-LAST:event_playActionPerformed
 
+    /**
+     * Save Button Clicked
+     * @param evt
+     */
     private void SaveActionPerformed(ActionEvent evt) {
         App.setGameSession(session);
         saveGame();
     }
 
+    /**
+     * Save Game subroutine
+     */
     private void saveGame() {
         //create a serialized file
         try {
             // create a new file with an ObjectOutputStream
-            File file = new File(App.getUsername() + ".ser");
+            File file = new File("." + App.getUsername() + ".ser");
 
             FileOutputStream out = new FileOutputStream(file);
             try (ObjectOutputStream oout = new ObjectOutputStream(out)) {
@@ -380,10 +411,14 @@ public class GameScreen extends JFrame {
                     "Saved Game Confirmation", 1);
 
         } catch (HeadlessException | IOException ex) {
+        	LOG.log(ex, LogLevel.WARNING, "Saving game error encountered.  Session not saved.");
         }
     }
 
-    //FIXME the user should not be able to change settings midway through a game.
+    /**
+     * Settings action performed
+     * @param evt
+     */
     private void SettingsActionPerformed(ActionEvent evt) {
         if (playing) {//game started
             JOptionPane.showMessageDialog(null, "Unable to change setting midway through a game...",
@@ -391,10 +426,15 @@ public class GameScreen extends JFrame {
         } else {//game not started
             Settings settings = new Settings();
             settings.setVisible(true);
+            //User will need to reload game screen
+            this.dispose();
         }
     }
 
-
+    /**
+     * Main Menu action performed
+     * @param evt
+     */
     private void mainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuActionPerformed
         int result = JOptionPane.showConfirmDialog((Component) null, "Save before returning to main menu?",
                 "alert", JOptionPane.YES_NO_CANCEL_OPTION);
@@ -417,6 +457,10 @@ public class GameScreen extends JFrame {
         }
     }//GEN-LAST:event_mainMenuActionPerformed
 
+    /**
+     * Restart action performed
+     * @param evt
+     */
     private void restartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartActionPerformed
 
         int result = JOptionPane.showConfirmDialog((Component) null, "Are you sure you'd like to restart the current game?",
@@ -424,49 +468,11 @@ public class GameScreen extends JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
             session.setImageList(session.getKeyList());
+            emptyButton = BUTTONS.get(NUMBER_OF_CELLS - 1);
             assignIcons();
             movesCounter = 0;
             session.setClickCount(movesCounter);
+            App.setGameSession(session);
         }
     }//GEN-LAST:event_restartActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new GameScreen(App.getSession()).setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
 }

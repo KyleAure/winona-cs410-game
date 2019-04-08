@@ -155,8 +155,7 @@ public class Settings extends JFrame implements ChangeListener {
 		diffGroup.add(rdbtnMedium);
 		diffGroup.add(rdbtnHard);
 		if(App.isDifficultyLevelSet()) {
-			level = App.getDifficultyLevel();
-			switch(level) {
+			switch(App.getDifficultyLevel()) {
 			case EASY:
 				diffGroup.setSelected(rdbtnEasy.getModel(), true);
 				break;
@@ -165,6 +164,10 @@ public class Settings extends JFrame implements ChangeListener {
 				break;
 			case HARD:
 				diffGroup.setSelected(rdbtnHard.getModel(), true);
+				break;
+			case TEST:
+				break;
+			default:
 				break;
 			}
 		}
@@ -241,18 +244,5 @@ public class Settings extends JFrame implements ChangeListener {
 		MainMenuScreen mms = new MainMenuScreen();
 		mms.setVisible(true);
 		this.dispose();
-		
-    }
-	
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Settings().setVisible(true);
-            }
-        });
     }
 }

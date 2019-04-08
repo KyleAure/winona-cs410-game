@@ -1,5 +1,4 @@
 # Orange Team Project
-
 Create a puzzle slider game that allows users to select a photo to be scrambled, only to be put back together by sliding tiles around. 
 When the user exits the game, the puzzle progress is saved for them to continue to finish at a later time. 
 Introduce other game design features to vary game-play options and allow users to save their game for later completion.
@@ -27,7 +26,7 @@ java -version
 
 You should receive an output, such as,
 
-```
+```bash
 java version "1.8.0_161"
 Java(TM) SE Runtime Environment (build 1.8.0_161-b12)
 Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)
@@ -45,7 +44,7 @@ mvn -version
 
 You should get an output similar to:
 
-```
+```bash
 Apache Maven 3.5.2
 Maven home: /usr/share/maven
 Java version: 1.8.0_201, vendor: Oracle Corporation
@@ -147,7 +146,7 @@ mvn clean install
 
 Once this application is built navigate to the `target/` directory and locate the `puzzle.game-version.jar` file.
 
-You can also run this applciation directly from the terminal using the following Maven goal:
+You can also run this appliciation directly from the terminal using the following Maven goal:
 
 ```bash
 mvn exec:java -Dexec.mainClass="edu.winona.cs.app.App"
@@ -157,6 +156,10 @@ mvn exec:java -Dexec.mainClass="edu.winona.cs.app.App"
 
 This project is built using the following Maven dependencies:
 1. Junit - for testing.
+2. Derby - for database creation / management
+3. AbsoluteLayout - for GUI layout
+4. ImgScalr - for image processing
+5. JGoodies - for GUI layout
 
 ## Contributing
 

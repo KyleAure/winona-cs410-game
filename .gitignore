@@ -34,6 +34,8 @@ target/
 *.rar
 
 #Ignore embedded database
-#TODO: update this ignore once final naming structure has been decided.
 .puzzledb/
+
+#Temp files
+*.ser
 
