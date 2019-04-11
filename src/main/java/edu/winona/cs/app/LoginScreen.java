@@ -2,10 +2,8 @@ package edu.winona.cs.app;
 
 import edu.winona.cs.component.*;
 import edu.winona.cs.db.DatabaseManager;
-import edu.winona.cs.db.GameSettingsTable;
-import edu.winona.cs.db.UserSettingsTable;
+import edu.winona.cs.db.SettingsTable;
 import edu.winona.cs.db.UserTable;
-import edu.winona.cs.gamelogic.DifficultyLevel;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -194,19 +192,20 @@ public class LoginScreen extends JFrame {
     	   App.setUsername(username);
     	   
     	   //STEP 3.2 Get users GameSettings and setSettings with APP
-    	   GameSettingsTable gst = dbm.getGameSettingsTable();
+    	   SettingsTable gst = dbm.getSettingsTable();
     	   GameSettings settings = gst.getGameSetting(App.getUsername());
     	   if(settings != null) {
     		   App.setSettings(settings);
     	   } else {
-    		   gst.recordGameSetting(App.getUsername(), App.DEFAULT_SETTINGS);
+    		   gst.recordSetting(App.getUsername(), App.DEFAULT_SETTINGS);
     		   App.setSettings(App.DEFAULT_SETTINGS);
     	   }
     	   
     	   //STEP 3.3 Get userSettings and setSettings with APP
-    	   UserSettingsTable ust = dbm.getUserSettingsTable();
-    	   DifficultyLevel level = ust.getDifficultyLevel(App.getUsername());
-    	   App.setDifficultyLevel(level);
+    	   //TODO Remove this is not in the settingsTable
+//    	   UserSettingsTable ust = dbm.getSett();
+//    	   DifficultyLevel level = ust.getDifficultyLevel(App.getUsername());
+//    	   App.setDifficultyLevel(level);
     	   
     	   //STEP 3.4 Open Main Menu and close this Menu
            MainMenuScreen mainMenu = new MainMenuScreen();
@@ -248,8 +247,8 @@ public class LoginScreen extends JFrame {
         	App.setUsername(username);
         	
         	//Step 3.2: set default settings in APP and in database
-        	GameSettingsTable gst = dbm.getGameSettingsTable();
-        	gst.recordGameSetting(App.getUsername(), App.DEFAULT_SETTINGS);
+        	SettingsTable gst = dbm.getSettingsTable();
+        	gst.recordSetting(App.getUsername(), App.DEFAULT_SETTINGS);
         	App.setSettings(App.DEFAULT_SETTINGS);
         	
         	//Step 3.3 Open Main Menu and close this menu

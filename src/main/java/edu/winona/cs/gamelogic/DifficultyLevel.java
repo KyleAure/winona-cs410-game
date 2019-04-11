@@ -14,7 +14,7 @@ public enum DifficultyLevel {
 
 	 static {
 	      for(DifficultyLevel level : EnumSet.allOf(DifficultyLevel.class))
-	           lookup.put(level.getDifficulty(), level);
+	           lookup.put(level.getInt(), level);
 	 }
 
 	 private int difficulty;
@@ -23,7 +23,7 @@ public enum DifficultyLevel {
 	      this.difficulty = difficulty;
 	 }
 
-	 public int getDifficulty() { return difficulty; }
+	 public int getInt() { return difficulty; }
 
 	 public static DifficultyLevel get(int difficulty) { 
 	      return lookup.get(difficulty); 

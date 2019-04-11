@@ -3,10 +3,13 @@ package edu.winona.cs.component;
 
 import java.awt.Color;
 
+import edu.winona.cs.gamelogic.DifficultyLevel;
+
 /**
  * Variables here match those stored in the GameSettingsTable.
- * Background Color - is a color object
- * High Score Tracking - true - we are tracking, false - we are not tracking.
+ * 1) Background Color - is a color object
+ * 2) High Score Tracking - true - we are tracking, false - we are not tracking.
+ * 3) Difficulty Level - users perferred difficulty
  * 
 * @author Tristin Harvell
  * @version 1.1
@@ -16,10 +19,12 @@ public class GameSettings {
     
     private Color backgroundColor;
     private boolean highScoreTracking;
+    private DifficultyLevel difficulty;
 
-    public GameSettings(Color backgroundColor, boolean highScoreTracking) {
+    public GameSettings(Color backgroundColor, boolean highScoreTracking, DifficultyLevel level) {
         this.backgroundColor = backgroundColor;
         this.highScoreTracking = highScoreTracking;
+        this.setDifficulty(level);
     }
 
     public Color getBackgroundColor() {
@@ -37,13 +42,19 @@ public class GameSettings {
     public void setHighScoreTracking(boolean highScoreTracking) {
         this.highScoreTracking = highScoreTracking;
     }
+    
+	public DifficultyLevel getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(DifficultyLevel difficulty) {
+		this.difficulty = difficulty;
+	}
 
     @Override
     public String toString() {
         return "Background color: " + backgroundColor + 
-                "HighScoreTracking: " + highScoreTracking;
+                "HighScoreTracking: " + highScoreTracking +
+                "DifficultyLevel: " + difficulty;
     }
-    
-    
-    
 }

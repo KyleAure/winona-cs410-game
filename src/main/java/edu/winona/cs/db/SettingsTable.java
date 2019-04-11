@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import edu.winona.cs.component.GameSettings;
+import edu.winona.cs.gamelogic.DifficultyLevel;
 import edu.winona.cs.log.Log;
 import edu.winona.cs.log.Log.LogLevel;
 
@@ -23,8 +24,8 @@ import edu.winona.cs.log.Log.LogLevel;
  * @author Kyle Aure
  *
  */
-public class GameSettingsTable implements Table{
-	private static final Log LOG = new Log(GameSettingsTable.class.getName());
+public class SettingsTable implements Table{
+	private static final Log LOG = new Log(SettingsTable.class.getName());
 
 	// Table attributes
 	public static final String NAME = "GAMESETTINGS";
@@ -34,6 +35,7 @@ public class GameSettingsTable implements Table{
 	private String pkUsername = "username";
 	private String attBackgroundColor = "backgroundColor";
 	private String attHighScoreTracking = "highScoreTracking";
+	private String attDifficulty = "difficulty";
 
 	@Override
 	public boolean isCreated() {
@@ -42,7 +44,7 @@ public class GameSettingsTable implements Table{
 	
 	@Override
 	public void setCreated(boolean status) {
-		GameSettingsTable.created = status;
+		SettingsTable.created = status;
 	}
 
 	@Override
@@ -56,6 +58,7 @@ public class GameSettingsTable implements Table{
 					+ pkUsername + " VARCHAR(255) not NULL, " 
 					+ attBackgroundColor + " INTEGER not NULL, "
 					+ attHighScoreTracking + " BOOLEAN not Null, "
+					+ attDifficulty + " INTEGER not NULL, "
 					+ " PRIMARY KEY (" + pkUsername + "))";
 			created = DatabaseUtil.createTable(NAME, sql);
 		} else {
@@ -83,7 +86,7 @@ public class GameSettingsTable implements Table{
 	 * @param username - user's unique name.
 	 * @param settings - GameSettings object.
 	 */
-	public void recordGameSetting(String username, GameSettings settings) {
+	public void recordSetting(String username, GameSettings settings) {
 		LOG.log(LogLevel.INFO, "Attempting database connection from: GameSettingsTable.recordGameSetting");
 		if (created) {
 			Connection conn = null;
@@ -92,13 +95,15 @@ public class GameSettingsTable implements Table{
 			String sqlGetUser = "SELECT * FROM " + NAME 
 					+ " WHERE " + pkUsername + " = '" + username + "'";
 			String sqlInsert = "INSERT INTO " + NAME 
-					+ " VALUES ('" + username + "', " + settings.getBackgroundColor().getRGB() + ", " + settings.isHighScoreTracking() + ")";
+					+ " VALUES ('" + username + "', " + settings.getBackgroundColor().getRGB() + ", " + settings.isHighScoreTracking() + ", " + settings.getDifficulty().getInt() + ")";
 			String sqlUpdateColor = "UPDATE " + NAME 
 					+ " SET " + attBackgroundColor + " = " + settings.getBackgroundColor().getRGB() 
 					+ " WHERE " + pkUsername + " = '" + username + "'";
 			String sqlUpdateTracking = "UPDATE " + NAME 
 					+ " SET " + attHighScoreTracking + " = " + settings.isHighScoreTracking()
 					+ " WHERE " + pkUsername + " = '" + username + "'";
+			String sqlUpdateDifficulty = "UPDATE " + NAME + " SET " + attDifficulty + " = " + settings.getDifficulty().getInt() + " WHERE "
+					+ pkUsername + " = '" + username + "'";
 			try {
 				// STEP 2: Register JDBC driver
 				Class.forName(DatabaseManager.JDBCDRIVER);
@@ -125,6 +130,7 @@ public class GameSettingsTable implements Table{
 					LOG.log(LogLevel.INFO, "User has been found.  Attempting to update settings...");
 					stmt.executeUpdate(sqlUpdateColor);
 					stmt.executeUpdate(sqlUpdateTracking);
+					stmt.executeUpdate(sqlUpdateDifficulty);
 					LOG.log(LogLevel.INFO, "User settings has been updated successfully...");
 				} else {
 					LOG.log(LogLevel.INFO, "User has not been found.  Attempting to add new user settings...");
@@ -193,7 +199,8 @@ public class GameSettingsTable implements Table{
 					LOG.log(LogLevel.INFO, "User has been found.  Attempting to get settings...");
 					int colorResult = rs.getInt(attBackgroundColor);
 					boolean highScoreResult = rs.getBoolean(attHighScoreTracking);
-					result = new GameSettings(new Color(colorResult), highScoreResult);
+					DifficultyLevel level = DifficultyLevel.get(rs.getInt(attDifficulty));
+					result = new GameSettings(new Color(colorResult), highScoreResult, level);
 					LOG.log(LogLevel.INFO, "User settings has been found successfully...");
 				}
 				if (!found) {
