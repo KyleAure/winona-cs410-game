@@ -2,7 +2,7 @@ package edu.winona.cs.gamelogic;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 public class AdjacencyListMaker {
 
     List<Space> tempList = new ArrayList<Space>();

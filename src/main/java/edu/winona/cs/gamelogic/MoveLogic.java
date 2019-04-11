@@ -2,7 +2,6 @@ package edu.winona.cs.gamelogic;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,6 +9,7 @@ import java.util.List;
  * represent image location on board, and the key to check if user has solved
  * the puzzle.
  */
+@Deprecated
 public class MoveLogic {
     //private static final Log LOG = new Log(MoveLogic.class.getName());
 
@@ -18,18 +18,18 @@ public class MoveLogic {
 
     public List<BufferedImage> move(List<BufferedImage> userList, Space moveFrom, Space moveTo) {
         
-        Space temp = moveFrom;
-
-        //FIXME resolve these errors
-        int indexMoveFrom = userList.indexOf(moveFrom);
-        int indexMoveTwo = userList.indexOf(moveTo);
-
-        //check adjacency
-        if (temp.isAdjacent(moveTo)) {
-            Collections.swap(userList, indexMoveFrom, indexMoveTwo);
-        }
-
-        hasWon();
+//        Space temp = moveFrom;
+//
+//        //resolve these errors
+//        int indexMoveFrom = userList.indexOf(moveFrom);
+//        int indexMoveTwo = userList.indexOf(moveTo);
+//
+//        //check adjacency
+//        if (temp.isAdjacent(moveTo)) {
+//            Collections.swap(userList, indexMoveFrom, indexMoveTwo);
+//        }
+//
+//        hasWon();
 
         return userList;
     }
