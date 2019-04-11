@@ -14,7 +14,7 @@ import edu.winona.cs.gamelogic.DifficultyLevel;
  */
 public class App {
 	//Default settings for new user, or verified user that does not have saved settings.
-	public static final GameSettings DEFAULT_SETTINGS = new GameSettings(Color.BLUE, true);
+	public static final GameSettings DEFAULT_SETTINGS = new GameSettings(Color.BLUE, true, DifficultyLevel.EASY);
 	
 	//Used to keep track of username if user is logged in.
 	private static String username = null; 
@@ -89,17 +89,21 @@ public class App {
 	}
 
 	/**
+	 * TODO remove this method, difficulty level is saved in settings and session
 	 * Returns the difficulty level set by user.
 	 * @return
 	 */
+	@Deprecated
 	public static DifficultyLevel getDifficultyLevel() {
 		return session.getDifficulty();
 	}
 
 	/**
+	 * TODO remove this method, difficulty level is saved in settings and session
 	 * Set the difficulty level.
 	 * @param level - DifficultyLevel
 	 */
+	@Deprecated
 	public static void setDifficultyLevel(DifficultyLevel level) {
 		if(session == null) {
 			session = new GameSession(username, level, 0, null, null);
@@ -109,9 +113,11 @@ public class App {
 	}
 	
 	/**
+	 * TODO remove this method, difficulty level is saved in settings and session
 	 * Check to see if a difficulty level has been set.
 	 * @return boolean: true = set, false = not set.
 	 */
+	@Deprecated
 	public static boolean isDifficultyLevelSet() {
 		if(session == null) {
 			return false;

@@ -70,8 +70,8 @@ public class NewGameSettings extends javax.swing.JFrame {
         buttonGroup.add(mediumBtn);
         buttonGroup.add(hardBtn);
         
-        if(App.isUser() && App.isDifficultyLevelSet()) {
-			switch(App.getDifficultyLevel()) {
+        if(App.isUser()) {
+			switch(App.getSettings().getDifficulty()) {
 			case EASY:
 				buttonGroup.setSelected(easyBtn.getModel(), true);
 				break;

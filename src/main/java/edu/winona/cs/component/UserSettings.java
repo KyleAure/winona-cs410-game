@@ -6,10 +6,14 @@ import edu.winona.cs.gamelogic.DifficultyLevel;
  * Variables here match those stored in the UserSettingsTable.
  * difficulty (DifficultyLevel) - preferred difficulty level.
  * 
+ * Why have this class when all we are keeping track of is DifficultyLevel.
+ * TODO Merge this class with GameSettings
+ * 
  * @author Kyle Aure
  * @version 1.0
  *
  */
+@Deprecated
 public class UserSettings {
 	//private static final Log LOG = new Log(UserSettings.class.getName());
     

@@ -10,8 +10,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 
 import edu.winona.cs.component.GameSettings;
 import edu.winona.cs.db.DatabaseManager;
-import edu.winona.cs.db.GameSettingsTable;
-import edu.winona.cs.db.UserSettingsTable;
+import edu.winona.cs.db.SettingsTable;
 import edu.winona.cs.gamelogic.DifficultyLevel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,16 +27,22 @@ import java.awt.event.ActionListener;
  * @version 0.0
  */
 public class Settings extends JFrame implements ChangeListener {
+	//Serialized Variable
 	private static final long serialVersionUID = 598611529258548986L;
-	private Color color = Color.WHITE;
-	private boolean isHighScoreTracking = true;
-	private DifficultyLevel level = DifficultyLevel.EASY;
+	
+	//GameSettings variables
+	private Color color = App.DEFAULT_SETTINGS.getBackgroundColor();
+	private boolean isHighScoreTracking = App.DEFAULT_SETTINGS.isHighScoreTracking();
+	private DifficultyLevel level = App.DEFAULT_SETTINGS.getDifficulty();
+	
+	//Database Variables
+	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
+	private SettingsTable st = dbm.getSettingsTable();
+	
+	//GUI variables
 	private JColorChooser colorChooser;
 	private JLabel lblTitle;
 	private Container a;
-	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
-	private GameSettingsTable gst = dbm.getGameSettingsTable();
-	private UserSettingsTable ust = dbm.getUserSettingsTable();
 	private JRadioButton rdbtnEasy;
 	private JRadioButton rdbtnMedium;
 	private JRadioButton rdbtnHard;
@@ -49,30 +54,34 @@ public class Settings extends JFrame implements ChangeListener {
 	 * Guest users should not be able to access this!
 	 */
 	public Settings() {
+		//STEP 1: check if user
 		if(App.isUser()) {
-	        a = Settings.this.getContentPane();
-	        if(App.isSettingsSet()) {
-	        	a.setBackground(App.getSettings().getBackgroundColor());
-	        } else {
-	        	a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
-	        }
+			//STEP 2: set background to preferred color
+
+	        //STEP 3: initialize all other components
 			init();
 		} else {
 			JOptionPane.showMessageDialog(null, 
 					"Games Settings are only accessable by logged in users.", 
 					"Guest User Settings", JOptionPane.INFORMATION_MESSAGE);
 		}
-
 	}
 	
 	private void init() {
 		//Get database info
 		if(App.isUser()) {
-			GameSettings settings = gst.getGameSetting(App.getUsername());
+			//Get settings from database
+			GameSettings settings = st.getGameSetting(App.getUsername());
+			
+			//Set local variables
 			color = settings.getBackgroundColor();
 			isHighScoreTracking = settings.isHighScoreTracking();
-			level = ust.getDifficultyLevel(App.getUsername());
+			level = settings.getDifficulty();
 		}
+	
+		//Set background color
+		a = Settings.this.getContentPane();
+		a.setBackground(color);
 		
 		//General Settings
 		setTitle("General Game Setting Menu");
@@ -95,10 +104,7 @@ public class Settings extends JFrame implements ChangeListener {
 		//Color Chooser
 		colorChooser = new JColorChooser();
 		colorChooser.getSelectionModel().addChangeListener(this);
-		if(App.isSettingsSet()) {
-			color = App.getSettings().getBackgroundColor();
-			colorChooser.setColor(color);
-		}
+		colorChooser.setColor(color);
 		tabbedPane.addTab("Color Chooser", null, colorChooser, null);
 		
 		//Other settings
@@ -154,22 +160,20 @@ public class Settings extends JFrame implements ChangeListener {
 		diffGroup.add(rdbtnEasy);
 		diffGroup.add(rdbtnMedium);
 		diffGroup.add(rdbtnHard);
-		if(App.isDifficultyLevelSet()) {
-			switch(App.getDifficultyLevel()) {
-			case EASY:
-				diffGroup.setSelected(rdbtnEasy.getModel(), true);
-				break;
-			case MEDIUM:
-				diffGroup.setSelected(rdbtnMedium.getModel(), true);
-				break;
-			case HARD:
-				diffGroup.setSelected(rdbtnHard.getModel(), true);
-				break;
-			case TEST:
-				break;
-			default:
-				break;
-			}
+		switch(level) {
+		case EASY:
+			diffGroup.setSelected(rdbtnEasy.getModel(), true);
+			break;
+		case MEDIUM:
+			diffGroup.setSelected(rdbtnMedium.getModel(), true);
+			break;
+		case HARD:
+			diffGroup.setSelected(rdbtnHard.getModel(), true);
+			break;
+		case TEST:
+			break;
+		default:
+			break;
 		}
 		
 		JSeparator separator = new JSeparator();
@@ -234,12 +238,10 @@ public class Settings extends JFrame implements ChangeListener {
 		//Step 3: get tracking
 		isHighScoreTracking = rdbtnOn.isSelected();
 		//Step 4: Notify App
-		GameSettings gs = new GameSettings(color, isHighScoreTracking);
+		GameSettings gs = new GameSettings(color, isHighScoreTracking, level);
 		App.setSettings(gs);
-		App.setDifficultyLevel(level);
 		//Step 5: Save to database
-		gst.recordGameSetting(App.getUsername(), gs);
-		ust.recordUserDifficultyLevel(App.getUsername(), level);
+		st.recordSetting(App.getUsername(), gs);
 		//Step 6: close window
 		MainMenuScreen mms = new MainMenuScreen();
 		mms.setVisible(true);

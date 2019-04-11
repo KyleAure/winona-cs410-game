@@ -14,6 +14,8 @@ import edu.winona.cs.log.Log.LogLevel;
  * Creates user settings table.
  * Preferred usage:
  * 
+ * TODO merge this class with GameSettingsTable
+ * 
  * DatabaseManager dbm = new DatabaseManager();
  * UserSettingsTable ust = DatabaseManager.getUserSettingsTable();
  * ust.recordUserDifficulty(username, DifficultyLevel.level);
@@ -21,6 +23,7 @@ import edu.winona.cs.log.Log.LogLevel;
  * 
  * @author Kyle Aure
  */
+@Deprecated
 public class UserSettingsTable implements Table {
 	private static final Log LOG = new Log(UserSettingsTable.class.getName());
 
@@ -81,8 +84,8 @@ public class UserSettingsTable implements Table {
 			Statement stmt = null;
 			ResultSet rs = null;
 			String sqlGetUser = "SELECT * FROM " + NAME + " WHERE " + pkUsername + " = '" + username + "'";
-			String sqlInsert = "INSERT INTO " + NAME + " VALUES ('" + username + "', " + level.getDifficulty() + ")";
-			String sqlUpdate = "UPDATE " + NAME + " SET " + attDifficulty + " = " + level.getDifficulty() + " WHERE "
+			String sqlInsert = "INSERT INTO " + NAME + " VALUES ('" + username + "', " + level.getInt() + ")";
+			String sqlUpdate = "UPDATE " + NAME + " SET " + attDifficulty + " = " + level.getInt() + " WHERE "
 					+ pkUsername + " = '" + username + "'";
 			try {
 				// STEP 2: Register JDBC driver

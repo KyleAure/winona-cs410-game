@@ -64,12 +64,13 @@ public class DatabaseManager {
 					ut.setCreated(true);
 					tables.put(UserTable.NAME, ut);
 					break;
-				case UserSettingsTable.NAME:
-					LOG.log(LogLevel.INFO,"UserSettingsTable found...");
-					UserSettingsTable ust = new UserSettingsTable();
-					ust.setCreated(true);
-					tables.put(UserSettingsTable.NAME, ust);
-					break;
+				//FIXME
+//				case UserSettingsTable.NAME:
+//					LOG.log(LogLevel.INFO,"UserSettingsTable found...");
+//					UserSettingsTable ust = new UserSettingsTable();
+//					ust.setCreated(true);
+//					tables.put(UserSettingsTable.NAME, ust);
+//					break;
 				case SaveStateTable.NAME:
 					LOG.log(LogLevel.INFO,"SaveStateTable found...");
 					SaveStateTable sst = new SaveStateTable();
@@ -88,11 +89,11 @@ public class DatabaseManager {
 					hst.setCreated(true);
 					tables.put(HighScoreTable.NAME, hst);
 					break;
-				case GameSettingsTable.NAME:
+				case SettingsTable.NAME:
 					LOG.log(LogLevel.INFO,"GameSettingsTable found...");
-					GameSettingsTable gst = new GameSettingsTable();
+					SettingsTable gst = new SettingsTable();
 					gst.setCreated(true);
-					tables.put(GameSettingsTable.NAME, gst);
+					tables.put(SettingsTable.NAME, gst);
 					break;
 				}
 			}
@@ -186,19 +187,20 @@ public class DatabaseManager {
 	 * Returns the UserSettingsTable object to be used for database connectivity.
 	 * @return UserSettingsTable
 	 */
-	public UserSettingsTable getUserSettingsTable() {
-		LOG.log(LogLevel.INFO, "Request for UserSettingsTable from DatabaseManager received.");
-		if(tables.containsKey(UserSettingsTable.NAME) && tables.get(UserSettingsTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (UserSettingsTable) tables.get(UserSettingsTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.\n");
-			UserSettingsTable ust = new UserSettingsTable();
-			ust.createTable();
-			tables.put(UserSettingsTable.NAME, ust);
-			return ust;
-		}
-	}
+	//FIXME
+//	public UserSettingsTable getUserSettingsTable() {
+//		LOG.log(LogLevel.INFO, "Request for UserSettingsTable from DatabaseManager received.");
+//		if(tables.containsKey(UserSettingsTable.NAME) && tables.get(UserSettingsTable.NAME).isCreated()) {
+//			LOG.log(LogLevel.INFO, "Existing table found.\n");
+//			return (UserSettingsTable) tables.get(UserSettingsTable.NAME);
+//		} else {
+//			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.\n");
+//			UserSettingsTable ust = new UserSettingsTable();
+//			ust.createTable();
+//			tables.put(UserSettingsTable.NAME, ust);
+//			return ust;
+//		}
+//	}
 	
 	/**
 	 * Returns the HighScoreTable object to be used for database connectivity.
@@ -256,19 +258,19 @@ public class DatabaseManager {
 	}
 	
 	/**
-	 * Returns the GameSettingsTable object to be used for database connectivity.
-	 * @return GameSettingsTable
+	 * Returns the SettingsTable object to be used for database connectivity.
+	 * @return SettingsTable
 	 */
-	public GameSettingsTable getGameSettingsTable() {
+	public SettingsTable getSettingsTable() {
 		LOG.log(LogLevel.INFO, "Request for GameSettingsTable from DatabaseManager received.");
-		if(tables.containsKey(GameSettingsTable.NAME) && tables.get(GameSettingsTable.NAME).isCreated()) {
+		if(tables.containsKey(SettingsTable.NAME) && tables.get(SettingsTable.NAME).isCreated()) {
 			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (GameSettingsTable) tables.get(GameSettingsTable.NAME);
+			return (SettingsTable) tables.get(SettingsTable.NAME);
 		} else {
 			LOG.log(LogLevel.INFO, "DatabaseManager creating GameSettingsTable.\n");
-			GameSettingsTable gst = new GameSettingsTable();
+			SettingsTable gst = new SettingsTable();
 			gst.createTable();
-			tables.put(GameSettingsTable.NAME, gst);
+			tables.put(SettingsTable.NAME, gst);
 			return gst;
 		}
 	}

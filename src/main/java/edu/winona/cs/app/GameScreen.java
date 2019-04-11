@@ -77,25 +77,22 @@ public class GameScreen extends JFrame {
         //Step 1: Set window color to users preference
         Container a = GameScreen.this.getContentPane();
         if (App.isSettingsSet()) {
-            if (App.isSettingsSet()) {
-                a.setBackground(App.getSettings().getBackgroundColor());
-            } else {
-                a.setBackground(App.DEFAULT_SETTINGS.getBackgroundColor());
-            }
+        	a.setBackground(App.getSettings().getBackgroundColor());
         } else {
             LOG.log(LogLevel.WARNING, "App settings not set when entering GameScreen.");
+            a.setBackground(App.getSettings().getBackgroundColor());
         }
 
         //Step 2: set rows and columns
         DifficultyLevel level;
-        if (App.isDifficultyLevelSet()) {
-            level = App.getDifficultyLevel();
+        if (App.isSettingsSet()) {
+            level = App.getSettings().getDifficulty();
         } else {
             LOG.log(LogLevel.WARNING, "Difficulty not set when entering GameScreen. Defaulted to EASY.");
-            level = DifficultyLevel.EASY;
+            level = App.DEFAULT_SETTINGS.getDifficulty();
         }
-        COLS = level.getDifficulty();
-        ROWS = level.getDifficulty();
+        COLS = level.getInt();
+        ROWS = level.getInt();
         NUMBER_OF_CELLS = ROWS * COLS;
 
         //STEP 3: Set up JFrame
