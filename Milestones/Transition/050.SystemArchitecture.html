@@ -1,0 +1,23 @@
+<h2 id="SystemArchitecture">System Architecture</h2>
+<img src="../assets/SystemArchitecture.png" alt="System Architecture">
+<p>
+	Our <i>Puzzle Slider</i> game will use both a <b>Layered Architecture</b> and a <b>Repository Architecture</b>.  Our program will be layered in the following way:
+	<ol>
+		<li><b>Graphical User Interface (GUI):</b> This is the first layer which will directly interact with the user and send requests down to the Game Components layer.  Responses from the Game Components layer will then update the GUI.</li>
+		<li><b>Game Components:</b> This layer will handle requests from the GUI layer above and return the results of these requests to the GUI layer.  Some examples of requests accepted by this layer include: </li>
+		<ul>
+			<li>Start or load games.</li>
+			<li>Create new user or login to existing user.</li>
+			<li>Check win conditions.</li>
+		</ul>
+		<li><b>Game Logic:</b> handles requests from the Game Components layer that require data processing of some sort.  Once processing as been completed, this layer returns data back to the Game Componets layer.</li>
+		<li><b>Image Processing:</b> this layer is on the same level as the Game Logic layer.  This layer handles request from the Game Components layer that requre image processing and returns completed requests back to the Game Components layer.</li>
+		<li><b>Database Interface</b> this layer provides the Game Logic and Image Processing layers the ability to make read/write requests to the underlaying database which acts as a <b>Repository</b> for all of our game's data.</li>
+		<li><b>Puzzle Database</b> the derby database that acts as our repository is the final layer to our architecture.  It will respond to SQL statements from the Database Interface layer.</li>
+	</ol>
+</p>
+<p>
+	The <b>System Architecture</b> above will be supported by a Maven build architecture.
+	Maven will build our project into a excutable .JAR program with automated JUnit testing.  
+</p>
+<hr>

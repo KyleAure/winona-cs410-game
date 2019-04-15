@@ -1,3 +1,61 @@
 <h2 id="WorkingApplicationCode">Working Application Code</h2>
-<p>This section describes your code and provides links to it</p>
+<p>This section describes your working code and provides links to it.</p>
+<p>
+    As a part of this system we also implemented the use of a Derby JDBC driver to store user login data in a Derby database. Output from automated testing shows the ability for us to connect to the database, create tables, and add/validate users. The output of this testing can be found <a href="../assets/puzzle.txt">here.</a>
+</p>
+<p>
+    Links to working application code:<br>
+    <b>APP:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/App.java">App.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/GameScreen.java">GameScreen.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/LoginScreen.java">LoginScreen.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/MainMenuScreen.java">MainMenuScreen.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/NewGameSettings.java">NewGameSettings.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/app/Settings.java">Settings.java</a>
+<br>
+    <b>COMPONENT:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/AuthenticationHash.java">AuthenticationHash.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/GameSession.java">GameSession.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/GameSettings.java">GameSettings.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/component/UserSettings.java">UserSettings.java</a><br>
+<br>
+    <b>DB:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/DatabaseManager.java">DatabaseManager.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/DatabaseUtil.java">DatabaseUtil.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/GameSettingsTable.java">GameSettingsTable.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/HighScoreTable.java">HighScoreTable.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/ImageTable.java">ImageTable.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/SaveStateTable.java">SaveStateTable.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/UserSettingsTable.java">UserSettingsTable.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/db/UserTable.java">UserTable.java</a><br>
+<br>
+    <b>GAMELOGIC:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/AdjacencyListMaker.java">AdjacencyListMaker.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/MoveLogic.java">MoveLogic.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/DifficultyLevel.java">DifficultyLevel.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/Cell.java">Cell.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/Randomize.java">Randomize.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/gamelogic/Space.java">Space.java</a><br>
+<br>
+    <b>IMAGE:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/image/ImageProcessor.java">ImageProcessor.java</a><br>
+<br>
+    <b>LOG:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/log/DebugFormatter.java">DebugFormatter.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/main/java/edu/winona/cs/log/Log.java">Log.java</a><br>
+</p>
+
+<p>
+    Links to automated test code:<br>
+    <b>COMPONENT:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/component/AuthenticationHashTest.java">AuthenticationHashTest.java</a>
+<br>
+    <b>DB:</b><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/db/GameSettingsTableTest.java">GameSettingsTableTest.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/db/HighScoreTableTest.java">HighScoreTableTest.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/db/SaveStateTableTest.java">SaveStateTableTest.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/db/UserSettingsTableTest.java">UserSettingsTableTest.java</a><br>
+    <a href="http://orange-cs410-winona.mybluemix.net/src/test/java/edu/winona/cs/db/UserTableTest.java">UserTableTest.java</a><br>
+<br>
+</p>
 <hr>
