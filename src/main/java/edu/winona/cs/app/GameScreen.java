@@ -275,7 +275,7 @@ public class GameScreen extends JFrame {
     private void assignIcons() {
         //set icons for each button
         for (int i = 0; i < NUMBER_OF_CELLS - 1; i++) {
-            BUTTONS.get(i).setIcon(new ImageIcon(App.getSession().getImageList().get(i)));
+            BUTTONS.get(i).setIcon(new ImageIcon(App.getSession().getKeyList().get(i)));
             BUTTONS.get(i).setEnabled(!BUTTONS.get(i).isEnabled());
         }
     }
@@ -466,6 +466,7 @@ public class GameScreen extends JFrame {
         if (result == JOptionPane.OK_OPTION) {
             session.setImageList(session.getKeyList());
             emptyButton = BUTTONS.get(NUMBER_OF_CELLS - 1);
+            emptyButton.setIcon(null);
             assignIcons();
             movesCounter = 0;
             session.setClickCount(movesCounter);
