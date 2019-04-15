@@ -466,6 +466,7 @@ public class GameScreen extends JFrame {
         if (result == JOptionPane.OK_OPTION) {
             session.setImageList(session.getKeyList());
             emptyButton = BUTTONS.get(NUMBER_OF_CELLS - 1);
+            emptyButton.setIcon(null);
             assignIcons();
             movesCounter = 0;
             session.setClickCount(movesCounter);
