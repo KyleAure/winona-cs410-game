@@ -37,4 +37,5 @@ target/
 
 #Temp files
 *.ser
+*.json
 

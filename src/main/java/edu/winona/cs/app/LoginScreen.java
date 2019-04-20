@@ -4,6 +4,8 @@ import edu.winona.cs.component.*;
 import edu.winona.cs.db.DatabaseManager;
 import edu.winona.cs.db.SettingsTable;
 import edu.winona.cs.db.UserTable;
+import edu.winona.cs.log.Log;
+import edu.winona.cs.log.Log.LogLevel;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -27,6 +29,9 @@ public class LoginScreen extends JFrame {
 	//Used to serialize the LoginScreen
 	private static final long serialVersionUID = -4328073729350178743L;
 	
+	//Logger
+	private static final Log LOG = new Log(LoginScreen.class.getName());
+	
 	//Database Manager
 	private DatabaseManager dbm = DatabaseManager.getDatabaseManager();
         
@@ -41,7 +46,9 @@ public class LoginScreen extends JFrame {
 	 * Since the user has not chosen settings yet, the login screen will not depend on user settings.
 	 */
     public LoginScreen() {
+    	LOG.log(LogLevel.INFO, "Creating components...");
         initComponents();
+        LOG.log(LogLevel.INFO, "Done creating components.\n");
         
         Container a = LoginScreen.this.getContentPane();
         a.setBackground(Color.ORANGE);
@@ -173,7 +180,8 @@ public class LoginScreen extends JFrame {
      * @param evt - Button Click
      */
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-       //STEP 1: Get UserTable and Verify User
+    	LOG.log(LogLevel.INFO, "Attempting to login...");
+    	//STEP 1: Get UserTable and Verify User
        UserTable ut = dbm.getUserTable();
        String username = usernameInput.getText().trim();
        
@@ -188,26 +196,25 @@ public class LoginScreen extends JFrame {
        
        //STEP 3: If Verified
        if(result == true) {
+    	   LOG.log(LogLevel.INFO, "Successfully logged in...");
     	   //STEP 3.1 setUsername with APP
     	   App.setUsername(username);
     	   
     	   //STEP 3.2 Get users GameSettings and setSettings with APP
-    	   SettingsTable gst = dbm.getSettingsTable();
-    	   GameSettings settings = gst.getGameSetting(App.getUsername());
+    	   LOG.log(LogLevel.INFO, "Getting user settings...");
+    	   SettingsTable st = dbm.getSettingsTable();
+    	   GameSettings settings = st.getGameSetting(App.getUsername());
     	   if(settings != null) {
+    		   LOG.log(LogLevel.INFO, "Found user settings...");
     		   App.setSettings(settings);
     	   } else {
-    		   gst.recordSetting(App.getUsername(), App.DEFAULT_SETTINGS);
+    		   LOG.log(LogLevel.INFO, "No user settings found using default...");
+    		   st.recordSetting(App.getUsername(), App.DEFAULT_SETTINGS);
     		   App.setSettings(App.DEFAULT_SETTINGS);
     	   }
     	   
-    	   //STEP 3.3 Get userSettings and setSettings with APP
-    	   //TODO Remove this is not in the settingsTable
-//    	   UserSettingsTable ust = dbm.getSett();
-//    	   DifficultyLevel level = ust.getDifficultyLevel(App.getUsername());
-//    	   App.setDifficultyLevel(level);
-    	   
     	   //STEP 3.4 Open Main Menu and close this Menu
+    	   LOG.log(LogLevel.INFO, "Done verifying user.\n");
            MainMenuScreen mainMenu = new MainMenuScreen();
            mainMenu.setVisible(true);
            this.dispose();
@@ -222,6 +229,7 @@ public class LoginScreen extends JFrame {
      * @param evt - Button Click
      */
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
+    	LOG.log(LogLevel.INFO, "Attempting to signup...");
     	//Step 1: Set up variables
         boolean success = false; //Assume failure
         String username = null;
@@ -243,15 +251,18 @@ public class LoginScreen extends JFrame {
         
         //Step 3: If successfully created
         if(success){
+        	LOG.log(LogLevel.INFO, "Successfully signed up...");
         	//Step 3.1: setUsername with APP
         	App.setUsername(username);
         	
         	//Step 3.2: set default settings in APP and in database
+        	LOG.log(LogLevel.INFO, "Setting default game settings...");
         	SettingsTable gst = dbm.getSettingsTable();
         	gst.recordSetting(App.getUsername(), App.DEFAULT_SETTINGS);
         	App.setSettings(App.DEFAULT_SETTINGS);
         	
         	//Step 3.3 Open Main Menu and close this menu
+        	LOG.log(LogLevel.INFO, "User creation finished.");
             MainMenuScreen mainMenu = new MainMenuScreen();
             mainMenu.setVisible(true);
             this.dispose();
@@ -265,6 +276,7 @@ public class LoginScreen extends JFrame {
      * @param evt - Button Click
      */
     private void guestLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginBtnActionPerformed
+    	LOG.log(LogLevel.INFO, "Playing as GUEST\n");
     	//Step 1: Set default settings with APP
     	App.setSettings(App.DEFAULT_SETTINGS);
     	

@@ -17,6 +17,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import edu.winona.cs.component.GameSession;
 import edu.winona.cs.gamelogic.DifficultyLevel;
+import edu.winona.cs.log.Log;
+import edu.winona.cs.log.Log.LogLevel;
 
 
 /**
@@ -31,6 +33,9 @@ import edu.winona.cs.gamelogic.DifficultyLevel;
 public class NewGameSettings extends javax.swing.JFrame {
 	//Serialized variable
     private static final long serialVersionUID = 7664729301277149568L;
+    
+    //Logger
+    private static final Log LOG = new Log(NewGameSettings.class.getName());
     
     //Button group
     private ButtonGroup buttonGroup = new ButtonGroup();
@@ -209,6 +214,7 @@ public class NewGameSettings extends javax.swing.JFrame {
      */
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
             imgfile = fileChooser.getSelectedFile();
+            LOG.log(LogLevel.INFO, "ImageFilePath: " + imgfile.getAbsolutePath());
             
             //check to make sure the file can be read.
             if(imgfile.isFile()){
@@ -240,13 +246,10 @@ public class NewGameSettings extends javax.swing.JFrame {
 			level = DifficultyLevel.HARD;
 		}
 		
-		//Step 2: get image file
-		App.setImgFileURL(imgfile.getAbsolutePath());
-		System.out.println(imgfile.getAbsolutePath());
-		
 		//Step 3: set game session
-		GameSession session = new GameSession(App.getUsername(), level, 0, null, null);
+		GameSession session = new GameSession(level, 0, imgfile.getAbsolutePath());
 		App.setGameSession(session);
+		LOG.log(LogLevel.INFO, "New Game Session: " + App.getSession());
 		
 		//Step 4: set app flag isNewGame
 		App.setNewGame(true);
@@ -254,7 +257,7 @@ public class NewGameSettings extends javax.swing.JFrame {
         //Step 5: display the game screen
         GameScreen gameScreen = null;
         try {
-            gameScreen = new GameScreen(App.getSession());
+            gameScreen = new GameScreen();
             gameScreen.setVisible(true);
             this.dispose();
         } catch (IOException ex) {

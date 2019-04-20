@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DifficultyLevel {
-         TEST(2),
+     TEST(2),
 	 EASY(3),
 	 MEDIUM(4),
 	 HARD(5);
@@ -24,6 +24,8 @@ public enum DifficultyLevel {
 	 }
 
 	 public int getInt() { return difficulty; }
+	 
+	 public int getSqure() {return difficulty * difficulty;}
 
 	 public static DifficultyLevel get(int difficulty) { 
 	      return lookup.get(difficulty); 

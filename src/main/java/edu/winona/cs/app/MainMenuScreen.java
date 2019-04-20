@@ -9,7 +9,7 @@ import java.awt.Container;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,8 +17,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Main Menu Screen
@@ -241,24 +245,19 @@ public class MainMenuScreen extends JFrame {
         		return;
         	}
         	
-        	//Step 1.2
-            FileInputStream fileInputStream = new FileInputStream(saveState.getAbsolutePath());
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            try {
-				GameSession gs = (GameSession) objectInputStream.readObject();
-				App.setGameSession(gs);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				objectInputStream.close(); 
-			}
+        	//Step 1.2 get session
+        	Jsonb jsonb = JsonbBuilder.create();
+        	InputStream is = new FileInputStream(saveState.getAbsolutePath());
+            String jsonTxt = IOUtils.toString(is, "UTF-8");
+            GameSession session = jsonb.fromJson(jsonTxt, GameSession.class);
+            App.setGameSession(session);
             
             //Step 1.3 notify app - not a new game
             App.setNewGame(false);
             
           
         	//Step 1.4: Open Game Screen
-        	GameScreen game = new GameScreen(App.getSession());
+        	GameScreen game = new GameScreen();
         	game.setVisible(true);
         	
         	//Step 1.5: dispose this
