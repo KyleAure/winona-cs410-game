@@ -20,7 +20,6 @@ public class App {
 	private static String username = null; 
 	private static GameSettings settings = null;
 	private static GameSession session = null;
-	private static String imageURL = null;
 	private static boolean isNewGame = true;
 
 	/**
@@ -86,67 +85,6 @@ public class App {
 	 */
 	public static boolean isSettingsSet() {
 		return settings != null;
-	}
-
-	/**
-	 * TODO remove this method, difficulty level is saved in settings and session
-	 * Returns the difficulty level set by user.
-	 * @return
-	 */
-	@Deprecated
-	public static DifficultyLevel getDifficultyLevel() {
-		return session.getDifficulty();
-	}
-
-	/**
-	 * TODO remove this method, difficulty level is saved in settings and session
-	 * Set the difficulty level.
-	 * @param level - DifficultyLevel
-	 */
-	@Deprecated
-	public static void setDifficultyLevel(DifficultyLevel level) {
-		if(session == null) {
-			session = new GameSession(username, level, 0, null, null);
-		} else {
-			session.setDifficulty(level);
-		}	
-	}
-	
-	/**
-	 * TODO remove this method, difficulty level is saved in settings and session
-	 * Check to see if a difficulty level has been set.
-	 * @return boolean: true = set, false = not set.
-	 */
-	@Deprecated
-	public static boolean isDifficultyLevelSet() {
-		if(session == null) {
-			return false;
-		}
-		return session.getDifficulty() != null;
-	}
-
-	/**
-	 * Returns imageURL
-	 * @return String - imageURL
-	 */
-	public static String getImgFileURL() {
-		return imageURL;
-	}
-
-	/**
-	 * Set imageURL 
-	 * @param fileURL
-	 */
-	public static void setImgFileURL(String fileURL) {
-		App.imageURL = fileURL;
-	}
-	
-	/**
-	 * Checks to see if imageURL has been set.
-	 * @return boolean: True = set, False = not set.
-	 */
-	public static boolean isImgFileSet() {
-		return imageURL != null;
 	}
 	
 	/**

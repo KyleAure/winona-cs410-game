@@ -1,11 +1,16 @@
 package edu.winona.cs.component;
 
-import java.io.Serializable;
-
 import edu.winona.cs.gamelogic.DifficultyLevel;
+import edu.winona.cs.image.ImageProcessor;
+
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 
 /**
  * Variables here match those stored in the SaveStateTable. fileURL (String) -
@@ -18,29 +23,40 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class GameSession implements Serializable {
-    //Used to serialize the GameSession to be loaded again later
-
-    private static final long serialVersionUID = -5135624122335249008L;
-
-    //Logger
-    //private static final Log LOG = new Log(GameSession.class.getName());
-
-    //Variables 
+public class GameSession {
+	//JSON Variables
+    @JsonbProperty
     private DifficultyLevel difficulty;
+    @JsonbProperty
     private int clickCount;
-    public List<BufferedImage> imageList = new ArrayList<>();
-    public List<BufferedImage> keyList = imageList;
+    @JsonbProperty
+    private String imgURL;
+    @JsonbProperty
+    private List<Integer> state;
+    @JsonbProperty
+    private List<Integer> key;
 
-    public GameSession(String username, DifficultyLevel level, int clickCount, List<BufferedImage> imageList, List<BufferedImage> keyList) {
+    @Override
+	public String toString() {
+		return "GameSession [difficulty=" + difficulty + ", clickCount=" + clickCount + ", imgURL=" + imgURL
+				+ ", state=" + state + ", key=" + key + "]";
+	}
+
+	public GameSession(DifficultyLevel level, int clickCount, String imgURL) {
         this.difficulty = level;
-        this.clickCount = 0;
-        this.imageList = imageList;
-        this.keyList = keyList;
+        this.clickCount = clickCount;
+        this.imgURL = imgURL;
+        key = new ArrayList<>();
+        state = new ArrayList<>();
+        
+        for(int i=0; i<level.getSqure(); i++) {
+        	key.add(i);
+        	state.add(i);
+        }
     }
-
-    public GameSession(DifficultyLevel difficulty) {
-        this.difficulty = difficulty;
+    
+    public GameSession() {
+    	//intentionally left black for JSON-B deserialization
     }
 
     public DifficultyLevel getDifficulty() {
@@ -59,29 +75,63 @@ public class GameSession implements Serializable {
         this.clickCount = clickCount;
     }
     
+    @JsonbTransient
     public void incrementClick() {
     	clickCount++;
     }
 
-    public void setImageList(List<BufferedImage> imageList) {
-        this.imageList = imageList;
-    }
-    
-    public List<BufferedImage> getImageList() {
-    	return imageList;
-    }
+    public String getImgURL() {
+		return imgURL;
+	}
 
-    public void setKeyList(List<BufferedImage> keyList) {
-        this.keyList = keyList;
-    }
-    
-    public List<BufferedImage> getKeyList() {
-    	return keyList;
-    }
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
 
-    @Override
-    public String toString() {
-        return "Difficulty: " + difficulty;
-    }
+	public List<Integer> getState() {
+		return state;
+	}
 
+	public void setState(List<Integer> img) {
+		this.state = img;
+	}
+
+	public List<Integer> getKey() {
+		return key;
+	}
+
+	public void setKey(List<Integer> key) {
+		this.key = key;
+	}
+
+	public boolean isVictorious() {
+		for(int i=0; i < state.size(); i++) {
+			if(state.get(i) != key.get(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns a list of buffered images in the key order.
+	 * @return
+	 */
+	public List<BufferedImage> loadIcons() {
+		ImageProcessor ip = new ImageProcessor();
+		File f = new File(imgURL);
+		List<BufferedImage> fromFile = null;
+		if(f.exists()) {
+			try {
+				ip.assignImage(f);
+				fromFile = ip.divideImage(difficulty.getSqure());
+			} catch (IOException e) {
+				return null;
+			}
+			
+			return fromFile;
+		} else {
+			return null;
+		}
+	}
 }
