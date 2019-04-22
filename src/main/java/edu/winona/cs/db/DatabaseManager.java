@@ -64,25 +64,12 @@ public class DatabaseManager {
 					ut.setCreated(true);
 					tables.put(UserTable.NAME, ut);
 					break;
-				//FIXME
-//				case UserSettingsTable.NAME:
-//					LOG.log(LogLevel.INFO,"UserSettingsTable found...");
-//					UserSettingsTable ust = new UserSettingsTable();
-//					ust.setCreated(true);
-//					tables.put(UserSettingsTable.NAME, ust);
-//					break;
 				case SaveStateTable.NAME:
 					LOG.log(LogLevel.INFO,"SaveStateTable found...");
 					SaveStateTable sst = new SaveStateTable();
 					sst.setCreated(true);
 					tables.put(SaveStateTable.NAME, sst);
 					break;
-//				case ImageTable.NAME:
-//					LOG.log(LogLevel.INFO,"ImageTable found...");
-//					ImageTable it = new ImageTable();
-//					it.setCreated(true);
-//					tables.put(ImageTable.NAME, it);
-//					break;
 				case HighScoreTable.NAME:
 					LOG.log(LogLevel.INFO,"HighScoreTable found...");
 					HighScoreTable hst = new HighScoreTable();
@@ -184,25 +171,6 @@ public class DatabaseManager {
 	}
 	
 	/**
-	 * Returns the UserSettingsTable object to be used for database connectivity.
-	 * @return UserSettingsTable
-	 */
-	//FIXME
-//	public UserSettingsTable getUserSettingsTable() {
-//		LOG.log(LogLevel.INFO, "Request for UserSettingsTable from DatabaseManager received.");
-//		if(tables.containsKey(UserSettingsTable.NAME) && tables.get(UserSettingsTable.NAME).isCreated()) {
-//			LOG.log(LogLevel.INFO, "Existing table found.\n");
-//			return (UserSettingsTable) tables.get(UserSettingsTable.NAME);
-//		} else {
-//			LOG.log(LogLevel.INFO, "DatabaseManager creating UserSettingsTable.\n");
-//			UserSettingsTable ust = new UserSettingsTable();
-//			ust.createTable();
-//			tables.put(UserSettingsTable.NAME, ust);
-//			return ust;
-//		}
-//	}
-	
-	/**
 	 * Returns the HighScoreTable object to be used for database connectivity.
 	 * @return HighScoreTable
 	 */
@@ -235,25 +203,6 @@ public class DatabaseManager {
 			sst.createTable();
 			tables.put(SaveStateTable.NAME, sst);
 			return sst;
-		}
-	}
-	
-	/**
-	 * Returns the ImageTable object to be used for database connectivity.
-	 * @return ImageTable
-	 */
-	@Deprecated
-	public ImageTable getImageTable() {
-		LOG.log(LogLevel.INFO, "Request for ImageTable from DatabaseManager received.");
-		if(tables.containsKey(ImageTable.NAME) && tables.get(ImageTable.NAME).isCreated()) {
-			LOG.log(LogLevel.INFO, "Existing table found.\n");
-			return (ImageTable) tables.get(ImageTable.NAME);
-		} else {
-			LOG.log(LogLevel.INFO, "DatabaseManager creating ImageTable.\n");
-			ImageTable it = new ImageTable();
-			it.createTable();
-			tables.put(ImageTable.NAME, it);
-			return it;
 		}
 	}
 	

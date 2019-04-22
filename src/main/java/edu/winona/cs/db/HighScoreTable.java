@@ -226,11 +226,11 @@ public class HighScoreTable implements Table{
 	/**
 	 * Get a user's high score.
 	 * @param username - unique name for user.
-	 * @return - int highscore or -1 if not found.
+	 * @return - int highscore or Max Integer if not found.
 	 */
 	public int getHighScore(String username) {
 		LOG.log(LogLevel.INFO, "Attempting database connection from: HighScoreTable.getDifficultyLevel");
-		int result = -1;
+		int result = Integer.MAX_VALUE;
 		if (created) {
 			Connection conn = null;
 			Statement stmt = null;
